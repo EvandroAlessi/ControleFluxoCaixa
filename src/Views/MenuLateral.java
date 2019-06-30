@@ -150,19 +150,20 @@ public class MenuLateral extends GridPane {
         c2.setPrefWidth(1);
         c2.setHalignment(HPos.CENTER);
         vbTop.setAlignment(Pos.TOP_CENTER);
+        //vbBottom.setAlignment(Pos.BOTTOM_CENTER);
         
         RowConstraints r1 = new RowConstraints();
         r1.setVgrow(Priority.ALWAYS);
         r1.setValignment(VPos.CENTER);
-        RowConstraints r3 = new RowConstraints();
-        r3.setVgrow(Priority.SOMETIMES);
-        r3.setPrefHeight(80);
-        r3.setMaxHeight(80);
-        r3.setValignment(VPos.CENTER);
+        RowConstraints r2 = new RowConstraints();
+        r2.setVgrow(Priority.ALWAYS);
+//        r2.setPrefHeight(80);
+//        r2.setMaxHeight(80);
+        r2.setValignment(VPos.CENTER);
         
         this.getColumnConstraints().add(c1);
         this.getRowConstraints().add(r1);
-        this.getRowConstraints().add(r3);
+        this.getRowConstraints().add(r2);
         this.getColumnConstraints().add(c2);
         
         

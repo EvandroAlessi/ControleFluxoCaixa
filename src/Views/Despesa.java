@@ -5,6 +5,8 @@
  */
 package Views;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  *
@@ -31,6 +34,7 @@ public class Despesa extends GridPane{
     Button cadastrar;
     private TableView table;
     private TableColumn data, descricao, valor, pagamento;
+    
     public Despesa(){
         titulo = new Label("Despesas");
         table = new TableView();
@@ -64,7 +68,12 @@ public class Despesa extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroDespesa cad = new CadastroDespesa();
+            CadastroForm form = new CadastroForm();
+            try {
+                form.start(new Stage());
+            } catch (Exception ex) {
+                Logger.getLogger(Despesa.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 }

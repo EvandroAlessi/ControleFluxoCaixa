@@ -9,6 +9,7 @@ import CrossCutting.Enums.Tela;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -30,16 +31,21 @@ public class FXMain extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
         
         //switchCenter(Tela.RECEITA);
         primaryStage.setMaximized(true);
         Scene scene = new Scene(root, 700, 700);
-
+        
+        
+       
+        
         primaryStage.setTitle("Controle Fluxo de Caixa");
         primaryStage.setScene(scene);
+        
+        
         primaryStage.show();
     }
      
@@ -55,7 +61,7 @@ public class FXMain extends Application {
                 //root.setCenter(new Resumo());
                 break;
             case DESPESA:
-                //root.setCenter(new Resumo());
+                root.setCenter(new Despesa());
                 break;
             case CATEGORIA:
                 //root.setCenter(new Resumo());

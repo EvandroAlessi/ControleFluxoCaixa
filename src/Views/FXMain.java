@@ -25,7 +25,7 @@ public class FXMain extends Application {
         Resumo resumo = new Resumo();
         root.setCenter(resumo);
         root.setLeft(menuLateral);
-        root.setTop(menuSuperior.addMenu());
+        root.setTop(menuSuperior);
         
         Scene scene = new Scene(root, 700, 700);
 

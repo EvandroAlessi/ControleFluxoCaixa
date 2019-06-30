@@ -8,9 +8,14 @@ package Views;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -21,22 +26,18 @@ public class FXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        BorderPane root = new BorderPane();
+        HBox centro = new HBox();
+        MenuSuperior menuSuperior = new MenuSuperior();
+        MenuLateral menuLateral = new MenuLateral();
+        Resumo resumo = new Resumo();
+        centro.getChildren().addAll(menuLateral.addMenu(),resumo.exibir());
+        root.setTop(menuSuperior.addMenu());
+        root.setCenter(centro);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
+        Scene scene = new Scene(root, 700, 700);
+
+        primaryStage.setTitle("Controle Fluxo de Caixa");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

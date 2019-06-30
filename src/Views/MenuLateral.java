@@ -5,8 +5,10 @@
  */
 package Views;
 
+import CrossCutting.Enums.Tela;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -31,16 +33,18 @@ public class MenuLateral extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox right;
-    Button resumo, relatorio, despesa, pagamento, sair, logout;
+    Button resumo, relatorio, despesa, receita, categoria, pagamento, sair, logout;
     Image grafico;
     ImageView imageView;
     
-    public MenuLateral() {
+    public MenuLateral(FXMain main) {
         vbTop = new VBox();
         vbBottom = new VBox();
         resumo = new Button("Resumos");
         relatorio = new Button("Relatórios");
         despesa = new Button("Despesas");
+        receita = new Button("Receitas");
+        categoria = new Button("Categorias");
         pagamento = new Button("Formas de Pagamentos");
         sair = new Button("Sair");
         logout = new Button("Logout");
@@ -62,15 +66,52 @@ public class MenuLateral extends GridPane {
         }
         imageView = new ImageView(grafico);
         
+        resumo.setOnAction((event) -> {
+            main.switchCenter(Tela.RESUMO);
+        });
+        
+        relatorio.setOnAction((event) -> {
+            main.switchCenter(Tela.RELATORIO);
+        });
+        
+        despesa.setOnAction((event) -> {
+            main.switchCenter(Tela.DESPESA);
+        });
+        
+        receita.setOnAction((event) -> {
+            main.switchCenter(Tela.RECEITA);
+        });
+        
+        categoria.setOnAction((event) -> {
+            main.switchCenter(Tela.CATEGORIA);
+        });
+        
+        pagamento.setOnAction((event) -> {
+            main.switchCenter(Tela.PAGAMENTO);
+        });
+        
+        logout.setOnAction((event) -> {
+            
+        });
+        
+        sair.setOnAction((event) -> {
+            Platform.exit();
+            System.exit(0);
+        });
+        
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         
-        vbTop.getChildren().addAll(imageView,resumo,relatorio,despesa,pagamento);
+        vbTop.getChildren().addAll(imageView,resumo,relatorio,despesa, receita, categoria,pagamento);
         vbBottom.getChildren().addAll(logout, sair);
         resumo.setMinWidth(150);
         resumo.setMinHeight(60);
+        receita.setMinWidth(150);
+        receita.setMinHeight(60);
+        categoria.setMinWidth(150);
+        categoria.setMinHeight(60);
         relatorio.setMinWidth(150);
         relatorio.setMinHeight(60);
         despesa.setMinWidth(150);
@@ -83,6 +124,8 @@ public class MenuLateral extends GridPane {
         logout.setMinHeight(60);
         
         resumo.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
+        receita.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
+        categoria.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
         relatorio.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
         despesa.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
         pagamento.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
@@ -90,11 +133,11 @@ public class MenuLateral extends GridPane {
         logout.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
         
         
-        this.add(vbTop, 0, 0);
-        this.add(vbBottom, 0, 1);
-        this.add(right, 1, 0);
+        add(vbTop, 0, 0);
+        add(vbBottom, 0, 1);
+        add(right, 1, 0);
         
-        this.setRowSpan(right, 2);
+        setRowSpan(right, 2);
         right.setStyle("-fx-background-color: #ddd");
         
         ColumnConstraints c1 =  new ColumnConstraints();

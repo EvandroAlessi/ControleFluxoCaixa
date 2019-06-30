@@ -5,12 +5,10 @@
  */
 package Views;
 
-import javafx.scene.Node;
+import CrossCutting.Enums.Tela;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 /**
  *
@@ -21,7 +19,7 @@ public class MenuSuperior extends MenuBar{
         Menu arquivo, resumo, relatorio, sobre;
         MenuItem sair;
         
-        public MenuSuperior(){
+        public MenuSuperior(FXMain main){
             arquivo = new Menu("Arquivo");
             resumo = new Menu("Resumo");
             relatorio = new Menu("Relatório");
@@ -29,17 +27,25 @@ public class MenuSuperior extends MenuBar{
             sair = new MenuItem("Sair");
             arquivo.getItems().add(sair);
             this.getMenus().addAll(arquivo,resumo,relatorio,sobre);
+            
+            resumo.setOnAction((event) -> {
+                main.switchCenter(Tela.RESUMO);
+            });
+
+            relatorio.setOnAction((event) -> {
+                main.switchCenter(Tela.RELATORIO);
+            });
         }
         
-        public Node addMenu(){
-            menuSuperior = new MenuBar();
-            arquivo = new Menu("Arquivo");
-            resumo = new Menu("Resumo");
-            relatorio = new Menu("Relatório");
-            sobre = new Menu("Sobre");
-            sair = new MenuItem("Sair");
-            arquivo.getItems().add(sair);
-            menuSuperior.getMenus().addAll(arquivo,resumo,relatorio,sobre);
-            return menuSuperior;
-        }     
+//        public Node addMenu(){
+//            menuSuperior = new MenuBar();
+//            arquivo = new Menu("Arquivo");
+//            resumo = new Menu("Resumo");
+//            relatorio = new Menu("Relatório");
+//            sobre = new Menu("Sobre");
+//            sair = new MenuItem("Sair");
+//            arquivo.getItems().add(sair);
+//            menuSuperior.getMenus().addAll(arquivo,resumo,relatorio,sobre);
+//            return menuSuperior;
+//        }     
 }

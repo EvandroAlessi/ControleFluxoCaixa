@@ -5,10 +5,10 @@
  */
 package Views;
 
+import CrossCutting.Enums.Tela;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -16,17 +16,26 @@ import javafx.stage.Stage;
  * @author evand
  */
 public class FXMain extends Application {
+    private static BorderPane root;
+    private MenuSuperior menuSuperior;
+    private MenuLateral menuLateral;
+    private Resumo resumo;
+    
+    @Override
+    public void init(){
+        root = new BorderPane();
+        menuSuperior = new MenuSuperior(this);
+        menuLateral = new MenuLateral(this);
+        //resumo = new Resumo();
+    }
     
     @Override
     public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
-        MenuSuperior menuSuperior = new MenuSuperior();
-        MenuLateral menuLateral = new MenuLateral();
-        Resumo resumo = new Resumo();
-        root.setCenter(resumo);
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
         
+        //switchCenter(Tela.RECEITA);
+        primaryStage.setMaximized(true);
         Scene scene = new Scene(root, 700, 700);
 
         primaryStage.setTitle("Controle Fluxo de Caixa");
@@ -34,8 +43,27 @@ public class FXMain extends Application {
         primaryStage.show();
     }
      
-    private void alternarTela(){
-        
+    public void switchCenter(Tela tela){
+        switch(tela){
+            case RESUMO:
+                root.setCenter(new Resumo());
+                break;
+            case RELATORIO:
+                //root.setCenter(new Resumo());
+                break;
+            case RECEITA:
+                //root.setCenter(new Resumo());
+                break;
+            case DESPESA:
+                //root.setCenter(new Resumo());
+                break;
+            case CATEGORIA:
+                //root.setCenter(new Resumo());
+                break;
+            case PAGAMENTO:
+                //root.setCenter(new Resumo());
+                break;
+        }
     }
     
     /**

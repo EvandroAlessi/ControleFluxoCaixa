@@ -6,6 +6,7 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
+import DAL.BDMySQL;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -20,13 +21,20 @@ public class FXMain extends Application {
     private MenuSuperior menuSuperior;
     private MenuLateral menuLateral;
     private Resumo resumo;
-    
+    BDMySQL banco;
     @Override
     public void init(){
         root = new BorderPane();
         menuSuperior = new MenuSuperior(this);
         menuLateral = new MenuLateral(this);
-        //resumo = new Resumo();
+        /*
+        try {
+            banco.conectar();
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("dasdasda");
+        }*/
+        
+        
     }
     
     @Override

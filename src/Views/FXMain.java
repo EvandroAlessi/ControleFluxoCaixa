@@ -7,6 +7,7 @@ package Views;
 
 import CrossCutting.Enums.Tela;
 import DAL.Contexto;
+import Services.CategoriaContaService;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -55,6 +56,9 @@ public class FXMain extends Application {
             Contexto contexto = new Contexto();
             contexto.getConnection();
             System.out.println("OK");
+            CategoriaContaService categoriaService = new CategoriaContaService();
+            
+            categoriaService.consultarCategorias(contexto);
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("error");

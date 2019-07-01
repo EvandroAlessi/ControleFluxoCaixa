@@ -14,6 +14,9 @@ public class CategoriaConta {
     private String descricao;
     private boolean positiva;
 
+    public CategoriaConta() {
+    }
+    
     public CategoriaConta(int categoriaContaID, int codigo, String descricao, boolean positiva) {
         this.categoriaContaID = categoriaContaID;
         this.descricao = descricao;

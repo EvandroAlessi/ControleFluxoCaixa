@@ -30,9 +30,9 @@ public class CategoriaContaService {
             while(dados.next()){
                 CategoriaConta categoria = new CategoriaConta();
                 categoria.setDescricao(dados.getString("Descricao"));
-                categoria.setCodigo(dados.getInt("CategoriaContaID"));
+                categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
                 categoria.setPositiva(dados.getBoolean("positiva"));
-                System.out.println(categoria.getCodigo()+"\n"+categoria.getDescricao()+"\n"+categoria.isPositiva());
+                System.out.println(categoria.getCategoriaContaID()+"\n"+categoria.getDescricao()+"\n"+categoria.isPositiva());
                 lista.add(categoria);
             }
             return lista;

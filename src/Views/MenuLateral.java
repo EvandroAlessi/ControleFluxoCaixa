@@ -52,7 +52,7 @@ public class MenuLateral extends GridPane {
         
         
         try {
-            grafico = new Image(new FileInputStream("src\\Views\\Imagens\\grafico.png"));
+            grafico = new Image(new FileInputStream("src\\Resources\\grafico.png"));
         } catch (FileNotFoundException ex) {
             Label img = new Label("Imagem não encontrada");
             img.setMinWidth(150);

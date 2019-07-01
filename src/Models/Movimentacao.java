@@ -5,7 +5,7 @@
  */
 package Models;
 
-import Services.MovimentacaoService;
+import DAO.MovimentacaoDAO;
 import java.util.Date;
 
 /**
@@ -31,8 +31,12 @@ public class Movimentacao implements IPagamento {
         selectPayment(formaPagamento);
     }
 
+    public Movimentacao() {
+        
+    }
+    
     public double getSaldo(){
-        MovimentacaoService service = new MovimentacaoService();
+        MovimentacaoDAO service = new MovimentacaoDAO();
         
 //        return service.getSaldo();
         return 0;
@@ -116,4 +120,10 @@ public class Movimentacao implements IPagamento {
     public void setSubcategoria(SubCategoria subcategoria) {
         this.subcategoria = subcategoria;
     }
+
+    @Override
+    public String toString() {
+        return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", subCategoriaID=" + subCategoriaID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subcategoria + '}';
+    }
+    
 }

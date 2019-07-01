@@ -21,6 +21,10 @@ public class SubCategoria {
         this.descricao = descricao;
     }
 
+    public SubCategoria() {
+        
+    }
+
     public int getSubCategoriaID() {
         return subCategoriaID;
     }

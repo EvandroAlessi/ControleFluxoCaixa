@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAL;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,26 +25,27 @@ public class Contexto {
 
     public void getConnection() throws ClassNotFoundException, SQLException{
         if(conexao == null){
-            System.out.println("111");
             Class.forName(driver);
-            System.out.println("222");
             conexao = DriverManager.getConnection(url, usuario, senha);
             System.out.println("Banco conectado");
         }
     }
     
-    public int atualizar(String sql) throws ClassNotFoundException, SQLException{
+    
+    public int executeUpdate(String sql) throws ClassNotFoundException, SQLException{
         getConnection();
         Statement sessao = getConexao().createStatement();
+        
         return sessao.executeUpdate(sql);
     }
     
-    public ResultSet consultar(String sql) throws ClassNotFoundException, SQLException{
+    public ResultSet executeQuery(String query) throws ClassNotFoundException, SQLException{
         getConnection();
         Statement sessao = getConexao().createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, 
                 ResultSet.CONCUR_READ_ONLY);
-        return sessao.executeQuery(sql);
+        
+        return sessao.executeQuery(query);
     }
     /**
      * @return the url

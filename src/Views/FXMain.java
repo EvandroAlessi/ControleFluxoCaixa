@@ -6,8 +6,10 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
-import DAL.Contexto;
-import Services.CategoriaContaService;
+import DAO.Contexto;
+import DAO.CategoriaContaDAO;
+import DAO.MovimentacaoDAO;
+import DAO.SubCategoriaDAO;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -44,17 +46,16 @@ public class FXMain extends Application {
         primaryStage.setScene(scene);
         
         primaryStage.show();
+        //Contexto contexto = new Contexto();
+        //contexto.getConnection();
+        //System.out.println("OK");
         try {
-            Contexto contexto = new Contexto();
-            contexto.getConnection();
-            System.out.println("OK");
-            CategoriaContaService categoriaService = new CategoriaContaService();
-            
-            categoriaService.consultarCategorias(contexto);
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("error");
+            SubCategoriaDAO sub = new SubCategoriaDAO();
+        sub.getAll();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
+        
     }
      
     public void switchCenter(Tela tela){

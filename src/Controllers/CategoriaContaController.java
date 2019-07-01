@@ -5,7 +5,7 @@
  */
 package Controllers;
 
-import Models.Despesa;
+import Models.CategoriaConta;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,22 +13,22 @@ import java.util.ArrayList;
  *
  * @author evand
  */
-public class SubCategoriaController {
-    public Despesa create(Despesa movimentacao) throws ClassNotFoundException, SQLException{
+public class CategoriaContaController {
+    public CategoriaConta create(CategoriaConta categoriaConta) throws ClassNotFoundException, SQLException{
         return null;
     }
     
-    public Despesa get(int id) throws ClassNotFoundException, SQLException{
+    public CategoriaConta get(int id) throws ClassNotFoundException, SQLException{
         
         
         return null;
     }
     
-    public ArrayList<Despesa> getAll() throws ClassNotFoundException, SQLException{
+    public ArrayList<CategoriaConta> getAll() throws ClassNotFoundException, SQLException{
         return null;
     }
     
-    public boolean update(Despesa movimentacao) throws ClassNotFoundException, SQLException{
+    public boolean update(CategoriaConta categoriaConta) throws ClassNotFoundException, SQLException{
         
 
         return false;

@@ -5,7 +5,12 @@
  */
 package Controllers;
 
+import Models.CategoriaConta;
 import Models.Despesa;
+import Models.SubCategoria;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,8 +18,8 @@ import java.util.ArrayList;
  *
  * @author evand
  */
-public class SubCategoriaController {
-    public Despesa create(Despesa movimentacao) throws ClassNotFoundException, SQLException{
+public class DespesaController {
+    public Despesa create(Despesa despesa) throws ClassNotFoundException, SQLException{
         return null;
     }
     
@@ -28,7 +33,7 @@ public class SubCategoriaController {
         return null;
     }
     
-    public boolean update(Despesa movimentacao) throws ClassNotFoundException, SQLException{
+    public boolean update(Despesa despesa) throws ClassNotFoundException, SQLException{
         
 
         return false;

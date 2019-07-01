@@ -63,7 +63,7 @@ public class CategoriaFX extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroFormFX form = new CadastroFormFX("Cadastro Categoria");
+            FormFX form = new FormFX("Cadastro Categoria");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {

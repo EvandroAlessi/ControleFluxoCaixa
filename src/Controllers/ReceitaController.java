@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author evand
  */
-public class SubCategoriaController {
+public class ReceitaController {
     public Despesa create(Despesa movimentacao) throws ClassNotFoundException, SQLException{
         return null;
     }

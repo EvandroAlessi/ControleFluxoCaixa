@@ -76,7 +76,7 @@ public class ReceitaFX extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroFormFX form = new CadastroFormFX("Cadastro Receita");
+            FormFX form = new FormFX("Cadastro Receita");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {

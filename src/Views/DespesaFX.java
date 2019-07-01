@@ -100,7 +100,7 @@ public class DespesaFX extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroFormFX form = new CadastroFormFX("Cadrastro Despesa");
+            FormFX form = new FormFX("Cadrastro Despesa");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {

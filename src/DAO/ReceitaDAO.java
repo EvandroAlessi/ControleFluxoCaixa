@@ -35,14 +35,14 @@ public class ReceitaDAO {
         return columns;
     }
     
-    public Receita create(Receita movimentacao) throws ClassNotFoundException, SQLException{
+    public Receita create(Receita receita) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
 
-                preparestatement.setString(1, movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
-                preparestatement.setDate(2, (Date) movimentacao.getDataOcorrencia());
-                preparestatement.setDouble(1, movimentacao.getValor()); //substitui o ? pelo dado do usuario
-                preparestatement.setInt(2, movimentacao.getFormaPagamento());   
+                preparestatement.setString(1, receita.getDescricao()); //substitui o ? pelo dado do usuario
+                preparestatement.setDate(2, (Date) receita.getDataOcorrencia());
+                preparestatement.setDouble(1, receita.getValor()); //substitui o ? pelo dado do usuario
+                preparestatement.setInt(2, receita.getFormaPagamento());   
                 //executando comando sql
 
                 preparestatement.execute();
@@ -157,25 +157,25 @@ public class ReceitaDAO {
         return list;
     }
     
-    public boolean update(Receita movimentacao) throws ClassNotFoundException, SQLException{
+    public boolean update(Receita receita) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
         columnsAndValues.append("descricao= '")
-                .append(movimentacao.getDescricao())
+                .append(receita.getDescricao())
                 .append("'");
         columnsAndValues.append("dataOcorrencia= '")
-                .append(movimentacao.getDataOcorrencia())
+                .append(receita.getDataOcorrencia())
                 .append("'");
         columnsAndValues.append("valor= '")
-                .append(movimentacao.getValor())
+                .append(receita.getValor())
                 .append("'");
         columnsAndValues.append("formaPagamento= '")
-                .append(movimentacao.getFormaPagamento())
+                .append(receita.getFormaPagamento())
                 .append("'");
         
         String query = "update movimentacao SET " 
                 + columnsAndValues.toString() 
-                + " WHERE movimentacaoID = " + movimentacao.getMovimentacaoID();
+                + " WHERE movimentacaoID = " + receita.getMovimentacaoID();
         
         int result = contexto.executeUpdate(query);
 

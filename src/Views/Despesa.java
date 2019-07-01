@@ -33,7 +33,7 @@ public class Despesa extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn data, descricao, valor, pagamento;
+    private TableColumn data, descricao, valor, pagamento, categoria;
     
     public Despesa(){
         titulo = new Label("Despesas");
@@ -43,11 +43,13 @@ public class Despesa extends GridPane{
         valor = new TableColumn("Valor");
         pagamento = new TableColumn("Forma de Pagamento");
         cadastrar = new Button("Cadastrar");
-        data.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+        categoria = new TableColumn("Categoria");
+        categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.20));
+        data.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
         descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
-        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.30));
-        table.getColumns().addAll(data,descricao,valor,pagamento);
+        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
+        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.20));
+        table.getColumns().addAll(data,categoria,descricao,valor,pagamento);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);

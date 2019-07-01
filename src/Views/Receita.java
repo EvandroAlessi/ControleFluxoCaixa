@@ -38,10 +38,14 @@ public class Receita extends GridPane{
         valor = new TableColumn("Valor");
         pagamento = new TableColumn("Forma de Pagamento");
         cadastrar = new Button("Cadastrar");
-        data.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
-        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.30));
+        data.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        descricao.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.40));
+        valor.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        pagamento.prefWidthProperty().bind(
+                table.widthProperty().multiply(0.30));
         table.getColumns().addAll(data,descricao,valor,pagamento);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
@@ -67,7 +71,8 @@ public class Receita extends GridPane{
             try {
                 form.start(new Stage());
             } catch (Exception ex) {
-                Logger.getLogger(Despesa.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Despesa.class.getName()).log(Level.SEVERE, 
+                        null, ex);
             }
         });
     }

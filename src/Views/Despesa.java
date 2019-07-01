@@ -59,7 +59,7 @@ public class Despesa extends GridPane{
         
         RowConstraints r1 = new RowConstraints();
         RowConstraints r2 = new RowConstraints();
-        r1.setPercentHeight(5);
+        //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
         this.getColumnConstraints().add(c1);
         this.getRowConstraints().addAll(r1,r2);

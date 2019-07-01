@@ -11,10 +11,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class CadastroForm extends Application {
+public class CadastroFormFX extends Application {
     private String title;
     
-    public CadastroForm(String title) {
+    public CadastroFormFX(String title) {
         this.title = title;
     }
 

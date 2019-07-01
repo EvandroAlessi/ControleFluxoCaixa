@@ -13,13 +13,13 @@ import java.util.Date;
  * @author evand
  */
 public class Movimentacao implements IPagamento {
-    private int movimentacaoID;
-    private int subCategoriaID;
-    private Date dataOcorrencia;
-    private String descricao;
-    private double valor;
-    private int formaPagamento;
-    private SubCategoria subcategoria;
+    protected int movimentacaoID;
+    protected int subCategoriaID;
+    protected Date dataOcorrencia;
+    protected String descricao;
+    protected double valor;
+    protected int formaPagamento;
+    protected SubCategoria subcategoria;
     
     public Movimentacao(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento, int subCategoriaID) {
         this.dataOcorrencia = dataOcorrencia;

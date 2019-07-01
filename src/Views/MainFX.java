@@ -8,10 +8,14 @@ package Views;
 import CrossCutting.Enums.Tela;
 import DAO.Contexto;
 import DAO.CategoriaContaDAO;
+import DAO.DespesaDAO;
 import DAO.MovimentacaoDAO;
 import DAO.SubCategoriaDAO;
 import Models.Movimentacao;
 import com.sun.media.jfxmedia.logging.Logger;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,17 +26,17 @@ import javafx.stage.Stage;
  *
  * @author evand
  */
-public class FXMain extends Application {
+public class MainFX extends Application {
     private static BorderPane root;
-    private MenuSuperior menuSuperior;
-    private MenuLateral menuLateral;
-    private Resumo resumo;
+    private MenuSuperiorFX menuSuperior;
+    private MenuLateralFX menuLateral;
+    private ResumoFX resumo;
     
     @Override
     public void init(){
         root = new BorderPane();
-        menuSuperior = new MenuSuperior(this);
-        menuLateral = new MenuLateral(this);
+        menuSuperior = new MenuSuperiorFX(this);
+        menuLateral = new MenuLateralFX(this);
     }
     
     @Override
@@ -52,7 +56,12 @@ public class FXMain extends Application {
         //contexto.getConnection();
         //System.out.println("OK");
         try {
-            SubCategoriaDAO sub = new SubCategoriaDAO();
+            
+//            BufferedWriter output = new BufferedWriter(new FileWriter("the-file-name.txt", true));
+//            output.append("\nThe third line");
+//            
+//            output.close();
+            DespesaDAO sub = new DespesaDAO();
         sub.getAll();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
@@ -61,19 +70,19 @@ public class FXMain extends Application {
         
     }
      
-    public void switchCenter(Tela tela){
+    public void switchCenter(Tela tela) {
         switch(tela){
             case RESUMO:
-                root.setCenter(new Resumo());
+                root.setCenter(new ResumoFX());
                 break;
             case RELATORIO:
                 //root.setCenter(new Resumo());
                 break;
             case RECEITA:
-                root.setCenter(new Receita());
+                root.setCenter(new ReceitaFX());
                 break;
             case DESPESA:
-                root.setCenter(new Despesa());
+                root.setCenter(new DespesaFX());
                 break;
             case CATEGORIA:
                 //root.setCenter(new Resumo());

@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
  *
  * @author SpaceBR
  */
-public class MenuLateral extends GridPane {
+public class MenuLateralFX extends GridPane {
     GridPane menu;
     VBox vbTop;
     VBox vbBottom;
@@ -37,7 +37,7 @@ public class MenuLateral extends GridPane {
     Image grafico;
     ImageView imageView;
     
-    public MenuLateral(FXMain main) {
+    public MenuLateralFX(MainFX main) {
         vbTop = new VBox();
         vbBottom = new VBox();
         resumo = new Button("Resumos");

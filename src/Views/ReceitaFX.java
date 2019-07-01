@@ -24,25 +24,38 @@ import javafx.stage.Stage;
  *
  * @author SpaceBR
  */
-public class Categoria extends GridPane{
+public class ReceitaFX extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn cod, data, descricao, valor, pagamento;
+    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
     
-    public Categoria(){
-        titulo = new Label("Categoria");
+    public ReceitaFX(){
+        titulo = new Label("Receitas");
         table = new TableView();
         data = new TableColumn("Ocorrência");
         descricao = new TableColumn("Descrição");
         valor = new TableColumn("Valor");
         pagamento = new TableColumn("Forma de Pagamento");
         cadastrar = new Button("Cadastrar");
-        data.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
-        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.30));
-        table.getColumns().addAll(data,descricao,valor,pagamento);
+        categoria = new TableColumn("Categoria");
+        subcategoria = new TableColumn("Subcategoria");
+        apagar = new TableColumn();
+        apagar.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.03));
+        subcategoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        categoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        data.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.10));
+        descricao.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.32));
+        valor.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.10));
+        pagamento.prefWidthProperty().bind(
+                table.widthProperty().multiply(0.15));
+        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);
@@ -63,11 +76,12 @@ public class Categoria extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroForm form = new CadastroForm("Cadastro Categoria");
+            CadastroFormFX form = new CadastroFormFX("Cadastro Receita");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {
-                Logger.getLogger(Despesa.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, 
+                        null, ex);
             }
         });
     }

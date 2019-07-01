@@ -22,7 +22,7 @@ import javafx.scene.layout.RowConstraints;
  *
  * @author SpaceBR
  */
-public class Resumo extends GridPane { 
+public class ResumoFX extends GridPane { 
     private TableView table;
     private TableColumn c1;
     private TableColumn c2;
@@ -33,7 +33,7 @@ public class Resumo extends GridPane {
     private CategoryAxis xAxis;
     private LineChart graficoLinha;
     
-    public Resumo() {
+    public ResumoFX() {
         setxAxis(new CategoryAxis());
         setyAxis(new NumberAxis());
         setxEixo(new NumberAxis());
@@ -58,6 +58,7 @@ public class Resumo extends GridPane {
         
         this.getColumnConstraints().add(c1);
         this.getRowConstraints().add(r1);
+        
         
     }
     

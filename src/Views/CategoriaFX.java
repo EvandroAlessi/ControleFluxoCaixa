@@ -7,10 +7,7 @@ package Views;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.text.Font;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,42 +15,34 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
  *
  * @author SpaceBR
  */
-public class Despesa extends GridPane{
+public class CategoriaFX extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
+    private TableColumn cod, data, descricao, valor, pagamento;
     
-    public Despesa(){
-        titulo = new Label("Despesas");
+    public CategoriaFX(){
+        titulo = new Label("Categoria");
         table = new TableView();
         data = new TableColumn("Ocorrência");
         descricao = new TableColumn("Descrição");
         valor = new TableColumn("Valor");
         pagamento = new TableColumn("Forma de Pagamento");
         cadastrar = new Button("Cadastrar");
-        categoria = new TableColumn("Categoria");
-        subcategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn();
-        apagar.prefWidthProperty().bind(table.widthProperty().multiply(0.03));
-        subcategoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        data.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.32));
-        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento);
+        data.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+        descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
+        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.30));
+        table.getColumns().addAll(data,descricao,valor,pagamento);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);
@@ -74,11 +63,11 @@ public class Despesa extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroForm form = new CadastroForm("Cadrastro Despesa");
+            CadastroFormFX form = new CadastroFormFX("Cadastro Categoria");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {
-                Logger.getLogger(Despesa.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

@@ -5,6 +5,7 @@
  */
 package Models;
 
+import Services.MovimentacaoService;
 import java.util.Date;
 
 /**
@@ -25,12 +26,39 @@ public class Movimentacao implements IPagamento {
         this.descricao = descricao;
         this.valor = valor;
         this.movimentacaoID = movimentacaoID;
-        this.formaPagamento = formaPagamento;
         this.subCategoriaID = subCategoriaID;
+        
+        selectPayment(formaPagamento);
     }
 
     public double getSaldo(){
+        MovimentacaoService service = new MovimentacaoService();
+        
+//        return service.getSaldo();
         return 0;
+    }
+    
+    @Override
+    public void selectPayment(int paymentType) {
+       switch(paymentType){
+            case CARTAO_CREDITO:
+                formaPagamento = CARTAO_CREDITO;
+                break;
+            case DINHEIRO:
+                 formaPagamento = DINHEIRO;
+                break;
+            case BOLETO:
+                 formaPagamento = BOLETO;
+                break;
+            case DEPOSITO:
+                 formaPagamento = DEPOSITO;
+                break;
+            case CONVENIO:
+                 formaPagamento = CONVENIO;
+                break;
+            default:
+                break;    
+       }
     }
     
     public int getMovimentacaoID() {
@@ -87,10 +115,5 @@ public class Movimentacao implements IPagamento {
 
     public void setSubcategoria(SubCategoria subcategoria) {
         this.subcategoria = subcategoria;
-    }
-    
-    @Override
-    public void selectPayment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

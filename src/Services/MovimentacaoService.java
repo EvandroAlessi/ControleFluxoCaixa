@@ -9,6 +9,6 @@ package Services;
  *
  * @author evand
  */
-public class SubCategoria {
+public class MovimentacaoService {
     
 }

@@ -16,5 +16,5 @@ public interface IPagamento {
     final int DEPOSITO = 4;
     final int CONVENIO = 5;
     
-    public abstract void selectPayment();
+    public abstract void selectPayment(int paymentType);
 }

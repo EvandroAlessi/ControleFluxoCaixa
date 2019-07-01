@@ -6,7 +6,7 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
-import DAL.BDMySQL;
+import DAL.Contexto;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -21,7 +21,7 @@ public class FXMain extends Application {
     private MenuSuperior menuSuperior;
     private MenuLateral menuLateral;
     private Resumo resumo;
-    BDMySQL banco;
+    
     @Override
     public void init(){
         root = new BorderPane();
@@ -50,6 +50,16 @@ public class FXMain extends Application {
         primaryStage.setScene(scene);
         
         primaryStage.show();
+        try {
+            Contexto contexto = new Contexto();
+            contexto.getConnection();
+            System.out.println("OK");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("error");
+        }
+    
+        
     }
      
     public void switchCenter(Tela tela){

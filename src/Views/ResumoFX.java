@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Controllers.MovimentacaoController;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -34,6 +35,7 @@ public class ResumoFX extends GridPane {
     private LineChart graficoLinha;
     
     public ResumoFX() {
+        MovimentacaoController control = new MovimentacaoController();
         setxAxis(new CategoryAxis());
         setyAxis(new NumberAxis());
         setxEixo(new NumberAxis());
@@ -45,10 +47,10 @@ public class ResumoFX extends GridPane {
         setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
         setGraficoLinha(new LineChart<>(getxEixo(), getyEixo()));
         
-        this.add(getTable(),0,1);
-        this.setColumnSpan(getTable(), 2);
-        this.add(getGraficoBar(),0,0);
-        this.add(getGraficoLinha(),1,0);
+        add(getTable(),0,1);
+        setColumnSpan(getTable(), 2);
+        add(getGraficoBar(),0,0);
+        add(getGraficoLinha(),1,0);
         
         ColumnConstraints c1 =  new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
@@ -56,16 +58,9 @@ public class ResumoFX extends GridPane {
         RowConstraints r1 = new RowConstraints();
         r1.setVgrow(Priority.ALWAYS);
         
-        this.getColumnConstraints().add(c1);
-        this.getRowConstraints().add(r1);
-        
-        
+        getColumnConstraints().add(c1);
+        getRowConstraints().add(r1);
     }
-    
-    public Node exibir(){
-        return null;
-    }
-
 
     /**
      * @return the table

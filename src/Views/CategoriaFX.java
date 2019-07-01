@@ -5,8 +5,12 @@
  */
 package Views;
 
+import Controllers.CategoriaContaController;
+import Models.CategoriaConta;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -31,6 +35,7 @@ public class CategoriaFX extends GridPane{
     private TableColumn cod, data, descricao, valor, pagamento;
     
     public CategoriaFX(){
+        CategoriaContaController control = new CategoriaContaController();
         titulo = new Label("Categoria");
         table = new TableView();
         data = new TableColumn("Ocorrência");
@@ -46,6 +51,10 @@ public class CategoriaFX extends GridPane{
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);
+        
+        List<CategoriaConta> categorias = control.getAll();
+        
+        this.table.setItems(FXCollections.observableArrayList(categorias));
         
         titulo.setFont(new Font("Arial", 45));
         cadastrar.setMinSize(100, 50);

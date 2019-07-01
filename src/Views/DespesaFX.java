@@ -5,7 +5,9 @@
  */
 package Views;
 
+import Controllers.DespesaController;
 import DAO.MovimentacaoDAO;
+import Models.Despesa;
 import Models.Movimentacao;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +47,8 @@ public class DespesaFX extends GridPane{
     private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
     
     public DespesaFX() {
+        DespesaController control = new DespesaController();
+        
         titulo = new Label("Despesas");
         table = new TableView();
         data = new TableColumn("Ocorrência");
@@ -68,16 +72,9 @@ public class DespesaFX extends GridPane{
         valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         table.getColumns().addAll(descricao, valor);
         
-//        List<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll();
-//        List<Movimentacao> despesas = new ArrayList<>();
-//        
-//        for(Movimentacao movimentacao: movimentacoes){
-//            if(!movimentacao.getSubcategoria().getCategoriaConta().isPositiva()){
-//                despesas.add(movimentacao);
-//            }
-//        }
+        List<Despesa> despesas = control.getAll();
         
-        //this.table.setItems(FXCollections.observableArrayList(despesas));
+        this.table.setItems(FXCollections.observableArrayList(despesas));
         
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);

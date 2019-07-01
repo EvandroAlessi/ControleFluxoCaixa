@@ -5,8 +5,12 @@
  */
 package Views;
 
+import Controllers.ReceitaController;
+import Models.Receita;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -31,6 +35,7 @@ public class ReceitaFX extends GridPane{
     private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
     
     public ReceitaFX(){
+        ReceitaController control = new ReceitaController();
         titulo = new Label("Receitas");
         table = new TableView();
         data = new TableColumn("Ocorrência");
@@ -59,6 +64,10 @@ public class ReceitaFX extends GridPane{
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);
+        
+        List<Receita> receitas = control.getAll();
+        
+        this.table.setItems(FXCollections.observableArrayList(receitas));
         
         titulo.setFont(new Font("Arial", 45));
         cadastrar.setMinSize(100, 50);

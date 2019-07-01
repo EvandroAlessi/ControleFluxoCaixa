@@ -76,7 +76,7 @@ public class MainFX extends Application {
                 root.setCenter(new ResumoFX());
                 break;
             case RELATORIO:
-                //root.setCenter(new Resumo());
+                root.setCenter(new RelatorioFX());
                 break;
             case RECEITA:
                 root.setCenter(new ReceitaFX());
@@ -85,10 +85,10 @@ public class MainFX extends Application {
                 root.setCenter(new DespesaFX());
                 break;
             case CATEGORIA:
-                //root.setCenter(new Resumo());
+                root.setCenter(new CategoriaFX());
                 break;
             case PAGAMENTO:
-                //root.setCenter(new Resumo());
+                //root.setCenter(new RelatorioFX());
                 break;
         }
     }

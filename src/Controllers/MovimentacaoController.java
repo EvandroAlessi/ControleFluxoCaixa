@@ -5,7 +5,9 @@
  */
 package Controllers;
 
-import Models.Despesa;
+import DAO.MovimentacaoDAO;
+import Models.Movimentacao;
+import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,27 +16,42 @@ import java.util.ArrayList;
  * @author evand
  */
 public class MovimentacaoController {
-    public Despesa create(Despesa movimentacao) throws ClassNotFoundException, SQLException{
-        return null;
-    }
-    
-    public Despesa get(int id) throws ClassNotFoundException, SQLException{
-        
+     public Movimentacao create(Movimentacao movimentacao) {
         
         return null;
     }
     
-    public ArrayList<Despesa> getAll() throws ClassNotFoundException, SQLException{
+    public Movimentacao get(int id) {
+        try {
+            Movimentacao movimentacao = new MovimentacaoDAO().get(id);
+            
+            return movimentacao;
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+        }
+        
         return null;
     }
     
-    public boolean update(Despesa movimentacao) throws ClassNotFoundException, SQLException{
+    public ArrayList<Movimentacao> getAll() {
+         try {
+            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll();
+            
+            return movimentacoes;
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+        }
+        
+        return null;
+    }
+    
+    public boolean update(Movimentacao movimentacao) {
         
 
         return false;
     }
     
-    public boolean delete(int id) throws ClassNotFoundException, SQLException{
+    public boolean delete(int id) {
         
         
         return true;

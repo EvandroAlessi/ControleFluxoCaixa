@@ -28,7 +28,7 @@ public class Receita extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn data, descricao, valor, pagamento, categoria;
+    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
     
     public Receita(){
         titulo = new Label("Receitas");
@@ -39,17 +39,23 @@ public class Receita extends GridPane{
         pagamento = new TableColumn("Forma de Pagamento");
         cadastrar = new Button("Cadastrar");
         categoria = new TableColumn("Categoria");
+        subcategoria = new TableColumn("Subcategoria");
+        apagar = new TableColumn();
+        apagar.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.03));
+        subcategoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
         categoria.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.20));
+                .multiply(0.15));
         data.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
         descricao.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.40));
+                .multiply(0.32));
         valor.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
         pagamento.prefWidthProperty().bind(
-                table.widthProperty().multiply(0.20));
-        table.getColumns().addAll(data,categoria,descricao,valor,pagamento);
+                table.widthProperty().multiply(0.15));
+        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);

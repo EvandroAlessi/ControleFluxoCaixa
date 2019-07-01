@@ -6,16 +6,9 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
-import DAO.Contexto;
 import DAO.CategoriaContaDAO;
-import DAO.DespesaDAO;
-import DAO.MovimentacaoDAO;
-import DAO.SubCategoriaDAO;
-import Models.Movimentacao;
+import Models.CategoriaConta;
 import com.sun.media.jfxmedia.logging.Logger;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -61,9 +54,9 @@ public class MainFX extends Application {
 //            output.append("\nThe third line");
 //            
 //            output.close();
-            DespesaDAO sub = new DespesaDAO();
-        sub.getAll();
-        } catch (ClassNotFoundException | SQLException e) {
+            CategoriaContaDAO sub = new CategoriaContaDAO();
+                sub.create(new CategoriaConta("descricao", true));
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
         }

@@ -23,6 +23,11 @@ public class CategoriaConta {
         this.positiva = positiva;
     }
 
+    public CategoriaConta(String descricao, boolean b) {
+        this.descricao = descricao;
+        this.positiva = b;
+    }
+
     public int getCategoriaContaID() {
         return categoriaContaID;
     }

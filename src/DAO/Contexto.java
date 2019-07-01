@@ -20,7 +20,7 @@ public class Contexto {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String usuario = "root";
     private String senha = "root";
-    private Connection conexao;
+    private static Connection conexao;
 
 
     public void getConnection() throws ClassNotFoundException, SQLException{
@@ -106,7 +106,10 @@ public class Contexto {
     /**
      * @return the conexao
      */
-    public Connection getConexao() {
+    public Connection getConexao() throws ClassNotFoundException, SQLException {
+//        if (conexao == null) {
+//            getConnection();
+//        }
         return conexao;
     }
 

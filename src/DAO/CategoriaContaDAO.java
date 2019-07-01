@@ -29,18 +29,20 @@ public class CategoriaContaDAO {
         return columns;
     }
     
-    public CategoriaConta create(CategoriaConta categoria) throws ClassNotFoundException, SQLException{
-        String sql = "insert into categoriaconta(descricao, positiva)values(?,?)";
+    public CategoriaConta create(CategoriaConta categoria) throws SQLException, ClassNotFoundException{
+        String sql = "insert into categoriaconta(Descricao, Positiva)values(?,?)";
+        System.out.println(contexto.getConexao());
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
-
+                System.out.println("0");
                 preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
                 preparestatement.setBoolean(2, categoria.isPositiva());
 
                 //executando comando sql
-
+                System.out.println("1");
                 preparestatement.execute();
+                System.out.println("2");
                 preparestatement.close();
-        } catch (SQLException e) {}
+        } catch (SQLException e) { throw e; }
         
         return null;
         

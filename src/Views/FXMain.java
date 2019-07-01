@@ -57,7 +57,7 @@ public class FXMain extends Application {
                 //root.setCenter(new Resumo());
                 break;
             case RECEITA:
-                //root.setCenter(new Resumo());
+                root.setCenter(new Receita());
                 break;
             case DESPESA:
                 root.setCenter(new Despesa());

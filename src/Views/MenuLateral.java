@@ -32,7 +32,7 @@ public class MenuLateral extends GridPane {
     GridPane menu;
     VBox vbTop;
     VBox vbBottom;
-    VBox right;
+    VBox vbRight;
     Button resumo, relatorio, despesa, receita, categoria, pagamento, sair, logout;
     Image grafico;
     ImageView imageView;
@@ -48,7 +48,7 @@ public class MenuLateral extends GridPane {
         pagamento = new Button("Formas de Pagamentos");
         sair = new Button("Sair");
         logout = new Button("Logout");
-        right = new VBox();
+        vbRight = new VBox();
         
         
         try {
@@ -122,23 +122,47 @@ public class MenuLateral extends GridPane {
         sair.setMinHeight(60);
         logout.setMinWidth(150);
         logout.setMinHeight(60);
-        
-        resumo.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        receita.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        categoria.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        relatorio.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        despesa.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        pagamento.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        sair.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
-        logout.setStyle("-fx-background-insets: 0,0; -fx-padding: 1; -fx-border: 0;");
+
+        resumo.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold;");
+        receita.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        categoria.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        relatorio.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        despesa.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        pagamento.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        sair.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        logout.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
         
         
         add(vbTop, 0, 0);
         add(vbBottom, 0, 1);
-        add(right, 1, 0);
+        add(vbRight, 1, 0);
         
-        setRowSpan(right, 2);
-        right.setStyle("-fx-background-color: #ddd");
+        setRowSpan(vbRight, 2);
+        vbRight.setStyle("-fx-background-color: #ddd");
         
         ColumnConstraints c1 =  new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
@@ -157,64 +181,14 @@ public class MenuLateral extends GridPane {
         r1.setValignment(VPos.CENTER);
         RowConstraints r2 = new RowConstraints();
         r2.setVgrow(Priority.ALWAYS);
-        r2.setPrefHeight(80);
-        r2.setMaxHeight(80);
+        r2.setPrefHeight(120);
+        r2.setMaxHeight(120);
+        r2.setMinHeight(120);
         r2.setValignment(VPos.CENTER);
         
-        this.getColumnConstraints().add(c1);
-        this.getRowConstraints().add(r1);
-        this.getRowConstraints().add(r2);
-        this.getColumnConstraints().add(c2);
-        
-        
-        
-        
+        getColumnConstraints().add(c1);
+        getRowConstraints().add(r1);
+        getRowConstraints().add(r2);
+        getColumnConstraints().add(c2);
     }
-    
-    
-//    public Node addMenu(){
-//        menu = new GridPane();
-//        vbTop = new VBox();
-//        vbMidd = new VBox();
-//        vbBottom = new VBox();
-//        resumo = new Button("Resumos");
-//        relatorio = new Button("Relatórios");
-//        despesa = new Button("Despesas");
-//        pagamento = new Button("Formas de Pagamentos");
-//        sair = new Button("Sair");
-//        try {
-//            grafico = new Image(new FileInputStream("src\\Views\\Imagens\\grafico.png"));
-//        } catch (FileNotFoundException ex) {
-//            Label img = new Label("Imagem não encontrada");
-//            img.setMinWidth(150);
-//            img.setMinHeight(150);
-//            Alert alert = new Alert(AlertType.WARNING);
-//            alert.setTitle("Aviso");
-//            alert.setHeaderText("Imagem não encontrada");
-//            alert.setContentText("Não foi possível encontrar uma imagem");
-//            vbTop.getChildren().add(img);
-//            alert.showAndWait();
-//        }
-//        vbTop.getChildren().addAll(imageView,resumo,relatorio,despesa,pagamento);
-//        
-//        imageView = new ImageView(grafico);
-//        resumo.setMinWidth(150);
-//        resumo.setMinHeight(60);
-//        relatorio.setMinWidth(150);
-//        relatorio.setMinHeight(60);
-//        despesa.setMinWidth(150);
-//        despesa.setMinHeight(60);
-//        pagamento.setMinWidth(150);
-//        pagamento.setMinHeight(60);
-//        sair.setMinWidth(150);
-//        sair.setMinHeight(60);
-//        
-//        menu.add(vbTop, 0, 0);
-//        menu.add(vbMidd, 0, 1);
-//        menu.add(vbBottom, 0, 2);
-//        
-//        menu.setTop.add(c1);
-//        menu.setBottom(sair);
-//        return menu;
-//    }
 }

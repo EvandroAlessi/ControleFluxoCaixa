@@ -42,16 +42,12 @@ public class FXMain extends Application {
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
         
-        //switchCenter(Tela.RECEITA);
+        switchCenter(Tela.DESPESA);
         primaryStage.setMaximized(true);
         Scene scene = new Scene(root, 700, 700);
         
-        
-       
-        
         primaryStage.setTitle("Controle Fluxo de Caixa");
         primaryStage.setScene(scene);
-        
         
         primaryStage.show();
     }

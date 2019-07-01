@@ -48,9 +48,9 @@ public class Despesa extends GridPane{
         valor.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
         pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.30));
         table.getColumns().addAll(data,descricao,valor,pagamento);
-        this.add(titulo, 0, 0);
-        this.add(cadastrar, 1, 0);
-        this.add(table,0,1);
+        add(titulo, 0, 0);
+        add(cadastrar, 1, 0);
+        add(table,0,1);
         
         titulo.setFont(new Font("Arial", 45));
         cadastrar.setMinSize(100, 50);
@@ -61,14 +61,14 @@ public class Despesa extends GridPane{
         RowConstraints r2 = new RowConstraints();
         //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
-        this.getColumnConstraints().add(c1);
-        this.getRowConstraints().addAll(r1,r2);
-        this.setConstraints(titulo, 0, 0, 1, 1, HPos.CENTER, VPos.BASELINE);
-        this.setConstraints(cadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
+        getColumnConstraints().add(c1);
+        getRowConstraints().addAll(r1,r2);
+        setConstraints(titulo, 0, 0, 1, 1, HPos.CENTER, VPos.BASELINE);
+        setConstraints(cadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            CadastroForm form = new CadastroForm();
+            CadastroForm form = new CadastroForm("Cadrastro Despesa");
             try {
                 form.start(new Stage());
             } catch (Exception ex) {

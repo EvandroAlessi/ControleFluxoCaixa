@@ -28,14 +28,6 @@ public class FXMain extends Application {
         root = new BorderPane();
         menuSuperior = new MenuSuperior(this);
         menuLateral = new MenuLateral(this);
-        /*
-        try {
-            banco.conectar();
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("dasdasda");
-        }*/
-        
-        
     }
     
     @Override
@@ -59,8 +51,6 @@ public class FXMain extends Application {
             System.out.println(ex.getMessage());
             System.out.println("error");
         }
-    
-        
     }
      
     public void switchCenter(Tela tela){

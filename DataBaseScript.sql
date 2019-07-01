@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Movimentacao (
 	PRIMARY KEY (MovimentacaoID),
     FOREIGN KEY fk_subcategoria(SubCategoriaID)
 	   REFERENCES SubCategoria(SubCategoriaID)
-	   ON UPDATE CASCADE
+	   ON UPDATE RESTRICT
 	   ON DELETE RESTRICT
 );
 

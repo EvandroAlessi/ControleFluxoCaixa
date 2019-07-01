@@ -10,18 +10,12 @@ package Models;
  * @author evand
  */
 public class CategoriaConta {
-    //Acho que nem precisa do ID
     private int categoriaContaID;
-    private int codigo;
     private String descricao;
     private boolean positiva;
 
-    public CategoriaConta() {
-    }
-
     public CategoriaConta(int categoriaContaID, int codigo, String descricao, boolean positiva) {
         this.categoriaContaID = categoriaContaID;
-        this.codigo = codigo;
         this.descricao = descricao;
         this.positiva = positiva;
     }
@@ -32,14 +26,6 @@ public class CategoriaConta {
 
     public void setCategoriaContaID(int categoriaContaID) {
         this.categoriaContaID = categoriaContaID;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public String getDescricao() {
@@ -56,5 +42,10 @@ public class CategoriaConta {
 
     public void setPositiva(boolean positiva) {
         this.positiva = positiva;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoriaConta{" + "categoriaContaID=" + categoriaContaID + ", descricao=" + descricao + ", positiva=" + positiva + '}';
     }
 }

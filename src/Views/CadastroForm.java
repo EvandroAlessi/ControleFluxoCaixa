@@ -4,17 +4,25 @@ import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class CadastroForm extends Application {
+    private String title;
+    
+    public CadastroForm(String title) {
+        this.title = title;
+    }
 
+    
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Registration Form JavaFX Application");
+        primaryStage.setTitle(title);
 
         // Create the registration form pane
         GridPane gridPane = createRegistrationFormPane();
@@ -31,11 +39,15 @@ public class CadastroForm extends Application {
     }
     
     private GridPane createRegistrationFormPane() {
-        // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
+        VBox vbLabel = new VBox();
+        VBox vbTextField = new VBox();
+        Label lbTitle = new Label(title);
+        Label lbNome = new Label("Nome: ");
+        TextField tfNome = new TextField();
 
         // Position the pane at the center of the screen, both vertically and horizontally
-        gridPane.setAlignment(Pos.CENTER);
+        //gridPane.setAlignment(Pos.CENTER);
 
         // Set a padding of 20px on each side
         gridPane.setPadding(new Insets(40, 40, 40, 40));
@@ -46,18 +58,36 @@ public class CadastroForm extends Application {
         // Set the vertical gap between rows
         gridPane.setVgap(10);
 
+        lbTitle.setFont(Font.font("Arial", 18));
+        lbTitle.setStyle("-fx-font-weight: bold");
         // Add Column Constraints
-
+        //Button btn = new Button("btn");
+        vbLabel.setAlignment(Pos.TOP_LEFT);
+        vbTextField.setAlignment(Pos.TOP_RIGHT);
+        
+        
+        vbLabel.getChildren().addAll(lbNome);
+        vbTextField.getChildren().addAll(tfNome);
         // columnOneConstraints will be applied to all the nodes placed in column one.
-        ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-        columnOneConstraints.setHalignment(HPos.RIGHT);
-
+        ColumnConstraints c1 = new ColumnConstraints(40, 100, Double.MAX_VALUE);
+        c1.setHalignment(HPos.CENTER);
         // columnTwoConstraints will be applied to all the nodes placed in column two.
-        ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
-        columnTwoConstrains.setHgrow(Priority.ALWAYS);
+        ColumnConstraints c2 = new ColumnConstraints(40,200, Double.MAX_VALUE);
+        c2.setHgrow(Priority.ALWAYS);
 
-        gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
-
+        RowConstraints r1 = new RowConstraints();
+        r1.setPrefHeight(40);
+        //r1.setVgrow(Priority.ALWAYS);
+        r1.setValignment(VPos.CENTER);
+        
+        
+        gridPane.getColumnConstraints().addAll(c1, c2);
+        gridPane.getRowConstraints().addAll(r1);
+        
+        gridPane.add(vbLabel, 0, 1);
+        gridPane.add(vbTextField, 1, 1);
+        gridPane.add(lbTitle, 0, 0, 2, 1);
+        
         return gridPane;
     }
 }

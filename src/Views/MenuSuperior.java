@@ -26,7 +26,8 @@ public class MenuSuperior extends MenuBar{
             sobre = new Menu("Sobre");
             sair = new MenuItem("Sair");
             arquivo.getItems().add(sair);
-            this.getMenus().addAll(arquivo,resumo,relatorio,sobre);
+            
+            getMenus().addAll(arquivo,resumo,relatorio,sobre);
             
             resumo.setOnAction((event) -> {
                 main.switchCenter(Tela.RESUMO);
@@ -35,17 +36,5 @@ public class MenuSuperior extends MenuBar{
             relatorio.setOnAction((event) -> {
                 main.switchCenter(Tela.RELATORIO);
             });
-        }
-        
-//        public Node addMenu(){
-//            menuSuperior = new MenuBar();
-//            arquivo = new Menu("Arquivo");
-//            resumo = new Menu("Resumo");
-//            relatorio = new Menu("Relatório");
-//            sobre = new Menu("Sobre");
-//            sair = new MenuItem("Sair");
-//            arquivo.getItems().add(sair);
-//            menuSuperior.getMenus().addAll(arquivo,resumo,relatorio,sobre);
-//            return menuSuperior;
-//        }     
+        }    
 }

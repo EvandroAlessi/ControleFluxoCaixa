@@ -10,6 +10,8 @@ import DAO.Contexto;
 import DAO.CategoriaContaDAO;
 import DAO.MovimentacaoDAO;
 import DAO.SubCategoriaDAO;
+import Models.Movimentacao;
+import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -54,6 +56,7 @@ public class FXMain extends Application {
         sub.getAll();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
+            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
         }
         
     }

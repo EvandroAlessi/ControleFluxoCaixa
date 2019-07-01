@@ -9,6 +9,6 @@ package Controllers;
  *
  * @author evand
  */
-public class FluxoCaixaController {
+public class SubCategoriaController {
     
 }

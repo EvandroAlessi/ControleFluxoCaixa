@@ -76,9 +76,6 @@ public class MainFX extends Application {
             case CATEGORIA:
                 root.setCenter(new CategoriaFX());
                 break;
-            case PAGAMENTO:
-                //root.setCenter(new RelatorioFX());
-                break;
         }
     }
     

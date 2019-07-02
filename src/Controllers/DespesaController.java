@@ -79,4 +79,8 @@ public class DespesaController {
         
         return false;
     }
+
+    public String[] getAllMetaData(){
+        return DespesaDAO.getAllMetaData();
+    }
 }

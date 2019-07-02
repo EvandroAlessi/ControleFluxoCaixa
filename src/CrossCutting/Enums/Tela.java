@@ -14,6 +14,5 @@ public enum Tela {
     RELATORIO,
     RECEITA,
     DESPESA,
-    CATEGORIA,
-    PAGAMENTO
+    CATEGORIA
 }

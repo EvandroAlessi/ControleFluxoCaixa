@@ -48,7 +48,7 @@ public class MainFX extends Application {
         
         try {
             CategoriaContaDAO sub = new CategoriaContaDAO();
-                sub.create(new CategoriaConta("descricao33", false));
+                sub.create(new CategoriaConta("descricao43", false));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");

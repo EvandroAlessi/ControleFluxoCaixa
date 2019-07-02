@@ -11,18 +11,18 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class FormFX<T> extends Application {
+public class FormFX extends Application {
     private String title;
-    private T classe;
+    //private T classe;
     
     public FormFX(String title) {
-        this.control = title;
+        this.title = title;
     }
 
-    public FormFX(String title, T control) {
-        this.title = title;
-        this.control = control;
-    }
+//    public FormFX(String title, T control) {
+//        this.title = title;
+//        this.control = control;
+//    }
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -43,13 +43,13 @@ public class FormFX<T> extends Application {
     }
     
     private GridPane createRegistrationFormPane() {
-        String[] columns = control.getAllMetaData();
+        //String[] columns = control.getAllMetaData();
         GridPane gridPane = new GridPane();
         VBox vbLabel = new VBox();
         VBox vbTextField = new VBox();
         Label lbTitle = new Label(title);
-        Label lbList = new Label[columns.count()];
-        TextField tfList = new TextField[columns.count()];     
+        //Label[] lbList = new Label[columns.count()];
+        //TextField[] tfList = new TextField[columns.count()];     
 
         // Position the pane at the center of the screen, both vertically and horizontally
         //gridPane.setAlignment(Pos.CENTER);
@@ -70,14 +70,14 @@ public class FormFX<T> extends Application {
         vbLabel.setAlignment(Pos.TOP_LEFT);
         vbTextField.setAlignment(Pos.TOP_RIGHT);
         
-        for(int i = 0; i < columns.count(); i++){
-            lbList[i].setText(columns[i]);
-            tfList[i] = new TextField();
-        }
+//        for(int i = 0; i < columns.count(); i++){
+//            lbList[i].setText(columns[i]);
+//            tfList[i] = new TextField();
+//        }
 
         
-        vbLabel.getChildren().addAll(lbList);
-        vbTextField.getChildren().addAll(tfList);
+        //vbLabel.getChildren().addAll(lbList);
+        //vbTextField.getChildren().addAll(tfList);
         // columnOneConstraints will be applied to all the nodes placed in column one.
         ColumnConstraints c1 = new ColumnConstraints(40, 100, Double.MAX_VALUE);
         c1.setHalignment(HPos.CENTER);

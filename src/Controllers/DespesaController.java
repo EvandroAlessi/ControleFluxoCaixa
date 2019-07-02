@@ -10,6 +10,7 @@ import Models.Despesa;
 import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 /**
  *
@@ -88,6 +89,11 @@ public class DespesaController {
     }
 
     public String[] getAllMetaData(){
-        return DespesaDAO.getAllMetaData();
+        try {
+            return new DespesaDAO().getAllMetaData();
+        } catch (ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(DespesaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

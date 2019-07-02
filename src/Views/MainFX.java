@@ -20,6 +20,7 @@ import javafx.stage.Stage;
  * @author evand
  */
 public class MainFX extends Application {
+    // Declaração de containers e componentes
     private static BorderPane root;
     private MenuSuperiorFX menuSuperior;
     private MenuLateralFX menuLateral;
@@ -27,6 +28,7 @@ public class MainFX extends Application {
     
     @Override
     public void init(){
+        // Instanciação da tela inicial e menus
         root = new BorderPane();
         menuSuperior = new MenuSuperiorFX(this);
         menuLateral = new MenuLateralFX(this);
@@ -38,14 +40,15 @@ public class MainFX extends Application {
         root.setTop(menuSuperior);
         
         switchCenter(Tela.DESPESA);
-        primaryStage.setMaximized(true);
+        primaryStage.setMaximized(true); // Tela cheia
         Scene scene = new Scene(root, 700, 700);
         
         primaryStage.setTitle("Controle Fluxo de Caixa");
         primaryStage.setScene(scene);
         
         primaryStage.show();
-        
+       
+        // teste
         try {
             CategoriaContaDAO sub = new CategoriaContaDAO();
                 sub.create(new CategoriaConta("descricao43", false));
@@ -72,9 +75,6 @@ public class MainFX extends Application {
                 break;
             case CATEGORIA:
                 root.setCenter(new CategoriaFX());
-                break;
-            case PAGAMENTO:
-                //root.setCenter(new RelatorioFX());
                 break;
         }
     }

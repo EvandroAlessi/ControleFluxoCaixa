@@ -26,7 +26,7 @@ public class Contexto {
     public void getConnection() throws ClassNotFoundException, SQLException{
         if(Contexto.conexao == null || Contexto.conexao.isClosed()){
             Class.forName(driver);
-            conexao = DriverManager.getConnection(url, usuario, senha);
+            conexao = DriverManager.getConnection(url, usuario, senha); // conecta com o banco
             System.out.println("Banco conectado");
         }
     }

@@ -19,9 +19,16 @@ public class DespesaController {
     public Despesa create(Despesa despesa) {
         try {
             DespesaDAO dao = new DespesaDAO();
-             if (dao.create(despesa)) {
-                 return despesa;
-             }
+            if (despesa.getMovimentacaoID() != 0 && despesa.getSubCategoriaID() != 0) {
+                if(!dao.exists(despesa.getDescricao())){
+                    if (dao.create(despesa)) {
+                        return despesa;
+                    }
+                }
+                else{
+                    return null;//ajeitar para retornar despesa já cadastrada
+                }
+            }
          } catch (ClassNotFoundException | SQLException e) {
              
          }
@@ -78,5 +85,9 @@ public class DespesaController {
         }
         
         return false;
+    }
+
+    public String[] getAllMetaData(){
+        return DespesaDAO.getAllMetaData();
     }
 }

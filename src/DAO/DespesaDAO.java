@@ -49,6 +49,18 @@ public class DespesaDAO {
         } catch (SQLException e) { throw e; }
     }
     
+
+    public boolean exists(String description) throws ClassNotFoundException, SQLException{
+        String query = "select * from movimentacao where subcategoriaid in "
+                + "(select subcategoriaid from subcategoria where subcategoriaid in "
+                    + "(select categoriacontaid from categoriaconta where positiva = 0)) "
+                + "AND descricao != '"+ description +"';";
+
+        ResultSet dados = contexto.executeQuery(query);
+
+        return dados == null ? false: true;
+    }
+
     public Despesa get(int id) throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "

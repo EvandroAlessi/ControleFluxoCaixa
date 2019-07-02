@@ -19,9 +19,16 @@ public class ReceitaController {
      public Receita create(Receita receita) {
         try {
             ReceitaDAO dao = new ReceitaDAO();
-             if (dao.create(receita)) {
-                 return receita;
-             }
+            if (receita.getMovimentacaoID() != 0 && receita.getSubCategoriaID() != 0) {
+                if(!dao.exists(receita.getDescricao())){
+                    if (dao.create(receita)) {
+                        return receita;
+                    }
+                }
+                else{
+                    return null;//ajeitar para retornar despesa já cadastrada
+                }
+            }
          } catch (ClassNotFoundException | SQLException e) {
              
          }
@@ -57,9 +64,15 @@ public class ReceitaController {
         try{
             ReceitaDAO dao = new ReceitaDAO();
             if (receita.getMovimentacaoID() != 0 && receita.getSubCategoriaID() != 0) {
-                if (dao.update(receita)) {
-                    return receita;
+                if(!dao.exists(receita.getDescricao())){
+                    if (dao.update(receita)) {
+                        return receita;
+                    }
                 }
+                else{
+                    return null;//ajeitar para retornar despesa já cadastrada
+                }
+                
             } 
          } catch (ClassNotFoundException | SQLException e) {
              

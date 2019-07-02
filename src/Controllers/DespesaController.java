@@ -6,16 +6,10 @@
 package Controllers;
 
 import DAO.DespesaDAO;
-import Models.CategoriaConta;
 import Models.Despesa;
-import Models.SubCategoria;
 import com.sun.media.jfxmedia.logging.Logger;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -23,6 +17,14 @@ import java.util.List;
  */
 public class DespesaController {
     public Despesa create(Despesa despesa) {
+        try {
+            DespesaDAO dao = new DespesaDAO();
+             if (dao.create(despesa)) {
+                 return despesa;
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
         return null;
     }
@@ -51,15 +53,30 @@ public class DespesaController {
         return null;
     }
     
-    public boolean update(Despesa despesa) {
+    public Despesa update(Despesa despesa) {
+        try{
+            DespesaDAO dao = new DespesaDAO();
+            if (despesa.getMovimentacaoID() != 0 && despesa.getSubCategoriaID() != 0) {
+                if (dao.update(despesa)) {
+                    return despesa;
+                }
+            } 
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
-
-        return false;
+        return null;
     }
     
     public boolean delete(int id) {
+        try {
+            if (id != 0) {
+                return new DespesaDAO().delete(id);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
         
-        
-        return true;
+        return false;
     }
 }

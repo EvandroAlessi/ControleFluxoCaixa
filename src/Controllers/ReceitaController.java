@@ -17,6 +17,14 @@ import java.util.ArrayList;
  */
 public class ReceitaController {
      public Receita create(Receita receita) {
+        try {
+            ReceitaDAO dao = new ReceitaDAO();
+             if (dao.create(receita)) {
+                 return receita;
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
         return null;
     }
@@ -45,15 +53,30 @@ public class ReceitaController {
         return null;
     }
     
-    public boolean update(Receita receita) {
+    public Receita update(Receita receita) {
+        try{
+            ReceitaDAO dao = new ReceitaDAO();
+            if (receita.getMovimentacaoID() != 0 && receita.getSubCategoriaID() != 0) {
+                if (dao.update(receita)) {
+                    return receita;
+                }
+            } 
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
-
-        return false;
+        return null;
     }
     
     public boolean delete(int id) {
+        try {
+            if (id != 0) {
+                return new ReceitaDAO().delete(id);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
         
-        
-        return true;
+        return false;
     }
 }

@@ -45,17 +45,10 @@ public class MainFX extends Application {
         primaryStage.setScene(scene);
         
         primaryStage.show();
-        //Contexto contexto = new Contexto();
-        //contexto.getConnection();
-        //System.out.println("OK");
+        
         try {
-            
-//            BufferedWriter output = new BufferedWriter(new FileWriter("the-file-name.txt", true));
-//            output.append("\nThe third line");
-//            
-//            output.close();
             CategoriaContaDAO sub = new CategoriaContaDAO();
-                sub.create(new CategoriaConta("descricao", true));
+                sub.create(new CategoriaConta("descricao33", false));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");

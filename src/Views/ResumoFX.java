@@ -6,8 +6,6 @@
 package Views;
 
 import Controllers.MovimentacaoController;
-import javafx.geometry.HPos;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;

@@ -33,20 +33,15 @@ public class SubCategoriaDAO {
         return columns;
     }
     
-    public SubCategoria create(SubCategoria subCategoria) throws ClassNotFoundException, SQLException{
+    public boolean create(SubCategoria subCategoria) throws ClassNotFoundException, SQLException{
         String sql = "insert into subCategoria(descricao)values(?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
 
                 preparestatement.setString(1, subCategoria.getDescricao()); //substitui o ? pelo dado do usuario
 
                 //executando comando sql
-
-                preparestatement.execute();
-                preparestatement.close();
-        } catch (SQLException e) {}
-        
-        return null;
-        
+                return preparestatement.execute();
+        } catch (SQLException e) { throw e; }
         
     }
     

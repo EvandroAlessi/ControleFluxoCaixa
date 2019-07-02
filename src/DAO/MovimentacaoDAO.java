@@ -35,7 +35,7 @@ public class MovimentacaoDAO {
         return columns;
     }
     
-    public Movimentacao create(Movimentacao movimentacao) throws ClassNotFoundException, SQLException{
+    public boolean create(Movimentacao movimentacao) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
 
@@ -45,11 +45,8 @@ public class MovimentacaoDAO {
                 preparestatement.setInt(2, movimentacao.getFormaPagamento());   
                 //executando comando sql
 
-                preparestatement.execute();
-                preparestatement.close();
-        } catch (SQLException e) {}
-        
-        return null;
+                return preparestatement.execute();
+        } catch (SQLException e) { throw e; }
         
         
     }

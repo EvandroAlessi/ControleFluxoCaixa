@@ -17,6 +17,14 @@ import java.util.ArrayList;
  */
 public class SubCategoriaController {
      public SubCategoria create(SubCategoria subCategoria) {
+        try {
+            SubCategoriaDAO dao = new SubCategoriaDAO();
+             if (dao.create(subCategoria)) {
+                 return subCategoria;
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
         return null;
     }
@@ -45,15 +53,30 @@ public class SubCategoriaController {
         return null;
     }
     
-    public boolean update(SubCategoria subCategoria) {
+    public SubCategoria update(SubCategoria subCategoria) {
+        try{
+            SubCategoriaDAO dao = new SubCategoriaDAO();
+            if (subCategoria.getCategoriaContaID() != 0 && subCategoria.getSubCategoriaID() != 0) {
+                if (dao.update(subCategoria)) {
+                    return subCategoria;
+                }
+            } 
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
-
-        return false;
+        return null;
     }
     
     public boolean delete(int id) {
+        try {
+            if (id != 0) {
+                return new SubCategoriaDAO().delete(id);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
         
-        
-        return true;
+        return false;
     }
 }

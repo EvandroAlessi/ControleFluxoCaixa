@@ -17,15 +17,25 @@ import java.util.ArrayList;
  */
 public class CategoriaContaController {
      public CategoriaConta create(CategoriaConta categoriaConta) {
+         try {
+            CategoriaContaDAO dao = new CategoriaContaDAO();
+             if (dao.create(categoriaConta)) {
+                 return categoriaConta;
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
         return null;
     }
     
     public CategoriaConta get(int id) {
         try {
-            CategoriaConta categoriaConta = new CategoriaContaDAO().get(id);
-            
-            return categoriaConta;
+            if (id != 0) {
+                CategoriaConta categoriaConta = new CategoriaContaDAO().get(id);
+                
+                return categoriaConta;
+            }
         } catch (ClassNotFoundException | SQLException e) {
             Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
         }
@@ -45,15 +55,30 @@ public class CategoriaContaController {
         return null;
     }
     
-    public boolean update(CategoriaConta categoriaConta) {
+    public CategoriaConta update(CategoriaConta categoriaConta) {
+        try{
+            CategoriaContaDAO dao = new CategoriaContaDAO();
+            if (categoriaConta.getCategoriaContaID() != 0) {
+                if (dao.update(categoriaConta)) {
+                    return categoriaConta;
+                }
+            }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
-
-        return false;
+        return null;
     }
     
     public boolean delete(int id) {
+        try {
+            if (id != 0) {
+                return new CategoriaContaDAO().delete(id);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
         
-        
-        return true;
+        return false;
     }
 }

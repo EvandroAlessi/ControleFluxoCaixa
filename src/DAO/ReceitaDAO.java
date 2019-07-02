@@ -35,7 +35,7 @@ public class ReceitaDAO {
         return columns;
     }
     
-    public Receita create(Receita receita) throws ClassNotFoundException, SQLException{
+    public boolean create(Receita receita) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
 
@@ -45,13 +45,8 @@ public class ReceitaDAO {
                 preparestatement.setInt(2, receita.getFormaPagamento());   
                 //executando comando sql
 
-                preparestatement.execute();
-                preparestatement.close();
-        } catch (SQLException e) {}
-        
-        return null;
-        
-        
+                return preparestatement.execute();
+        } catch (SQLException e) { throw e; }
     }
     
     public Receita get(int id) throws ClassNotFoundException, SQLException{

@@ -17,6 +17,14 @@ import java.util.ArrayList;
  */
 public class MovimentacaoController {
      public Movimentacao create(Movimentacao movimentacao) {
+        try {
+            MovimentacaoDAO dao = new MovimentacaoDAO();
+             if (dao.create(movimentacao)) {
+                 return movimentacao;
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
         return null;
     }
@@ -45,15 +53,30 @@ public class MovimentacaoController {
         return null;
     }
     
-    public boolean update(Movimentacao movimentacao) {
+    public Movimentacao update(Movimentacao movimentacao) {
+        try{
+            MovimentacaoDAO dao = new MovimentacaoDAO();
+            if (movimentacao.getMovimentacaoID() != 0 && movimentacao.getSubCategoriaID() != 0) {
+                if (dao.update(movimentacao)) {
+                    return movimentacao;
+                }
+            } 
+         } catch (ClassNotFoundException | SQLException e) {
+             
+         }
         
-
-        return false;
+        return null;
     }
     
     public boolean delete(int id) {
+        try {
+            if (id != 0) {
+                return new MovimentacaoDAO().delete(id);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
         
-        
-        return true;
+        return false;
     }
 }

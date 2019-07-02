@@ -10,6 +10,8 @@ import Models.Receita;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -17,12 +19,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -36,6 +40,7 @@ public class ReceitaFX extends GridPane{
     
     public ReceitaFX(){
         ReceitaController control = new ReceitaController();
+        
         titulo = new Label("Receitas");
         table = new TableView();
         data = new TableColumn("Ocorrência");
@@ -45,7 +50,8 @@ public class ReceitaFX extends GridPane{
         cadastrar = new Button("Cadastrar");
         categoria = new TableColumn("Categoria");
         subcategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn();
+        apagar = new TableColumn("x");
+        
         apagar.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.03));
         subcategoria.prefWidthProperty().bind(table.widthProperty()
@@ -60,7 +66,30 @@ public class ReceitaFX extends GridPane{
                 .multiply(0.10));
         pagamento.prefWidthProperty().bind(
                 table.widthProperty().multiply(0.15));
+        
+        data.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
+        descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        pagamento.setCellValueFactory(new PropertyValueFactory("formaPagamento"));
+        categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+            @Override
+            // obtem a descrição da categoria e converte para Observable
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
+                return new SimpleStringProperty(param.getValue().getSubcategoria().getCategoriaConta().getDescricao());
+            }
+        });
+        subcategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+            @Override
+            // obtem a descrição da subcategoria e converte para Observable
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
+                return new SimpleStringProperty(param.getValue().getSubcategoria().getDescricao());
+            }
+        });
+        
         table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
+        
+        
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
         add(table,0,1);

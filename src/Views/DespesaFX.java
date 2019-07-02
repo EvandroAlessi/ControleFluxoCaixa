@@ -10,6 +10,8 @@ import Models.Despesa;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
@@ -24,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -49,7 +52,8 @@ public class DespesaFX extends GridPane{
         cadastrar = new Button("Cadastrar");
         categoria = new TableColumn("Categoria");
         subcategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn();
+        apagar = new TableColumn("x");
+        
         apagar.prefWidthProperty().bind(table.widthProperty().multiply(0.03));
         subcategoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
         categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
@@ -57,14 +61,28 @@ public class DespesaFX extends GridPane{
         descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.32));
         valor.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
         pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        //table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento);
         
+        data.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        table.getColumns().addAll(descricao, valor);
+        pagamento.setCellValueFactory(new PropertyValueFactory("formaPagamento"));
+        categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+                return new SimpleStringProperty(param.getValue().getSubcategoria().getCategoriaConta().getDescricao());
+            }
+        });
+        subcategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+                return new SimpleStringProperty(param.getValue().getSubcategoria().getDescricao());
+            }
+        });
+        
+        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
         
         List<Despesa> despesas = control.getAll();
-        
         this.table.setItems(FXCollections.observableArrayList(despesas));
         
         add(titulo, 0, 0);

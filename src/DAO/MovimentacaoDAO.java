@@ -54,8 +54,8 @@ public class MovimentacaoDAO {
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
             preparestatement.setDate(2, (Date) movimentacao.getDataOcorrencia());
-            preparestatement.setDouble(1, movimentacao.getValor()); //substitui o ? pelo dado do usuario
-            preparestatement.setInt(2, movimentacao.getFormaPagamento());   
+            preparestatement.setDouble(3, movimentacao.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(4, movimentacao.getFormaPagamento());   
             //executando comando sql
 
             int result = preparestatement.executeUpdate();
@@ -128,7 +128,7 @@ public class MovimentacaoDAO {
      * @throws SQLException
      */
     public ArrayList<Movimentacao> getAll() throws ClassNotFoundException, SQLException{
-        String query = "select * from movimentacao;";
+        String query = "select * from movimentacao order by dataocorrencia desc;";
         ArrayList<Movimentacao> list = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);

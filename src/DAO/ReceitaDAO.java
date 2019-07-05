@@ -54,8 +54,8 @@ public class ReceitaDAO {
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, receita.getDescricao()); //substitui o ? pelo dado do usuario
             preparestatement.setDate(2, (Date) receita.getDataOcorrencia());
-            preparestatement.setDouble(1, receita.getValor()); //substitui o ? pelo dado do usuario
-            preparestatement.setInt(2, receita.getFormaPagamento());   
+            preparestatement.setDouble(3, receita.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(4, receita.getFormaPagamento());   
             //executando comando sql
 
             int result = preparestatement.executeUpdate();
@@ -144,7 +144,7 @@ public class ReceitaDAO {
     public ArrayList<Receita> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
-                    + "(select categoriacontaid from categoriaconta where positiva = 1));";
+                    + "(select categoriacontaid from categoriaconta where positiva = 1)) order by dataocorrencia desc;";
         ArrayList<Receita> list = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);

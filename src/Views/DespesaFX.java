@@ -39,8 +39,10 @@ public class DespesaFX extends GridPane{
     private TableColumn data, pagamento, categoria, subcategoria, apagar;
     private TableColumn<String, DespesaFX> descricao = new TableColumn<>("Descrição");
     private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
+    private Stage mainStage;
     
     public DespesaFX(Stage stage) {
+        mainStage = stage;
         DespesaController control = new DespesaController();
         
         titulo = new Label("Despesas");
@@ -124,9 +126,9 @@ public class DespesaFX extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            FormFX form = new FormFX("Cadrastro Despesa");
+            CadastroDespesaFX form= new CadastroDespesaFX();
             try {
-                form.start(new Stage());
+                form.start(mainStage);
             } catch (Exception ex) {
                 Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
             }

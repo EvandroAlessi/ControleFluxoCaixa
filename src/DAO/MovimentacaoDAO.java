@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -50,15 +51,22 @@ public class MovimentacaoDAO {
      */
     public boolean create(Movimentacao movimentacao) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
-        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
+        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparestatement.setString(1, movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setDate(2, (Date) movimentacao.getDataOcorrencia());
+            preparestatement.setDouble(1, movimentacao.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(2, movimentacao.getFormaPagamento());   
+            //executando comando sql
 
-                preparestatement.setString(1, movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
-                preparestatement.setDate(2, (Date) movimentacao.getDataOcorrencia());
-                preparestatement.setDouble(1, movimentacao.getValor()); //substitui o ? pelo dado do usuario
-                preparestatement.setInt(2, movimentacao.getFormaPagamento());   
-                //executando comando sql
-
-                return preparestatement.execute();
+            int result = preparestatement.executeUpdate();
+            if (result > 0) {
+                ResultSet id = preparestatement.getGeneratedKeys();
+                if (id.next()){
+                    movimentacao.setMovimentacaoID(id.getInt(1));
+                    return true;
+                }
+            }
+            return false;
         } catch (SQLException e) { throw e; }
         
         
@@ -78,14 +86,13 @@ public class MovimentacaoDAO {
 
         while(dados.next()){
             movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            movimentacao.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             movimentacao.setDescricao(dados.getString("Descricao"));
             movimentacao.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             movimentacao.setValor(dados.getDouble("valor"));
             movimentacao.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + movimentacao.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     +"';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             
@@ -93,13 +100,12 @@ public class MovimentacaoDAO {
                 movimentacao.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + movimentacao.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -133,14 +139,13 @@ public class MovimentacaoDAO {
         while(dados.next()){
             Movimentacao movimentacao = new Movimentacao();
             movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            movimentacao.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             movimentacao.setDescricao(dados.getString("Descricao"));
             movimentacao.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             movimentacao.setValor(dados.getDouble("valor"));
             movimentacao.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + movimentacao.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     +"';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             
@@ -148,13 +153,12 @@ public class MovimentacaoDAO {
                 movimentacao.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + movimentacao.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -196,6 +200,9 @@ public class MovimentacaoDAO {
                 .append("'");
         columnsAndValues.append("formaPagamento= '")
                 .append(movimentacao.getFormaPagamento())
+                .append("'");
+        columnsAndValues.append("SubCategoriaID= '")
+                .append(movimentacao.getSubcategoria().getSubCategoriaID())
                 .append("'");
         
         String query = "update movimentacao SET " 

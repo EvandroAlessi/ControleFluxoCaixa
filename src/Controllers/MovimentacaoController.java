@@ -11,6 +11,7 @@ import DAO.MovimentacaoDAO;
 import Models.Movimentacao;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -26,9 +27,32 @@ public class MovimentacaoController {
     public Movimentacao create(Movimentacao movimentacao) {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
-             if (dao.create(movimentacao)) {
-                 return movimentacao;
-             }
+            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+                if (movimentacao.getValor() != 0) {
+                    if (movimentacao.getFormaPagamento() != 0) {
+                        if (movimentacao.getDataOcorrencia() == null) {
+                            Date date = new Date();
+                            date.getTime();
+                            movimentacao.setDataOcorrencia(date);
+                        }
+                        if (dao.create(movimentacao)) {
+                            return movimentacao;
+                        }
+                        else{
+                            Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                        }
+                    }
+                    else{
+                        Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
+                    }
+                }
+                else{
+                    Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
+                }
+            }
+            else{
+                Mensagem.aviso("A movimentacao deve ter uma Descricao.");
+            }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
              Mensagem.excecao(e);
@@ -80,11 +104,32 @@ public class MovimentacaoController {
     public Movimentacao update(Movimentacao movimentacao) {
         try{
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if (movimentacao.getMovimentacaoID() != 0 && movimentacao.getSubCategoriaID() != 0) {
-                if (dao.update(movimentacao)) {
-                    return movimentacao;
+            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+                if (movimentacao.getValor() != 0) {
+                    if (movimentacao.getFormaPagamento() != 0) {
+                        if (movimentacao.getDataOcorrencia() == null) {
+                            Date date = new Date();
+                            date.getTime();
+                            movimentacao.setDataOcorrencia(date);
+                        }
+                        if (dao.update(movimentacao)) {
+                            return movimentacao;
+                        }
+                        else{
+                            Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                        }
+                    }
+                    else{
+                        Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
+                    }
                 }
-            } 
+                else{
+                    Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
+                }
+            }
+            else{
+                Mensagem.aviso("A movimentacao deve ter uma Descricao.");
+            }
          } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);

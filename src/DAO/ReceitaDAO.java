@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -50,28 +51,35 @@ public class ReceitaDAO {
      */
     public boolean create(Receita receita) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
-        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
+        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparestatement.setString(1, receita.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setDate(2, (Date) receita.getDataOcorrencia());
+            preparestatement.setDouble(1, receita.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(2, receita.getFormaPagamento());   
+            //executando comando sql
 
-                preparestatement.setString(1, receita.getDescricao()); //substitui o ? pelo dado do usuario
-                preparestatement.setDate(2, (Date) receita.getDataOcorrencia());
-                preparestatement.setDouble(1, receita.getValor()); //substitui o ? pelo dado do usuario
-                preparestatement.setInt(2, receita.getFormaPagamento());   
-                //executando comando sql
-
-                return preparestatement.execute();
+            int result = preparestatement.executeUpdate();
+            if (result > 0) {
+                ResultSet id = preparestatement.getGeneratedKeys();
+                if (id.next()){
+                    receita.setMovimentacaoID(id.getInt(1));
+                    return true;
+                }
+            }
+            return false;
         } catch (SQLException e) { throw e; }
     }
     
-    public boolean exists(String description) throws ClassNotFoundException, SQLException{
-        String query = "select * from movimentacao where subcategoriaid in "
-                + "(select subcategoriaid from subcategoria where subcategoriaid in "
-                    + "(select categoriacontaid from categoriaconta where positiva = 1)) "
-                + "AND descricao != '"+ description +"';";
-
-        ResultSet dados = contexto.executeQuery(query);
-
-        return dados != null;
-    }
+//    public boolean exists(String description) throws ClassNotFoundException, SQLException{
+//        String query = "select * from movimentacao where subcategoriaid in "
+//                + "(select subcategoriaid from subcategoria where subcategoriaid in "
+//                    + "(select categoriacontaid from categoriaconta where positiva = 1)) "
+//                + "AND descricao != '"+ description +"';";
+//
+//        ResultSet dados = contexto.executeQuery(query);
+//
+//        return dados != null;
+//    }
 
     /**
      *
@@ -90,14 +98,13 @@ public class ReceitaDAO {
 
         while(dados.next()){
             receita.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            receita.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             receita.setDescricao(dados.getString("Descricao"));
             receita.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             receita.setValor(dados.getDouble("valor"));
             receita.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + receita.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     + "';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             
@@ -105,13 +112,13 @@ public class ReceitaDAO {
                 receita.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
+                                
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + receita.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -147,14 +154,13 @@ public class ReceitaDAO {
         while(dados.next()){
             Receita receita = new Receita();
             receita.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            receita.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             receita.setDescricao(dados.getString("Descricao"));
             receita.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             receita.setValor(dados.getDouble("valor"));
             receita.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + receita.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     +"';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             
@@ -162,13 +168,12 @@ public class ReceitaDAO {
                 receita.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + receita.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -207,6 +212,9 @@ public class ReceitaDAO {
                 .append("'");
         columnsAndValues.append("valor= '")
                 .append(receita.getValor())
+                .append("'");
+        columnsAndValues.append("SubCategoriaID= '")
+                .append(receita.getSubcategoria().getSubCategoriaID())
                 .append("'");
         columnsAndValues.append("formaPagamento= '")
                 .append(receita.getFormaPagamento())

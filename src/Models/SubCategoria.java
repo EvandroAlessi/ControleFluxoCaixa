@@ -11,13 +11,11 @@ package Models;
  */
 public class SubCategoria {
     private int subCategoriaID;
-    private int CategoriaContaID;
     private String descricao;
     private CategoriaConta categoriaConta;
 
-    public SubCategoria(int subCategoriaID, int CategoriaContaID, String descricao) {
+    public SubCategoria(int subCategoriaID, String descricao) {
         this.subCategoriaID = subCategoriaID;
-        this.CategoriaContaID = CategoriaContaID;
         this.descricao = descricao;
     }
 
@@ -31,14 +29,6 @@ public class SubCategoria {
 
     public void setSubCategoriaID(int subCategoriaID) {
         this.subCategoriaID = subCategoriaID;
-    }
-
-    public int getCategoriaContaID() {
-        return CategoriaContaID;
-    }
-
-    public void setCategoriaContaID(int CategoriaContaID) {
-        this.CategoriaContaID = CategoriaContaID;
     }
 
     public String getDescricao() {
@@ -59,6 +49,6 @@ public class SubCategoria {
 
     @Override
     public String toString() {
-        return "SubCategoria{" + "subCategoriaID=" + subCategoriaID + ", CategoriaContaID=" + CategoriaContaID + ", descricao=" + descricao + ", categoriaConta=" + categoriaConta + '}';
+        return "SubCategoria{" + "subCategoriaID=" + subCategoriaID + ", descricao=" + descricao + ", categoriaConta=" + categoriaConta + '}';
     }
 }

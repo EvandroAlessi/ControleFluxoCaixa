@@ -25,6 +25,7 @@ public class MainFX extends Application {
     private MenuSuperiorFX menuSuperior;
     private MenuLateralFX menuLateral;
     private ResumoFX resumo;
+    private Stage stage;
     
     @Override
     public void init(){
@@ -36,6 +37,7 @@ public class MainFX extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
         
@@ -62,19 +64,19 @@ public class MainFX extends Application {
     public void switchCenter(Tela tela) {
         switch(tela){
             case RESUMO:
-                root.setCenter(new ResumoFX());
+                root.setCenter(new ResumoFX(this.stage));
                 break;
             case RELATORIO:
-                root.setCenter(new RelatorioFX());
+                root.setCenter(new RelatorioFX(this.stage));
                 break;
             case RECEITA:
-                root.setCenter(new ReceitaFX());
+                root.setCenter(new ReceitaFX(this.stage));
                 break;
             case DESPESA:
-                root.setCenter(new DespesaFX());
+                root.setCenter(new DespesaFX(this.stage));
                 break;
             case CATEGORIA:
-                root.setCenter(new CategoriaFX());
+                root.setCenter(new CategoriaFX(this.stage));
                 break;
         }
     }

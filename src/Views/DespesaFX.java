@@ -40,7 +40,7 @@ public class DespesaFX extends GridPane{
     private TableColumn<String, DespesaFX> descricao = new TableColumn<>("Descrição");
     private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
     
-    public DespesaFX() {
+    public DespesaFX(Stage stage) {
         DespesaController control = new DespesaController();
         
         titulo = new Label("Despesas");

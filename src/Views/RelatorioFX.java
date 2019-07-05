@@ -6,11 +6,15 @@
 package Views;
 
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  *
  * @author evand
  */
 public class RelatorioFX extends GridPane{
+
+    public RelatorioFX(Stage stage) {
+    }
     
 }

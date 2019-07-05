@@ -33,8 +33,10 @@ public class CategoriaFX extends GridPane{
     Button cadastrar;
     private TableView table;
     private TableColumn cod, data, descricao, valor, pagamento;
+    private Stage mainStage;
     
-    public CategoriaFX(){
+    public CategoriaFX(Stage stage){
+        mainStage = stage;
         CategoriaContaController control = new CategoriaContaController();
         titulo = new Label("Categoria");
         table = new TableView();
@@ -72,9 +74,9 @@ public class CategoriaFX extends GridPane{
         GridPane.setColumnSpan(table, 2);
         
         cadastrar.setOnAction(e ->{
-            FormFX form = new FormFX("Cadastro Categoria");
+            CadastroCategoria form = new CadastroCategoria();
             try {
-                form.start(new Stage());
+                form.start(mainStage);
             } catch (Exception ex) {
                 Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -64,3 +64,67 @@ StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.Launc
 Sexta-feira, 05 de Julho de 2019 às 11:01:11
 Mensagem:null
 StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:05:26
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:45:05
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:51:03
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:52:02
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:52:59
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:54:05
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 11:56:59
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:11:42
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:14:21
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:28:57
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:35:51
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:36:45
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:36:59
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:37:09
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:39:24
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]
+
+Sexta-feira, 05 de Julho de 2019 às 12:39:33
+Mensagem:null
+StackTrace:[Views.MainFX.start(MainFX.java:53), com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$161(LauncherImpl.java:863), com.sun.javafx.application.PlatformImpl.lambda$runAndWait$174(PlatformImpl.java:326), com.sun.javafx.application.PlatformImpl.lambda$null$172(PlatformImpl.java:295), java.security.AccessController.doPrivileged(Native Method), com.sun.javafx.application.PlatformImpl.lambda$runLater$173(PlatformImpl.java:294), com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95), com.sun.glass.ui.win.WinApplication._runLoop(Native Method), com.sun.glass.ui.win.WinApplication.lambda$null$147(WinApplication.java:177), java.lang.Thread.run(Thread.java:748)]

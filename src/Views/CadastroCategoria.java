@@ -5,7 +5,15 @@
  */
 package Views;
 
+import Controllers.CategoriaContaController;
+import Controllers.SubCategoriaController;
+import Models.CategoriaConta;
+import Models.SubCategoria;
+import java.util.List;
+import java.util.ListIterator;
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,9 +46,13 @@ public class CadastroCategoria {
     private final Label lbTitle;
     private final Label lbDesc;
     private final Label lbTipo;
+    private final Label lbCategoria;
     private final ComboBox combo;
     private final TextField txtDesc;
     private final Button cadastrar;
+    private final Button novaCategoria;
+    private CategoriaContaController controlCategoria;
+    private List<CategoriaConta> categorias;
     //private T classe;
     private final Button cancelar;
     //private T classe;
@@ -52,13 +64,17 @@ public class CadastroCategoria {
         forms = new VBox();
         receita = new RadioButton("Receita");
         despesa = new RadioButton("Despesa");
-        lbTitle = new Label("Cadastrar Categoria");
+        lbTitle = new Label("Cadastrar Subcategoria");
+        lbCategoria = new Label("Categoria:");
         lbDesc = new Label("Nome:");
         lbTipo = new Label("Tipo:");
         txtDesc = new TextField();
         combo = new ComboBox();
         cadastrar = new Button("Cadastrar");
         cancelar = new Button("Cancelar");
+        novaCategoria = new Button("+");
+        controlCategoria = new CategoriaContaController();
+        categorias = controlCategoria.getAll();
     }
 
 //    public FormFX(String title, T control) {
@@ -89,24 +105,42 @@ public class CadastroCategoria {
 
     private GridPane criarFormulario(){
         GridPane pane = new GridPane();
+        ListIterator<CategoriaConta> desc = categorias.listIterator();
         pane.setAlignment(Pos.TOP_CENTER);
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 25, 25, 25));
+
         ToggleGroup grupo = new ToggleGroup();
         receita.setToggleGroup(grupo);
         despesa.setToggleGroup(grupo);
+        
+        while(desc.hasNext()){
+            combo.getItems().addAll(FXCollections.observableArrayList(desc.next().getDescricao()));
+        }
+
+        
         l1.getChildren().addAll(receita,despesa);
         l1.setSpacing(10);
         l1.setAlignment(Pos.CENTER_LEFT);
+        
         pane.add(lbTitle, 0, 0, 4, 1);
-        pane.add(lbDesc, 0, 1);
+        pane.add(lbCategoria,0,1);
+        pane.add(combo,1,1);
+        pane.add(novaCategoria,2,1);
+        pane.add(lbDesc, 0, 2);
+        pane.add(txtDesc,1,2);
+        pane.add(lbTipo,0,3);
+        pane.add(l1,1,3,2,1);
+        pane.add(cadastrar,0,4);
+        pane.add(cancelar,1,4);
+        /*
         pane.add(txtDesc, 1, 1);
         pane.add(lbTipo,0,2);
         pane.add(l1,1,2,2,1);
         pane.add(cadastrar,0,3);
         pane.add(cancelar,1,3);
-        
+        pane.add(combo,0,4);*/
         lbTitle.setFont(Font.font("Arial",FontWeight.NORMAL,35));
         lbDesc.setFont(Font.font("Arial",FontWeight.NORMAL,25));
         lbTipo.setFont(Font.font("Arial",FontWeight.NORMAL,25));

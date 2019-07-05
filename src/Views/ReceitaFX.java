@@ -6,6 +6,7 @@
 package Views;
 
 import Controllers.ReceitaController;
+import Models.Despesa;
 import Models.Receita;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,7 +72,24 @@ public class ReceitaFX extends GridPane{
         subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        pagamento.setCellValueFactory(new PropertyValueFactory("formaPagamento"));
+        pagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
+                switch(param.getValue().getFormaPagamento()){
+                    case 1:
+                        return new SimpleStringProperty("Crédito");
+                    case 2:
+                        return new SimpleStringProperty("Dinheiro");
+                    case 3:
+                        return new SimpleStringProperty("Boleto");
+                    case 4:
+                        return new SimpleStringProperty("Depósito");
+                    case 5:
+                        return new SimpleStringProperty("Convênio");
+                }
+                return new SimpleStringProperty("Indefinido");
+            }
+        });
         categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
             @Override
             // obtem a descrição da categoria e converte para Observable

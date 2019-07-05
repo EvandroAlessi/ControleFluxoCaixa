@@ -66,7 +66,25 @@ public class DespesaFX extends GridPane{
         subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        pagamento.setCellValueFactory(new PropertyValueFactory("formaPagamento"));
+        pagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+                switch(param.getValue().getFormaPagamento()){
+                    case 1:
+                        return new SimpleStringProperty("Crédito");
+                    case 2:
+                        return new SimpleStringProperty("Dinheiro");
+                    case 3:
+                        return new SimpleStringProperty("Boleto");
+                    case 4:
+                        return new SimpleStringProperty("Depósito");
+                    case 5:
+                        return new SimpleStringProperty("Convênio");
+                }
+                return new SimpleStringProperty("Indefinido");
+            }
+        });
+        
         categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {

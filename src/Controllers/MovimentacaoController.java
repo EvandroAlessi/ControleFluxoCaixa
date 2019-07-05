@@ -27,7 +27,7 @@ public class MovimentacaoController {
     public Movimentacao create(Movimentacao movimentacao) {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if( movimentacao.getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
                 if (movimentacao.getValor() != 0) {
                     if (movimentacao.getFormaPagamento() != 0) {
                         if (movimentacao.getDataOcorrencia() == null) {
@@ -104,7 +104,7 @@ public class MovimentacaoController {
     public Movimentacao update(Movimentacao movimentacao) {
         try{
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if( movimentacao.getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
                 if (movimentacao.getValor() != 0) {
                     if (movimentacao.getFormaPagamento() != 0) {
                         if (movimentacao.getDataOcorrencia() == null) {

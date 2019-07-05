@@ -26,7 +26,7 @@ public class SubCategoriaController {
     public SubCategoria create(SubCategoria subCategoria) {
         try {
             SubCategoriaDAO dao = new SubCategoriaDAO();
-            if (subCategoria.getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
+            if (subCategoria.getCategoriaConta().getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
                 if (!dao.exists(subCategoria.getDescricao())) {
                     if (dao.create(subCategoria)) {
                         return subCategoria;
@@ -93,7 +93,7 @@ public class SubCategoriaController {
     public SubCategoria update(SubCategoria subCategoria) {
         try{
             SubCategoriaDAO dao = new SubCategoriaDAO();
-            if (subCategoria.getSubCategoriaID() != 0 && subCategoria.getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
+            if (subCategoria.getSubCategoriaID() != 0 && subCategoria.getCategoriaConta().getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
                 if (!dao.exists(subCategoria.getDescricao())) {
                     if (dao.update(subCategoria)) {
                         return subCategoria;

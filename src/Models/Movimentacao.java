@@ -14,19 +14,17 @@ import java.util.Date;
  */
 public class Movimentacao implements IPagamento {
     protected int movimentacaoID;
-    protected int subCategoriaID;
     protected Date dataOcorrencia;
     protected String descricao;
     protected double valor;
     protected int formaPagamento;
     protected SubCategoria subcategoria;
     
-    public Movimentacao(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento, int subCategoriaID) {
+    public Movimentacao(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
         this.dataOcorrencia = dataOcorrencia;
         this.descricao = descricao;
         this.valor = valor;
         this.movimentacaoID = movimentacaoID;
-        this.subCategoriaID = subCategoriaID;
         
         selectPayment(formaPagamento);
     }
@@ -72,14 +70,6 @@ public class Movimentacao implements IPagamento {
     public void setMovimentacaoID(int fluxoCaixaID) {
         this.movimentacaoID = fluxoCaixaID;
     }
-
-    public int getSubCategoriaID() {
-        return subCategoriaID;
-    }
-
-    public void setSubCategoriaID(int subCategoriaID) {
-        this.subCategoriaID = subCategoriaID;
-    }
     
     public Date getDataOcorrencia() {
         return dataOcorrencia;
@@ -123,7 +113,7 @@ public class Movimentacao implements IPagamento {
 
     @Override
     public String toString() {
-        return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", subCategoriaID=" + subCategoriaID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subcategoria + '}';
+        return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subcategoria + '}';
     }
     
 }

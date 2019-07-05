@@ -89,11 +89,10 @@ public class SubCategoriaDAO {
         
         while(dadosSub.next()){
             subCategoria.setSubCategoriaID(dadosSub.getInt("subCategoriaID"));
-            subCategoria.setCategoriaContaID(dadosSub.getInt("CategoriaContaID"));
             subCategoria.setDescricao(dadosSub.getString("Descricao"));
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                    + subCategoria.getCategoriaContaID() 
+                    + dadosSub.getInt("CategoriaContaID")
                     +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
             
@@ -126,10 +125,11 @@ public class SubCategoriaDAO {
         while(dadosSub.next()){
             SubCategoria subCategoria = new SubCategoria();
             subCategoria.setSubCategoriaID(dadosSub.getInt("subCategoriaID"));
-            subCategoria.setCategoriaContaID(dadosSub.getInt("CategoriaContaID"));
             subCategoria.setDescricao(dadosSub.getString("Descricao"));
             
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"+ subCategoria.getCategoriaContaID() +"';";
+            String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + dadosSub.getInt("CategoriaContaID")
+                    +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
             
             while(dadosCat.next()){
@@ -163,13 +163,13 @@ public class SubCategoriaDAO {
                 .append("'");
         
         columnsAndValues.append("CategoriaContaID= '")
-                .append(subCategoria.getCategoriaContaID())
+                .append(subCategoria.getCategoriaConta().getCategoriaContaID())
                 .append("'");
         
         String query = "update subCategoria SET " 
                 + columnsAndValues.toString() 
                 + " WHERE subCategoriaid = " 
-                + subCategoria.getCategoriaContaID();
+                + subCategoria.getSubCategoriaID();
         
         int result = contexto.executeUpdate(query);
 

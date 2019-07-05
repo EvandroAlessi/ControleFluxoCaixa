@@ -112,13 +112,13 @@ public class ReceitaDAO {
                 receita.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
+                                
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + receita.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -168,13 +168,12 @@ public class ReceitaDAO {
                 receita.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + receita.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -213,6 +212,9 @@ public class ReceitaDAO {
                 .append("'");
         columnsAndValues.append("valor= '")
                 .append(receita.getValor())
+                .append("'");
+        columnsAndValues.append("SubCategoriaID= '")
+                .append(receita.getSubcategoria().getSubCategoriaID())
                 .append("'");
         columnsAndValues.append("formaPagamento= '")
                 .append(receita.getFormaPagamento())

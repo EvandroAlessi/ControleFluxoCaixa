@@ -27,7 +27,7 @@ public class ReceitaController {
     public Receita create(Receita receita) {
         try {
             ReceitaDAO dao = new ReceitaDAO();
-            if (receita.getSubCategoriaID() != 0 && receita.getDescricao() != null) {
+            if (receita.getSubcategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
                 if (receita.getValor() != 0) {
                     if (receita.getFormaPagamento() != 0) {
                         if (receita.getDataOcorrencia() == null) {
@@ -104,7 +104,7 @@ public class ReceitaController {
     public Receita update(Receita receita) {
         try{
             ReceitaDAO dao = new ReceitaDAO();
-            if (receita.getMovimentacaoID() != 0 && receita.getSubCategoriaID() != 0 && receita.getDescricao() != null) {
+            if (receita.getMovimentacaoID() != 0 && receita.getSubcategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
                 if (receita.getValor() != 0) {
                     if (receita.getFormaPagamento() != 0) {
                         if (receita.getDataOcorrencia() == null) {

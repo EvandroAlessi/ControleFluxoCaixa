@@ -119,13 +119,12 @@ public class DespesaDAO {
                 despesa.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + despesa.getSubcategoria().getCategoriaContaID()
+                + + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -175,13 +174,12 @@ public class DespesaDAO {
                 despesa.setSubcategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
-                                dadosSub.getInt("CategoriaContaID"),
                                 dadosSub.getString("Descricao"))
                 );
             }
             
             String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + despesa.getSubcategoria().getCategoriaContaID()
+                + dadosSub.getInt("CategoriaContaID")
                 +"';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
@@ -223,6 +221,9 @@ public class DespesaDAO {
                 .append("'");
         columnsAndValues.append("formaPagamento= '")
                 .append(despesa.getFormaPagamento())
+                .append("'");
+        columnsAndValues.append("SubCategoriaID= '")
+                .append(despesa.getSubcategoria().getSubCategoriaID())
                 .append("'");
         
         String query = "update movimentacao SET " 

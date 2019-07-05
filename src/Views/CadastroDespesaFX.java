@@ -7,6 +7,7 @@ package Views;
 
 import Controllers.SubCategoriaController;
 import Models.SubCategoria;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import static javafx.application.Application.launch;
@@ -80,8 +81,13 @@ public class CadastroDespesaFX {
     private GridPane criarFormulario(){
         GridPane pane = new GridPane();
         HBox l1 = new HBox();
-
-        ListIterator<SubCategoria> subIte = subCategorias.listIterator();
+        
+        List<SubCategoria> despesas = new ArrayList<>();
+        for (SubCategoria despesa: subCategorias) {
+            if(!despesa.getCategoriaConta().isPositiva())
+                despesas.add(despesa);
+        }
+        ListIterator<SubCategoria> subIte = despesas.listIterator();
         pane.setAlignment(Pos.TOP_CENTER);
         pane.setHgap(10);
         pane.setVgap(10);

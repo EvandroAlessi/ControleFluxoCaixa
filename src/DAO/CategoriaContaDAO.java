@@ -83,7 +83,7 @@ public class CategoriaContaDAO {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public ArrayList<CategoriaConta> getAll() throws ClassNotFoundException, SQLException{
+    public ArrayList<CategoriaConta> getAll() throws SQLException, ClassNotFoundException{
         String query = "select * from categoriaconta;";
         ArrayList<CategoriaConta> lista = new ArrayList<>();
 

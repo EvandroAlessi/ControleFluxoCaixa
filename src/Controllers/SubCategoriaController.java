@@ -6,9 +6,9 @@
 package Controllers;
 
 import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import DAO.SubCategoriaDAO;
 import Models.SubCategoria;
-import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,6 +31,7 @@ public class SubCategoriaController {
              }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -48,6 +49,7 @@ public class SubCategoriaController {
             return subCategoria;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -64,6 +66,7 @@ public class SubCategoriaController {
             return subCategorias;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -84,6 +87,7 @@ public class SubCategoriaController {
             } 
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -101,6 +105,7 @@ public class SubCategoriaController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return false;

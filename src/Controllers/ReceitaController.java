@@ -6,9 +6,9 @@
 package Controllers;
 
 import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import DAO.ReceitaDAO;
 import Models.Receita;
-import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -37,7 +37,8 @@ public class ReceitaController {
                 }
             }
          } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
+            Log.saveLog(e);
+            Mensagem.excecao(e);
          }
         
         return null;
@@ -55,6 +56,7 @@ public class ReceitaController {
             return receita;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -71,6 +73,7 @@ public class ReceitaController {
             return receitas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -97,6 +100,7 @@ public class ReceitaController {
             } 
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -114,6 +118,7 @@ public class ReceitaController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return false;

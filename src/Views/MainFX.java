@@ -5,13 +5,10 @@
  */
 package Views;
 
+import Controllers.CategoriaContaController;
 import CrossCutting.Enums.Tela;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
-import DAO.CategoriaContaDAO;
-import Models.CategoriaConta;
-import com.sun.media.jfxmedia.logging.Logger;
-import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -54,7 +51,7 @@ public class MainFX extends Application {
        
         // teste
         Log.saveLog(new Exception());
-        
+        //Mensagem.excecao(new Exception());
     }
      
     /**

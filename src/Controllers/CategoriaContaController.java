@@ -9,7 +9,6 @@ import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import DAO.CategoriaContaDAO;
 import Models.CategoriaConta;
-import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -32,6 +31,7 @@ public class CategoriaContaController {
              }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -50,6 +50,7 @@ public class CategoriaContaController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -66,6 +67,7 @@ public class CategoriaContaController {
             return categoriaContas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -86,6 +88,7 @@ public class CategoriaContaController {
             }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -103,6 +106,7 @@ public class CategoriaContaController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return false;

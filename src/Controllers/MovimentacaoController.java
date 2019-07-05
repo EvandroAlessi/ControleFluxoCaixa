@@ -6,9 +6,9 @@
 package Controllers;
 
 import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import DAO.MovimentacaoDAO;
 import Models.Movimentacao;
-import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,6 +31,7 @@ public class MovimentacaoController {
              }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -48,6 +49,7 @@ public class MovimentacaoController {
             return movimentacao;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -64,6 +66,7 @@ public class MovimentacaoController {
             return movimentacoes;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -83,7 +86,8 @@ public class MovimentacaoController {
                 }
             } 
          } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
+            Log.saveLog(e);
+            Mensagem.excecao(e);
          }
         
         return null;
@@ -101,6 +105,7 @@ public class MovimentacaoController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return false;

@@ -6,12 +6,11 @@
 package Controllers;
 
 import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import DAO.DespesaDAO;
 import Models.Despesa;
-import com.sun.media.jfxmedia.logging.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 /**
  *
@@ -39,6 +38,7 @@ public class DespesaController {
             }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -56,6 +56,7 @@ public class DespesaController {
             return despesa;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -72,6 +73,7 @@ public class DespesaController {
             return despesas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return null;
@@ -92,6 +94,7 @@ public class DespesaController {
             } 
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
+             Mensagem.excecao(e);
          }
         
         return null;
@@ -109,6 +112,7 @@ public class DespesaController {
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         
         return false;
@@ -123,6 +127,7 @@ public class DespesaController {
             return new DespesaDAO().getAllMetaData();
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
+            Mensagem.excecao(e);
         }
         return null;
     }

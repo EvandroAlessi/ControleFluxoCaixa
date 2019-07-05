@@ -14,8 +14,10 @@ import java.util.ListIterator;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -123,27 +126,22 @@ public class CadastroCategoria {
         l1.getChildren().addAll(receita,despesa);
         l1.setSpacing(10);
         l1.setAlignment(Pos.CENTER_LEFT);
-        
+        l2.getChildren().addAll(cadastrar,cancelar);
+        l2.setSpacing(10);
+        l3.getChildren().addAll(combo,novaCategoria);
+        l3.setSpacing(10);
         pane.add(lbTitle, 0, 0, 4, 1);
         pane.add(lbCategoria,0,1);
-        pane.add(combo,1,1);
-        pane.add(novaCategoria,2,1);
+        pane.add(l3,1,1,2,1);
         pane.add(lbDesc, 0, 2);
         pane.add(txtDesc,1,2);
-        pane.add(lbTipo,0,3);
-        pane.add(l1,1,3,2,1);
-        pane.add(cadastrar,0,4);
-        pane.add(cancelar,1,4);
-        /*
-        pane.add(txtDesc, 1, 1);
-        pane.add(lbTipo,0,2);
-        pane.add(l1,1,2,2,1);
-        pane.add(cadastrar,0,3);
-        pane.add(cancelar,1,3);
-        pane.add(combo,0,4);*/
-        lbTitle.setFont(Font.font("Arial",FontWeight.NORMAL,35));
-        lbDesc.setFont(Font.font("Arial",FontWeight.NORMAL,25));
-        lbTipo.setFont(Font.font("Arial",FontWeight.NORMAL,25));
+        pane.add(l2,1,3,2,1);
+
+
+        lbTitle.setFont(Font.font("Arial",FontWeight.NORMAL,27));
+        lbDesc.setFont(Font.font("Arial",FontWeight.NORMAL,17));
+        lbTipo.setFont(Font.font("Arial",FontWeight.NORMAL,17));
+        lbCategoria.setFont(Font.font("Arial",FontWeight.NORMAL,17));
         receita.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         despesa.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         cadastrar.setFont(Font.font("Arial",FontWeight.NORMAL,15));

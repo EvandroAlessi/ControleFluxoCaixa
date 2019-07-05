@@ -38,8 +38,9 @@ public class ReceitaFX extends GridPane{
     Button cadastrar;
     private TableView table;
     private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
-    
+    private Stage mainStage;
     public ReceitaFX(Stage stage){
+        mainStage = stage;
         ReceitaController control = new ReceitaController();
         
         titulo = new Label("Receitas");
@@ -134,7 +135,7 @@ public class ReceitaFX extends GridPane{
         cadastrar.setOnAction(e ->{
             CadastroReceitaFX form = new CadastroReceitaFX();
             try {
-                form.start(new Stage());
+                form.start(mainStage);
             } catch (Exception ex) {
                 Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, 
                         null, ex);

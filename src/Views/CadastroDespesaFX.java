@@ -5,32 +5,22 @@
  */
 package Views;
 
-import Controllers.CategoriaContaController;
 import Controllers.SubCategoriaController;
-import Models.CategoriaConta;
 import Models.SubCategoria;
 import java.util.List;
 import java.util.ListIterator;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -40,7 +30,7 @@ import javafx.stage.Stage;
  *
  * @author SpaceBR
  */
-public class CadastroReceitaFX {
+public class CadastroDespesaFX {
     private final Label lbData,lbSubCategoria,lbDescricao,lbValor,lbPagamento,lbTitle;
     private final TextField txtDesc,txtValor;
     private final DatePicker calendario;
@@ -48,11 +38,12 @@ public class CadastroReceitaFX {
     private SubCategoriaController controlSubCategoria;
     private List<SubCategoria> subCategorias;
     private ComboBox comboSub,comboPgt;
-    public CadastroReceitaFX() {
+    
+        public CadastroDespesaFX() {
         lbDescricao = new Label("Descrição:");
         txtDesc = new TextField();
         txtValor = new TextField();
-        lbTitle = new Label("Cadastrar Receita");
+        lbTitle = new Label("Cadastrar Despesa");
         lbData = new Label("Ocorrência:");
         lbSubCategoria = new Label("Subcategoria:");
         lbValor = new Label("Valor:");
@@ -69,7 +60,7 @@ public class CadastroReceitaFX {
     public void start(Stage mainStage) throws Exception {
         Stage dialog = new Stage();
         GridPane painel = criarFormulario();
-        dialog.setTitle("Cadastro Receita");
+        dialog.setTitle("Cadastro Despesa");
         dialog.initOwner(mainStage);
         dialog.initModality(Modality.APPLICATION_MODAL);
         // Create the registration form pane
@@ -127,7 +118,6 @@ public class CadastroReceitaFX {
         cadastrar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         cancelar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         
-
         return pane;
     }
 }

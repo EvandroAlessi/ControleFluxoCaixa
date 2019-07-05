@@ -5,3 +5,7 @@
 /driverMySQL/
 nbproject/private/private.properties
 *.properties
+log.txt
+
+/log.txt
+log.txt

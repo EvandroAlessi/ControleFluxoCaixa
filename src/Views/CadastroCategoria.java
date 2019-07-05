@@ -8,6 +8,7 @@ package Views;
 import Controllers.CategoriaContaController;
 import Controllers.SubCategoriaController;
 import Models.CategoriaConta;
+import Models.Receita;
 import Models.SubCategoria;
 import java.util.List;
 import java.util.ListIterator;
@@ -54,8 +55,10 @@ public class CadastroCategoria {
     private final TextField txtDesc;
     private final Button cadastrar;
     private final Button novaCategoria;
+    private SubCategoriaController controlSub;
     private CategoriaContaController controlCategoria;
     private List<CategoriaConta> categorias;
+    private Stage dialog;
     //private T classe;
     private final Button cancelar;
     //private T classe;
@@ -78,6 +81,26 @@ public class CadastroCategoria {
         novaCategoria = new Button("+");
         controlCategoria = new CategoriaContaController();
         categorias = controlCategoria.getAll();
+        
+        cadastrar.setOnAction(e->{
+            SubCategoria nSub = new SubCategoria();
+            nSub.setSubCategoriaID(123123);
+            nSub.setDescricao(txtDesc.getText());
+            for(CategoriaConta conta: categorias){
+                if(conta.getDescricao() == combo.getValue()){
+                    nSub.setCategoriaConta(conta);
+                    break;
+                }
+                else
+                    nSub.setCategoriaConta(null);
+            }
+            System.out.println(nSub);
+            controlSub.create(nSub);
+        });
+        
+        cancelar.setOnAction(e->{
+            dialog.close();
+        });
     }
 
 //    public FormFX(String title, T control) {
@@ -87,7 +110,7 @@ public class CadastroCategoria {
     
 
     public void start(Stage mainStage) throws Exception {
-        Stage dialog = new Stage();
+        dialog = new Stage();
         GridPane painel = criarFormulario();
         dialog.setTitle("Cadastro Categoria");
         dialog.initOwner(mainStage);

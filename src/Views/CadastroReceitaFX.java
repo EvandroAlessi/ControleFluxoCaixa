@@ -55,6 +55,7 @@ public class CadastroReceitaFX {
     private List<SubCategoria> subCategorias;
     private ComboBox comboSub,comboPgt;
     private ReceitaController controlReceita;
+    private Stage dialog;
     
     public CadastroReceitaFX() {
         lbDescricao = new Label("Descrição:");
@@ -82,7 +83,6 @@ public class CadastroReceitaFX {
             nReceita.setFormaPagamento(switchPag((String) comboPgt.getValue()));
             for (SubCategoria sub: subCategorias) {
                 if(sub.getDescricao()==comboSub.getValue()){
-                    System.out.println("combo == "+ comboSub.getValue());
                     nReceita.setSubcategoria(sub);
                     break;
                 }
@@ -92,6 +92,9 @@ public class CadastroReceitaFX {
             System.out.println(nReceita);
             System.out.println("subcat id: "+nReceita.getSubcategoria().getSubCategoriaID());
             controlReceita.create(nReceita);
+        });
+        cancelar.setOnAction(e->{
+            dialog.close();
         });
     }
     
@@ -112,7 +115,7 @@ public class CadastroReceitaFX {
     }
 
     public void start(Stage mainStage) throws Exception {
-        Stage dialog = new Stage();
+        dialog = new Stage();
         GridPane painel = criarFormulario();
         dialog.setTitle("Cadastro Receita");
         dialog.initOwner(mainStage);
@@ -124,6 +127,7 @@ public class CadastroReceitaFX {
         // Set the scene in primary stage
         dialog.setScene(scene);
         dialog.showAndWait();
+       
     }
     
     public static void main(String[] args) {

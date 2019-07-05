@@ -39,6 +39,7 @@ public class CadastroDespesaFX {
     private SubCategoriaController controlSubCategoria;
     private List<SubCategoria> subCategorias;
     private ComboBox comboSub,comboPgt;
+    private Stage dialog;
     
         public CadastroDespesaFX() {
         lbDescricao = new Label("Descrição:");
@@ -56,10 +57,14 @@ public class CadastroDespesaFX {
         subCategorias = controlSubCategoria.getAll();
         comboSub = new ComboBox();
         comboPgt = new ComboBox();
+        
+        cancelar.setOnAction(e->{
+            dialog.close();
+        });
     }
 
     public void start(Stage mainStage) throws Exception {
-        Stage dialog = new Stage();
+        dialog = new Stage();
         GridPane painel = criarFormulario();
         dialog.setTitle("Cadastro Despesa");
         dialog.initOwner(mainStage);

@@ -130,8 +130,6 @@ public class ReceitaDAO {
                                 dadosCat.getBoolean("positiva"))
                 );
             }
-            
-            System.out.println(receita.toString());
         }
         
         return receita;
@@ -170,23 +168,20 @@ public class ReceitaDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
-            }
-            
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + dadosSub.getInt("CategoriaContaID")
-                +"';";
-            ResultSet dadosCat = contexto.executeQuery(queryCat);
+                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + dadosSub.getInt("CategoriaContaID")
+                    +"';";
+                ResultSet dadosCat = contexto.executeQuery(queryCat);
 
-            while(dadosCat.next()){
-                receita.getSubcategoria().setCategoriaConta(
-                        new CategoriaConta(
-                                dadosCat.getInt("CategoriaContaID"),
-                                dadosCat.getString("Descricao"), 
-                                dadosCat.getBoolean("positiva"))
-                );
+                while(dadosCat.next()){
+                    receita.getSubcategoria().setCategoriaConta(
+                            new CategoriaConta(
+                                    dadosCat.getInt("CategoriaContaID"),
+                                    dadosCat.getString("Descricao"), 
+                                    dadosCat.getBoolean("positiva"))
+                    );
+                }
             }
-            
-            System.out.println(receita.toString());
             
             list.add(receita);
         }

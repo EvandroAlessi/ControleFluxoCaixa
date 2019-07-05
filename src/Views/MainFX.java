@@ -50,7 +50,7 @@ public class MainFX extends Application {
         primaryStage.show();
        
         // teste
-        Log.saveLog(new Exception());
+        //Log.saveLog(new Exception());
         //Mensagem.excecao(new Exception());
     }
      

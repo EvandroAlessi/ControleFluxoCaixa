@@ -104,7 +104,6 @@ public class SubCategoriaDAO {
                                 dadosCat.getBoolean("positiva"))
                 );
             }
-            System.out.println(subCategoria.toString());
         }
 
         return subCategoria;
@@ -141,7 +140,6 @@ public class SubCategoriaDAO {
                 );
             }
             
-            System.out.println(subCategoria.toString());
             list.add(subCategoria);
         }
 

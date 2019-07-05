@@ -121,23 +121,21 @@ public class DespesaDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
-            }
-            
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + + dadosSub.getInt("CategoriaContaID")
-                +"';";
-            ResultSet dadosCat = contexto.executeQuery(queryCat);
+                
+                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + + dadosSub.getInt("CategoriaContaID")
+                    +"';";
+                ResultSet dadosCat = contexto.executeQuery(queryCat);
 
-            while(dadosCat.next()){
-                despesa.getSubcategoria().setCategoriaConta(
-                        new CategoriaConta(
-                                dadosCat.getInt("CategoriaContaID"),
-                                dadosCat.getString("Descricao"), 
-                                dadosCat.getBoolean("positiva"))
-                );
+                while(dadosCat.next()){
+                    despesa.getSubcategoria().setCategoriaConta(
+                            new CategoriaConta(
+                                    dadosCat.getInt("CategoriaContaID"),
+                                    dadosCat.getString("Descricao"), 
+                                    dadosCat.getBoolean("positiva"))
+                    );
+                }
             }
-            
-            System.out.println(despesa.toString());
         }
         
         return despesa;
@@ -154,7 +152,6 @@ public class DespesaDAO {
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
                     + "(select categoriacontaid from categoriaconta where positiva = 0));";
         ArrayList<Despesa> list = new ArrayList<>();
-
         ResultSet dados = contexto.executeQuery(query);
 
         while(dados.next()){
@@ -176,27 +173,24 @@ public class DespesaDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
+                
+                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + dadosSub.getInt("CategoriaContaID")
+                    +"';";
+                ResultSet dadosCat = contexto.executeQuery(queryCat);
+                while(dadosCat.next()){
+                    despesa.getSubcategoria().setCategoriaConta(
+                            new CategoriaConta(
+                                    dadosCat.getInt("CategoriaContaID"),
+                                    dadosCat.getString("Descricao"), 
+                                    dadosCat.getBoolean("positiva"))
+                    );
+                }
             }
-            
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + dadosSub.getInt("CategoriaContaID")
-                +"';";
-            ResultSet dadosCat = contexto.executeQuery(queryCat);
-
-            while(dadosCat.next()){
-                despesa.getSubcategoria().setCategoriaConta(
-                        new CategoriaConta(
-                                dadosCat.getInt("CategoriaContaID"),
-                                dadosCat.getString("Descricao"), 
-                                dadosCat.getBoolean("positiva"))
-                );
-            }
-            
-            System.out.println(despesa.toString());
             
             list.add(despesa);
         }
-
+        
         return list;
     }
     

@@ -102,23 +102,20 @@ public class MovimentacaoDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
-            }
-            
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + dadosSub.getInt("CategoriaContaID")
-                +"';";
-            ResultSet dadosCat = contexto.executeQuery(queryCat);
+                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + dadosSub.getInt("CategoriaContaID")
+                    +"';";
+                ResultSet dadosCat = contexto.executeQuery(queryCat);
 
-            while(dadosCat.next()){
-                movimentacao.getSubcategoria().setCategoriaConta(
-                        new CategoriaConta(
-                                dadosCat.getInt("CategoriaContaID"),
-                                dadosCat.getString("Descricao"), 
-                                dadosCat.getBoolean("positiva"))
-                );
+                while(dadosCat.next()){
+                    movimentacao.getSubcategoria().setCategoriaConta(
+                            new CategoriaConta(
+                                    dadosCat.getInt("CategoriaContaID"),
+                                    dadosCat.getString("Descricao"), 
+                                    dadosCat.getBoolean("positiva"))
+                    );
+                }
             }
-            
-            System.out.println(movimentacao.toString());
         }
 
         return movimentacao;
@@ -155,23 +152,21 @@ public class MovimentacaoDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
-            }
-            
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
-                + dadosSub.getInt("CategoriaContaID")
-                +"';";
-            ResultSet dadosCat = contexto.executeQuery(queryCat);
+                
+                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                    + dadosSub.getInt("CategoriaContaID")
+                    +"';";
+                ResultSet dadosCat = contexto.executeQuery(queryCat);
 
-            while(dadosCat.next()){
-                movimentacao.getSubcategoria().setCategoriaConta(
-                        new CategoriaConta(
-                                dadosCat.getInt("CategoriaContaID"),
-                                dadosCat.getString("Descricao"), 
-                                dadosCat.getBoolean("positiva"))
-                );
+                while(dadosCat.next()){
+                    movimentacao.getSubcategoria().setCategoriaConta(
+                            new CategoriaConta(
+                                    dadosCat.getInt("CategoriaContaID"),
+                                    dadosCat.getString("Descricao"), 
+                                    dadosCat.getBoolean("positiva"))
+                    );
+                }
             }
-            
-            System.out.println(movimentacao.toString());
             
             list.add(movimentacao);
         }

@@ -20,6 +20,17 @@ public class Movimentacao implements IPagamento {
     protected int formaPagamento;
     protected SubCategoria subcategoria;
     
+    public Movimentacao() {
+        
+    }
+
+    public Movimentacao(Date dataOcorrencia, String descricao, double valor, int formaPagamento) {
+        this.dataOcorrencia = dataOcorrencia;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.formaPagamento = formaPagamento;
+    }
+    
     public Movimentacao(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
         this.dataOcorrencia = dataOcorrencia;
         this.descricao = descricao;
@@ -29,9 +40,7 @@ public class Movimentacao implements IPagamento {
         selectPayment(formaPagamento);
     }
 
-    public Movimentacao() {
-        
-    }
+    
     
     public double getSaldo(){
         MovimentacaoDAO service = new MovimentacaoDAO();

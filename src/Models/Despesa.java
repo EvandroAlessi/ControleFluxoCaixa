@@ -5,11 +5,22 @@
  */
 package Models;
 
+import java.util.Date;
+
 /**
  *
  * @author evand
  */
 public class Despesa extends Movimentacao {
+
+    public Despesa() {
+    }
+
+    public Despesa(Date dataOcorrencia, String descricao, double valor, int formaPagamento) {
+        super(dataOcorrencia, descricao, valor, formaPagamento);
+    }
     
-    
+    public Despesa(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
+        super(dataOcorrencia, descricao, valor, movimentacaoID, formaPagamento);
+    }
 }

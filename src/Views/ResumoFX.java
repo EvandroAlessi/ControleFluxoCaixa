@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Controllers.DespesaController;
 import Controllers.MovimentacaoController;
 import DAO.DespesaDAO;
 import DAO.ReceitaDAO;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -56,7 +58,7 @@ public class ResumoFX extends GridPane {
             getyAxis().setLabel("VALOR");
             setTable(new TableView());
 
-            this.graficoLinha = new LineChart<String, Number>(new CategoryAxis(), new NumberAxis());
+            this.graficoLinha = new LineChart<>(new CategoryAxis(), new NumberAxis());
             XYChart.Series dataSeries1 = new XYChart.Series();
             dataSeries1.setName("Receitas");
 
@@ -64,13 +66,16 @@ public class ResumoFX extends GridPane {
 
             HashMap<String, Double> dados = new HashMap();
 
-            for(Receita receita: receitas){
+            receitas.forEach((receita) -> {
                 if(!dados.containsKey((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900))){
                     dados.put((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900), receita.getValor());
                 }else{
                     dados.put((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900), receita.getValor() + dados.get((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900)));
                 }
-            }
+            });
+            
+            DespesaController dao = new DespesaController();
+            dao.create(new Despesa(new Date(1997, 10, 05), "asdasss",120 , 1));
 
             for(String chave: dados.keySet()){
                 dataSeries1.getData().add(new XYChart.Data(chave, dados.get(chave)));
@@ -118,7 +123,7 @@ public class ResumoFX extends GridPane {
 
             getColumnConstraints().add(c1);
             getRowConstraints().add(r1);
-        }catch(Exception e){
+        }catch(ClassNotFoundException | SQLException e){
             //
         }
     }

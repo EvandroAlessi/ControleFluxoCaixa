@@ -40,7 +40,7 @@ public class MainFX extends Application {
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
         
-        switchCenter(Tela.DESPESA);
+        switchCenter(Tela.RESUMO);
         primaryStage.setMaximized(true); // Tela cheia
         Scene scene = new Scene(root, 700, 700);
         

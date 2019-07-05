@@ -27,31 +27,36 @@ public class MovimentacaoController {
     public Movimentacao create(Movimentacao movimentacao) {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
-                if (movimentacao.getValor() != 0) {
-                    if (movimentacao.getFormaPagamento() != 0) {
-                        if (movimentacao.getDataOcorrencia() == null) {
-                            Date date = new Date();
-                            date.getTime();
-                            movimentacao.setDataOcorrencia(date);
-                        }
-                        if (dao.create(movimentacao)) {
-                            return movimentacao;
+            if (movimentacao.getSubcategoria() != null) {
+                if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+                    if (movimentacao.getValor() != 0) {
+                        if (movimentacao.getFormaPagamento() != 0) {
+                            if (movimentacao.getDataOcorrencia() == null) {
+                                Date date = new Date();
+                                date.getTime();
+                                movimentacao.setDataOcorrencia(date);
+                            }
+                            if (dao.create(movimentacao)) {
+                                return movimentacao;
+                            }
+                            else{
+                                Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                            }
                         }
                         else{
-                            Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                            Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
                     }
                     else{
-                        Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
+                        Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
                     }
                 }
                 else{
-                    Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
+                    Mensagem.aviso("A movimentacao deve ter uma Descricao.");
                 }
             }
             else{
-                Mensagem.aviso("A movimentacao deve ter uma Descricao.");
+                Mensagem.aviso("A movimentacao deve ter uma Categoria.");
             }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
@@ -104,31 +109,36 @@ public class MovimentacaoController {
     public Movimentacao update(Movimentacao movimentacao) {
         try{
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
-                if (movimentacao.getValor() != 0) {
-                    if (movimentacao.getFormaPagamento() != 0) {
-                        if (movimentacao.getDataOcorrencia() == null) {
-                            Date date = new Date();
-                            date.getTime();
-                            movimentacao.setDataOcorrencia(date);
-                        }
-                        if (dao.update(movimentacao)) {
-                            return movimentacao;
+            if (movimentacao.getSubcategoria() != null) {
+                if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+                    if (movimentacao.getValor() != 0) {
+                        if (movimentacao.getFormaPagamento() != 0) {
+                            if (movimentacao.getDataOcorrencia() == null) {
+                                Date date = new Date();
+                                date.getTime();
+                                movimentacao.setDataOcorrencia(date);
+                            }
+                            if (dao.update(movimentacao)) {
+                                return movimentacao;
+                            }
+                            else{
+                                Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                            }
                         }
                         else{
-                            Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                            Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
                     }
                     else{
-                        Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
+                        Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
                     }
                 }
                 else{
-                    Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
+                    Mensagem.aviso("A movimentacao deve ter uma Descricao.");
                 }
             }
             else{
-                Mensagem.aviso("A movimentacao deve ter uma Descricao.");
+                Mensagem.aviso("A despesa deve ter uma Categoria.");
             }
          } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);

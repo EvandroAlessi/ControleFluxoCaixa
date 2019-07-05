@@ -26,13 +26,26 @@ public class SubCategoriaController {
     public SubCategoria create(SubCategoria subCategoria) {
         try {
             SubCategoriaDAO dao = new SubCategoriaDAO();
-             if (dao.create(subCategoria)) {
-                 return subCategoria;
-             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
+            if (subCategoria.getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
+                if (!dao.exists(subCategoria.getDescricao())) {
+                    if (dao.create(subCategoria)) {
+                        return subCategoria;
+                    }
+                    else{
+                        Mensagem.aviso("Não foi possivel criar a Subcategoria.");
+                    }
+                }
+                else{
+                    Mensagem.aviso("Já existe uma Subcategoria com essa descricao.");
+                }
+            }
+            else{
+                Mensagem.aviso("Você deve selecionar uma Categoria e a SubCategoria deve ter uma descrição.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
         
         return null;
     }
@@ -80,11 +93,22 @@ public class SubCategoriaController {
     public SubCategoria update(SubCategoria subCategoria) {
         try{
             SubCategoriaDAO dao = new SubCategoriaDAO();
-            if (subCategoria.getCategoriaContaID() != 0 && subCategoria.getSubCategoriaID() != 0) {
-                if (dao.update(subCategoria)) {
-                    return subCategoria;
+            if (subCategoria.getSubCategoriaID() != 0 && subCategoria.getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
+                if (!dao.exists(subCategoria.getDescricao())) {
+                    if (dao.update(subCategoria)) {
+                        return subCategoria;
+                    }
+                    else{
+                        Mensagem.aviso("Não foi possivel realizar a atualização.");
+                    }
                 }
-            } 
+                else{
+                    Mensagem.aviso("Já existe uma Subcategoria com essa descricao.");
+                }
+            }
+            else{
+                Mensagem.aviso("Você deve selecionar uma Categoria e a SubCategoria deve ter uma descrição.");
+            }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
              Mensagem.excecao(e);

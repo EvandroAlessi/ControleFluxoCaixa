@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -50,35 +51,42 @@ public class DespesaDAO {
      */
     public boolean create(Despesa despesa) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
-        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
+        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparestatement.setString(1, despesa.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setDate(2, (Date) despesa.getDataOcorrencia());
+            preparestatement.setDouble(1, despesa.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(2, despesa.getFormaPagamento());   
+            //executando comando sql
 
-                preparestatement.setString(1, despesa.getDescricao()); //substitui o ? pelo dado do usuario
-                preparestatement.setDate(2, (Date) despesa.getDataOcorrencia());
-                preparestatement.setDouble(1, despesa.getValor()); //substitui o ? pelo dado do usuario
-                preparestatement.setInt(2, despesa.getFormaPagamento());   
-                //executando comando sql
-
-                return preparestatement.execute();
+            int result = preparestatement.executeUpdate();
+            if (result > 0) {
+                ResultSet id = preparestatement.getGeneratedKeys();
+                if (id.next()){
+                    despesa.setMovimentacaoID(id.getInt(1));
+                    return true;
+                }
+            }
+            return false;
         } catch (SQLException e) { throw e; }
     }
     
-    /**
-     *
-     * @param description
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
-     */
-    public boolean exists(String description) throws ClassNotFoundException, SQLException{
-        String query = "select * from movimentacao where subcategoriaid in "
-                + "(select subcategoriaid from subcategoria where subcategoriaid in "
-                    + "(select categoriacontaid from categoriaconta where positiva = 0)) "
-                + "AND descricao != '"+ description +"';";
-
-        ResultSet dados = contexto.executeQuery(query);
-
-        return dados != null;
-    }
+//    /**
+//     *
+//     * @param description
+//     * @return
+//     * @throws ClassNotFoundException
+//     * @throws SQLException
+//     */
+//    public boolean exists(String description) throws ClassNotFoundException, SQLException{
+//        String query = "select * from movimentacao where subcategoriaid in "
+//                + "(select subcategoriaid from subcategoria where subcategoriaid in "
+//                    + "(select categoriacontaid from categoriaconta where positiva = 0)) "
+//                + "AND descricao != '"+ description +"';";
+//
+//        ResultSet dados = contexto.executeQuery(query);
+//
+//        return dados != null;
+//    }
 
     /**
      *
@@ -97,14 +105,13 @@ public class DespesaDAO {
 
         while(dados.next()){
             despesa.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            despesa.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             despesa.setDescricao(dados.getString("Descricao"));
             despesa.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             despesa.setValor(dados.getDouble("valor"));
             despesa.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + despesa.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     +"';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             
@@ -154,14 +161,13 @@ public class DespesaDAO {
         while(dados.next()){
             Despesa despesa = new Despesa();
             despesa.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            despesa.setSubCategoriaID(dados.getInt("SubCategoriaID"));
             despesa.setDescricao(dados.getString("Descricao"));
             despesa.setDataOcorrencia(dados.getDate("dataOcorrencia"));
             despesa.setValor(dados.getDouble("valor"));
             despesa.setFormaPagamento(dados.getInt("formaPagamento"));
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
-                    + despesa.getSubCategoriaID() 
+                    + dados.getInt("SubCategoriaID") 
                     +"';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
             

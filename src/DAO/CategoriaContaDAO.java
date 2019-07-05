@@ -45,13 +45,30 @@ public class CategoriaContaDAO {
     public boolean create(CategoriaConta categoria) throws SQLException, ClassNotFoundException{
         String sql = "insert into categoriaconta(Descricao, Positiva)values(?,?)";
         System.out.println(contexto.getConexao());
-        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
-                preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
-                preparestatement.setBoolean(2, categoria.isPositiva());
+        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setBoolean(2, categoria.isPositiva());
 
-                //executando comando sql
-                return preparestatement.execute();
+            //executando comando sql
+            int result = preparestatement.executeUpdate();
+            if (result > 0) {
+                ResultSet id = preparestatement.getGeneratedKeys();
+                if (id.next()){
+                    categoria.setCategoriaContaID(id.getInt(1));
+                    return true;
+                }
+            }
+            return false;
         } catch (SQLException e) { throw e; }
+    }
+    
+    
+    public boolean exists(String desc, boolean positiva) throws ClassNotFoundException, SQLException{
+        String query = "select categoriaContaID from categoriaConta where Descricao = '"+ desc +"' Positiva = '"+ positiva  +"';";
+
+        ResultSet dados = contexto.executeQuery(query);
+
+        return dados != null;
     }
     
     /**

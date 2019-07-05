@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -48,14 +49,28 @@ public class SubCategoriaDAO {
      */
     public boolean create(SubCategoria subCategoria) throws ClassNotFoundException, SQLException{
         String sql = "insert into subCategoria(descricao)values(?)";
-        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
+        try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            preparestatement.setString(1, subCategoria.getDescricao()); //substitui o ? pelo dado do usuario
 
-                preparestatement.setString(1, subCategoria.getDescricao()); //substitui o ? pelo dado do usuario
+            //executando comando sql
+            int result = preparestatement.executeUpdate();
+            if (result > 0) {
+                ResultSet id = preparestatement.getGeneratedKeys();
+                if (id.next()){
+                    subCategoria.setSubCategoriaID(id.getInt(1));
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) { throw e; }    
+    }
+    
+    public boolean exists(String desc) throws ClassNotFoundException, SQLException{
+        String query = "select SubCategoriaID from SubCategoria where Descricao = '"+ desc +"';";
 
-                //executando comando sql
-                return preparestatement.execute();
-        } catch (SQLException e) { throw e; }
-        
+        ResultSet dados = contexto.executeQuery(query);
+
+        return dados != null;
     }
     
     /**

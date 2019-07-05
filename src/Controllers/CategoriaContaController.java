@@ -26,9 +26,27 @@ public class CategoriaContaController {
     public CategoriaConta create(CategoriaConta categoriaConta) {
          try {
             CategoriaContaDAO dao = new CategoriaContaDAO();
-             if (dao.create(categoriaConta)) {
-                 return categoriaConta;
-             }
+            if (categoriaConta.getDescricao() != null) {
+                if ( !dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
+                    if (dao.create(categoriaConta)) {
+                       return categoriaConta;
+                    }
+                    else{
+                        Mensagem.aviso("Não foi possivel criar a categoria.");
+                    }
+                }
+                else{
+                    if (categoriaConta.isPositiva()) {
+                        Mensagem.aviso("Já existe uma categoria de receita com essa Descrição.");
+                    }
+                    else{
+                        Mensagem.aviso("Já existe uma categoria de despesa com essa Descrição.");
+                    }
+                }
+            }
+            else{
+               Mensagem.aviso("A categoria deve ter uma Descrição."); 
+            }
          } catch (ClassNotFoundException | SQLException e) {
              Log.saveLog(e);
              Mensagem.excecao(e);
@@ -81,14 +99,30 @@ public class CategoriaContaController {
     public CategoriaConta update(CategoriaConta categoriaConta) {
         try{
             CategoriaContaDAO dao = new CategoriaContaDAO();
-            if (categoriaConta.getCategoriaContaID() != 0) {
-                if (dao.update(categoriaConta)) {
-                    return categoriaConta;
+            if (categoriaConta.getCategoriaContaID() != 0 && categoriaConta.getDescricao() != null) {
+                if ( !dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
+                    if (dao.update(categoriaConta)) {
+                       return categoriaConta;
+                    }
+                    else{
+                        Mensagem.aviso("Não foi possivel realizar a Atualização.");
+                    }
+                }
+                else{
+                    if (categoriaConta.isPositiva()) {
+                        Mensagem.aviso("Já existe uma categoria de receita com essa Descrição.");
+                    }
+                    else{
+                        Mensagem.aviso("Já existe uma categoria de despesa com essa Descrição.");
+                    }
                 }
             }
+            else{
+               Mensagem.aviso("Deve ser selecionada uma categoria e a categoria deve ter uma Descrição."); 
+            }
          } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
+            Log.saveLog(e);
+            Mensagem.excecao(e);
          }
         
         return null;

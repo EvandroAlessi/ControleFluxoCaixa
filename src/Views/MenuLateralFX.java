@@ -33,7 +33,7 @@ public class MenuLateralFX extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button resumo, relatorio, despesa, receita, categoria, sair, logout;
+    Button resumo, relatorio, despesa, receita, categoria, sair;
     Image grafico;
     ImageView imageView;
     
@@ -47,7 +47,6 @@ public class MenuLateralFX extends GridPane {
         categoria = new Button("Categorias");
         //pagamento = new Button("Formas de Pagamentos");
         sair = new Button("Sair");
-        logout = new Button("Logout");
         vbRight = new VBox();
         
         
@@ -86,14 +85,6 @@ public class MenuLateralFX extends GridPane {
             main.switchCenter(Tela.CATEGORIA);
         });
         
-//        pagamento.setOnAction((event) -> {
-//            main.switchCenter(Tela.PAGAMENTO);
-//        });
-        
-        logout.setOnAction((event) -> {
-            
-        });
-        
         sair.setOnAction((event) -> {
             Platform.exit();
             System.exit(0);
@@ -105,7 +96,7 @@ public class MenuLateralFX extends GridPane {
         imageView.setPreserveRatio(true);
         
         vbTop.getChildren().addAll(imageView,resumo,relatorio,despesa, receita, categoria);
-        vbBottom.getChildren().addAll(logout, sair);
+        vbBottom.getChildren().addAll(sair);
         resumo.setMinWidth(150);
         resumo.setMinHeight(60);
         receita.setMinWidth(150);
@@ -116,12 +107,8 @@ public class MenuLateralFX extends GridPane {
         relatorio.setMinHeight(60);
         despesa.setMinWidth(150);
         despesa.setMinHeight(60);
-       //pagamento.setMinWidth(150);
-        //pagamento.setMinHeight(60);
         sair.setMinWidth(150);
         sair.setMinHeight(60);
-        logout.setMinWidth(150);
-        logout.setMinHeight(60);
 
         resumo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
@@ -143,15 +130,7 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
-       // pagamento.setStyle("-fx-background-insets: 0,0; "
-       //         + "-fx-padding: 1; "
-       //         + "-fx-border: 0;"
-        //        + "-fx-font-weight: bold");
         sair.setStyle("-fx-background-insets: 0,0; "
-                + "-fx-padding: 1; "
-                + "-fx-border: 0;"
-                + "-fx-font-weight: bold");
-        logout.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");

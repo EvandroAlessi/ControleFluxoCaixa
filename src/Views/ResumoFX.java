@@ -19,17 +19,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -74,8 +80,7 @@ public class ResumoFX extends GridPane {
                 }
             });
             
-            DespesaController dao = new DespesaController();
-            dao.create(new Despesa(new Date(1997, 10, 05), "asdasss",120 , 1));
+           
 
             for(String chave: dados.keySet()){
                 dataSeries1.getData().add(new XYChart.Data(chave, dados.get(chave)));
@@ -109,17 +114,34 @@ public class ResumoFX extends GridPane {
 
 
             setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
-
-            add(getTable(),0,1);
-            setColumnSpan(getTable(), 2);
-            add(getGraficoBar(),0,0);
-            add(this.graficoLinha,1,0);
-
+//
+//            add(getTable(),0,1);
+//            setColumnSpan(getTable(), 2);
+//            add(getGraficoBar(),0,0);
+            add(this.graficoLinha,0,1);
+            
+           double saldo = control.getSaldo();
+             
+            Label label = new Label("SALDO \n" + saldo);
+            
+            label.setAlignment(Pos.CENTER);
+            Font font = new Font(70);
+            label.setFont(font);
+            if(saldo >= 0){
+                label.setTextFill(Color.GREEN);
+            }else{
+                 label.setTextFill(Color.RED);
+            }
+            
+            
+            add(label, 0, 0);
             ColumnConstraints c1 =  new ColumnConstraints();
             c1.setHgrow(Priority.ALWAYS);
+            c1.setHalignment(HPos.CENTER);
 
             RowConstraints r1 = new RowConstraints();
             r1.setVgrow(Priority.ALWAYS);
+            r1.setValignment(VPos.CENTER);
 
             getColumnConstraints().add(c1);
             getRowConstraints().add(r1);

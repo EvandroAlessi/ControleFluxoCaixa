@@ -6,6 +6,7 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
+import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -16,18 +17,22 @@ import javafx.scene.control.MenuItem;
  */
 public class MenuSuperiorFX extends MenuBar{
         MenuBar menuSuperior; 
-        Menu arquivo, resumo, relatorio, sobre;
-        MenuItem sair;
+        Menu arquivo, cadastro;
+        MenuItem sair, resumo, relatorio, despesa, receita, categoria;
         
         public MenuSuperiorFX(MainFX main){
             arquivo = new Menu("Arquivo");
-            resumo = new Menu("Resumo");
-            relatorio = new Menu("Relatório");
-            sobre = new Menu("Sobre");
+            cadastro = new Menu("Geral");
+            resumo = new MenuItem("Resumo");
+            relatorio = new MenuItem("Relatório");
+            despesa = new MenuItem("Despesas");
+            receita = new MenuItem("Receitas");
+            categoria = new MenuItem("Categorias");
             sair = new MenuItem("Sair");
             arquivo.getItems().add(sair);
+            cadastro.getItems().addAll(resumo, relatorio, despesa, receita, categoria);
             
-            getMenus().addAll(arquivo,resumo,relatorio,sobre);
+            getMenus().addAll(arquivo, cadastro);
             
             resumo.setOnAction((event) -> {
                 main.switchCenter(Tela.RESUMO);
@@ -35,6 +40,23 @@ public class MenuSuperiorFX extends MenuBar{
 
             relatorio.setOnAction((event) -> {
                 main.switchCenter(Tela.RELATORIO);
+            });
+
+            despesa.setOnAction((event) -> {
+                main.switchCenter(Tela.DESPESA);
+            });
+
+            receita.setOnAction((event) -> {
+                main.switchCenter(Tela.RECEITA);
+            });
+
+            categoria.setOnAction((event) -> {
+                main.switchCenter(Tela.CATEGORIA);
+            });
+
+            sair.setOnAction((event) -> {
+                Platform.exit();
+                System.exit(0);
             });
         }    
 }

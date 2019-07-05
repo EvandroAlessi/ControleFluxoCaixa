@@ -34,7 +34,7 @@ public class Log {
             
             try (FileWriter escrever = new FileWriter(log, true)) {
                 Date data = Calendar.getInstance().getTime();
-                SimpleDateFormat dataPTBR = new SimpleDateFormat("EEEEEE ',' dd ' de 'MMMM ' de ' yyyy");
+                SimpleDateFormat dataPTBR = new SimpleDateFormat("EEEEEE',' dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss");
                 escrever.append("\n" + dataPTBR.format(data) + "\n");
                 escrever.append("Mensagem:" + exeption.getMessage()+"\n");
                 escrever.append("StackTrace:" + Arrays.toString(exeption.getStackTrace()) + "\n");

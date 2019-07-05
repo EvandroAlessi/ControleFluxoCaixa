@@ -6,11 +6,17 @@
 package Views;
 
 import Controllers.CategoriaContaController;
+import Controllers.ReceitaController;
 import Controllers.SubCategoriaController;
 import Models.CategoriaConta;
+import Models.Receita;
 import Models.SubCategoria;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
@@ -48,6 +54,8 @@ public class CadastroReceitaFX {
     private SubCategoriaController controlSubCategoria;
     private List<SubCategoria> subCategorias;
     private ComboBox comboSub,comboPgt;
+    private ReceitaController controlReceita;
+    
     public CadastroReceitaFX() {
         lbDescricao = new Label("Descrição:");
         txtDesc = new TextField();
@@ -61,9 +69,46 @@ public class CadastroReceitaFX {
         cancelar = new Button("Cancelar");
         calendario = new DatePicker();
         controlSubCategoria = new SubCategoriaController();
+        controlReceita = new ReceitaController();
         subCategorias = controlSubCategoria.getAll();
         comboSub = new ComboBox();
         comboPgt = new ComboBox();
+        cadastrar.setOnAction(e ->{
+            // Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento
+            Receita nReceita = new Receita();
+            nReceita.setDescricao(txtDesc.getText());
+            nReceita.setDataOcorrencia(java.sql.Date.valueOf(calendario.getValue()));
+            nReceita.setValor(Double.parseDouble(txtValor.getText()));
+            nReceita.setFormaPagamento(switchPag((String) comboPgt.getValue()));
+            for (SubCategoria sub: subCategorias) {
+                if(sub.getDescricao()==comboSub.getValue()){
+                    System.out.println("combo == "+ comboSub.getValue());
+                    nReceita.setSubcategoria(sub);
+                    break;
+                }
+                else
+                    nReceita.setSubcategoria(null);
+            }
+            System.out.println(nReceita);
+            System.out.println("subcat id: "+nReceita.getSubcategoria().getSubCategoriaID());
+            controlReceita.create(nReceita);
+        });
+    }
+    
+    public int switchPag(String pgt){
+        switch(pgt){
+            case "Crédito":
+                return 1;
+            case "Dinheiro":
+                return 2;
+            case "Boleto":
+                return 3;
+            case "Depósito":
+                return 4;
+            case "Convênio":
+                return 5;
+        }
+        return 0;
     }
 
     public void start(Stage mainStage) throws Exception {
@@ -89,8 +134,12 @@ public class CadastroReceitaFX {
     private GridPane criarFormulario(){
         GridPane pane = new GridPane();
         HBox l1 = new HBox();
-
-        ListIterator<SubCategoria> subIte = subCategorias.listIterator();
+        List<SubCategoria> receitas = new ArrayList<>();
+        for (SubCategoria receita: subCategorias) {
+            if(receita.getCategoriaConta().isPositiva())
+                receitas.add(receita);
+        }
+        ListIterator<SubCategoria> subIte = receitas.listIterator();
         pane.setAlignment(Pos.TOP_CENTER);
         pane.setHgap(10);
         pane.setVgap(10);
@@ -127,7 +176,8 @@ public class CadastroReceitaFX {
         cadastrar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         cancelar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
         
-
         return pane;
     }
+    
+    
 }

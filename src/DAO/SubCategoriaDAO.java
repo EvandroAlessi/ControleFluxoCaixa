@@ -20,6 +20,12 @@ import java.util.ArrayList;
 public class SubCategoriaDAO {
     private final Contexto contexto = new Contexto();
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException{
         String query = "select * from subCategoria;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
@@ -33,6 +39,13 @@ public class SubCategoriaDAO {
         return columns;
     }
     
+    /**
+     *
+     * @param subCategoria
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean create(SubCategoria subCategoria) throws ClassNotFoundException, SQLException{
         String sql = "insert into subCategoria(descricao)values(?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
@@ -45,6 +58,13 @@ public class SubCategoriaDAO {
         
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public SubCategoria get(int id) throws ClassNotFoundException, SQLException{
         System.out.println("1");
         String query = "select * from subCategoria where subCategoriaid = '"+ id +"';";
@@ -76,6 +96,12 @@ public class SubCategoriaDAO {
         return subCategoria;
     }
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<SubCategoria> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from subCategoria;";
         ArrayList<SubCategoria> list = new ArrayList<>();
@@ -107,6 +133,13 @@ public class SubCategoriaDAO {
         return list;
     }
     
+    /**
+     *
+     * @param subCategoria
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean update(SubCategoria subCategoria) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
@@ -128,6 +161,13 @@ public class SubCategoriaDAO {
         return result > 0;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean delete(int id) throws ClassNotFoundException, SQLException{
         String sql = "delete from subCategoria where subCategoria = ?";
         try(PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)){

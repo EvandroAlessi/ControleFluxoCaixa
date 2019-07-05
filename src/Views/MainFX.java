@@ -6,6 +6,8 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import DAO.CategoriaContaDAO;
 import Models.CategoriaConta;
 import com.sun.media.jfxmedia.logging.Logger;
@@ -24,7 +26,7 @@ public class MainFX extends Application {
     private static BorderPane root;
     private MenuSuperiorFX menuSuperior;
     private MenuLateralFX menuLateral;
-    private ResumoFX resumo;
+    //private ResumoFX resumo;
     private Stage stage;
     
     @Override
@@ -51,16 +53,14 @@ public class MainFX extends Application {
         primaryStage.show();
        
         // teste
-        try {
-            CategoriaContaDAO sub = new CategoriaContaDAO();
-                sub.create(new CategoriaConta("descricao43", false));
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
-        }
+        Log.saveLog(new Exception());
         
     }
      
+    /**
+     *
+     * @param tela
+     */
     public void switchCenter(Tela tela) {
         switch(tela){
             case RESUMO:

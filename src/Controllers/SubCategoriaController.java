@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import CrossCutting.Log;
 import DAO.SubCategoriaDAO;
 import Models.SubCategoria;
 import com.sun.media.jfxmedia.logging.Logger;
@@ -16,43 +17,63 @@ import java.util.ArrayList;
  * @author evand
  */
 public class SubCategoriaController {
-     public SubCategoria create(SubCategoria subCategoria) {
+
+    /**
+     *
+     * @param subCategoria
+     * @return
+     */
+    public SubCategoria create(SubCategoria subCategoria) {
         try {
             SubCategoriaDAO dao = new SubCategoriaDAO();
              if (dao.create(subCategoria)) {
                  return subCategoria;
              }
          } catch (ClassNotFoundException | SQLException e) {
-             
+             Log.saveLog(e);
          }
         
         return null;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public SubCategoria get(int id) {
         try {
             SubCategoria subCategoria = new SubCategoriaDAO().get(id);
             
             return subCategoria;
         } catch (ClassNotFoundException | SQLException e) {
-            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+            Log.saveLog(e);
         }
         
         return null;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<SubCategoria> getAll() {
          try {
             ArrayList<SubCategoria> subCategorias = new SubCategoriaDAO().getAll();
             
             return subCategorias;
         } catch (ClassNotFoundException | SQLException e) {
-            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+            Log.saveLog(e);
         }
         
         return null;
     }
     
+    /**
+     *
+     * @param subCategoria
+     * @return
+     */
     public SubCategoria update(SubCategoria subCategoria) {
         try{
             SubCategoriaDAO dao = new SubCategoriaDAO();
@@ -62,19 +83,24 @@ public class SubCategoriaController {
                 }
             } 
          } catch (ClassNotFoundException | SQLException e) {
-             
+             Log.saveLog(e);
          }
         
         return null;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public boolean delete(int id) {
         try {
             if (id != 0) {
                 return new SubCategoriaDAO().delete(id);
             }
         } catch (ClassNotFoundException | SQLException e) {
-            
+            Log.saveLog(e);
         }
         
         return false;

@@ -22,6 +22,12 @@ import java.util.ArrayList;
 public class MovimentacaoDAO {
     private final Contexto contexto = new Contexto();
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
@@ -35,6 +41,13 @@ public class MovimentacaoDAO {
         return columns;
     }
     
+    /**
+     *
+     * @param movimentacao
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean create(Movimentacao movimentacao) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
@@ -51,6 +64,13 @@ public class MovimentacaoDAO {
         
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Movimentacao get(int id) throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where movimentacaoid = '"+ id +"';";
         Movimentacao movimentacao = new Movimentacao();
@@ -98,6 +118,12 @@ public class MovimentacaoDAO {
         return movimentacao;
     }
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<Movimentacao> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao;";
         ArrayList<Movimentacao> list = new ArrayList<>();
@@ -149,6 +175,13 @@ public class MovimentacaoDAO {
         return list;
     }
     
+    /**
+     *
+     * @param movimentacao
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean update(Movimentacao movimentacao) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
@@ -174,6 +207,13 @@ public class MovimentacaoDAO {
         return result > 0;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean delete(int id) throws ClassNotFoundException, SQLException{
         String sql = "delete from movimentacao where movimentacaoID = ?";
         try(PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)){

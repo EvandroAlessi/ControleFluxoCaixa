@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import CrossCutting.Log;
 import DAO.MovimentacaoDAO;
 import Models.Movimentacao;
 import com.sun.media.jfxmedia.logging.Logger;
@@ -16,43 +17,63 @@ import java.util.ArrayList;
  * @author evand
  */
 public class MovimentacaoController {
-     public Movimentacao create(Movimentacao movimentacao) {
+
+    /**
+     *
+     * @param movimentacao
+     * @return
+     */
+    public Movimentacao create(Movimentacao movimentacao) {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
              if (dao.create(movimentacao)) {
                  return movimentacao;
              }
          } catch (ClassNotFoundException | SQLException e) {
-             
+             Log.saveLog(e);
          }
         
         return null;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Movimentacao get(int id) {
         try {
             Movimentacao movimentacao = new MovimentacaoDAO().get(id);
             
             return movimentacao;
         } catch (ClassNotFoundException | SQLException e) {
-            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+            Log.saveLog(e);
         }
         
         return null;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Movimentacao> getAll() {
          try {
             ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll();
             
             return movimentacoes;
         } catch (ClassNotFoundException | SQLException e) {
-            Logger.logMsg(Logger.ERROR, "Failed to load cinematic context");
+            Log.saveLog(e);
         }
         
         return null;
     }
     
+    /**
+     *
+     * @param movimentacao
+     * @return
+     */
     public Movimentacao update(Movimentacao movimentacao) {
         try{
             MovimentacaoDAO dao = new MovimentacaoDAO();
@@ -62,19 +83,24 @@ public class MovimentacaoController {
                 }
             } 
          } catch (ClassNotFoundException | SQLException e) {
-             
+             Log.saveLog(e);
          }
         
         return null;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public boolean delete(int id) {
         try {
             if (id != 0) {
                 return new MovimentacaoDAO().delete(id);
             }
         } catch (ClassNotFoundException | SQLException e) {
-            
+            Log.saveLog(e);
         }
         
         return false;

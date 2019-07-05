@@ -28,14 +28,21 @@ import javafx.stage.Stage;
  * @author SpaceBR
  */
 public class CadastroCategoria {
-    private String title;
-    private HBox l1,l2,l3;
-    private RadioButton despesa,receita;
-    private VBox forms;
-    private Label lbTitle,lbDesc, lbTipo;
-    private ComboBox combo;
-    private TextField txtDesc;
-    private Button cadastrar,cancelar;
+    //private String title;
+    private final HBox l1;
+    private final HBox l2;
+    private final HBox l3;
+    private final RadioButton despesa;
+    private final RadioButton receita;
+    private final VBox forms;
+    private final Label lbTitle;
+    private final Label lbDesc;
+    private final Label lbTipo;
+    private final ComboBox combo;
+    private final TextField txtDesc;
+    private final Button cadastrar;
+    //private T classe;
+    private final Button cancelar;
     //private T classe;
     
     public CadastroCategoria() {

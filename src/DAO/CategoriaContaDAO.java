@@ -16,6 +16,12 @@ import java.util.ArrayList;
 public class CategoriaContaDAO {
     private final Contexto contexto = new Contexto();
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException{
         String query = "select * from categoriaconta;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
@@ -29,6 +35,13 @@ public class CategoriaContaDAO {
         return columns;
     }
     
+    /**
+     *
+     * @param categoria
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public boolean create(CategoriaConta categoria) throws SQLException, ClassNotFoundException{
         String sql = "insert into categoriaconta(Descricao, Positiva)values(?,?)";
         System.out.println(contexto.getConexao());
@@ -41,6 +54,13 @@ public class CategoriaContaDAO {
         } catch (SQLException e) { throw e; }
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public CategoriaConta get(int id) throws ClassNotFoundException, SQLException{
         String query = "select * from categoriaconta where categoriacontaid = '"+ id +"';";
         CategoriaConta categoria = new CategoriaConta();
@@ -57,6 +77,12 @@ public class CategoriaContaDAO {
         return categoria;
     }
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<CategoriaConta> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from categoriaconta;";
         ArrayList<CategoriaConta> lista = new ArrayList<>();
@@ -77,6 +103,13 @@ public class CategoriaContaDAO {
         return lista;
     }
     
+    /**
+     *
+     * @param categoria
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean update(CategoriaConta categoria) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
@@ -96,6 +129,13 @@ public class CategoriaContaDAO {
         return result > 0;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean delete(int id) throws ClassNotFoundException, SQLException{
         String sql = "delete from categoriaconta where categoriacontaid = ?";
         try(PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)){

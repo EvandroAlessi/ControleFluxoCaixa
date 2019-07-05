@@ -22,6 +22,12 @@ import java.util.ArrayList;
 public class ReceitaDAO {
     private final Contexto contexto = new Contexto();
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
@@ -35,6 +41,13 @@ public class ReceitaDAO {
         return columns;
     }
     
+    /**
+     *
+     * @param receita
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean create(Receita receita) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
@@ -57,9 +70,16 @@ public class ReceitaDAO {
 
         ResultSet dados = contexto.executeQuery(query);
 
-        return dados == null ? false: true;
+        return dados != null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Receita get(int id) throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
@@ -110,6 +130,12 @@ public class ReceitaDAO {
         return receita;
     }
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<Receita> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
@@ -163,6 +189,13 @@ public class ReceitaDAO {
         return list;
     }
     
+    /**
+     *
+     * @param receita
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean update(Receita receita) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
@@ -188,6 +221,13 @@ public class ReceitaDAO {
         return result > 0;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean delete(int id) throws ClassNotFoundException, SQLException{
         String sql = "delete from movimentacao where movimentacaoID = ?";
         try(PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)){

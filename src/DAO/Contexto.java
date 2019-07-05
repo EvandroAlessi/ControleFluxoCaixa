@@ -21,8 +21,7 @@ public class Contexto {
     private String usuario = "root";
     private String senha = "root";
     private static Connection conexao;
-
-
+    
     public void getConnection() throws ClassNotFoundException, SQLException{
         if(Contexto.conexao == null || Contexto.conexao.isClosed()){
             Class.forName(driver);
@@ -30,7 +29,6 @@ public class Contexto {
             System.out.println("Banco conectado");
         }
     }
-    
     
     public int executeUpdate(String sql) throws ClassNotFoundException, SQLException{
         getConnection();
@@ -105,6 +103,8 @@ public class Contexto {
 
     /**
      * @return the conexao
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     public Connection getConexao() throws ClassNotFoundException, SQLException {
         if (Contexto.conexao == null || Contexto.conexao.isClosed()) {
@@ -117,6 +117,6 @@ public class Contexto {
      * @param conexao the conexao to set
      */
     public void setConexao(Connection conexao) {
-        this.conexao = conexao;
+        Contexto.conexao = conexao;
     }
 }

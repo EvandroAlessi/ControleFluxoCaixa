@@ -22,6 +22,12 @@ import java.util.ArrayList;
 public class DespesaDAO {
     private final Contexto contexto = new Contexto();
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
@@ -35,6 +41,13 @@ public class DespesaDAO {
         return columns;
     }
     
+    /**
+     *
+     * @param despesa
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean create(Despesa despesa) throws ClassNotFoundException, SQLException{
         String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento)values(?, ?, ?, ?)";
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql)) {
@@ -49,7 +62,13 @@ public class DespesaDAO {
         } catch (SQLException e) { throw e; }
     }
     
-
+    /**
+     *
+     * @param description
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean exists(String description) throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
@@ -58,9 +77,16 @@ public class DespesaDAO {
 
         ResultSet dados = contexto.executeQuery(query);
 
-        return dados == null ? false: true;
+        return dados != null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Despesa get(int id) throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
@@ -111,6 +137,12 @@ public class DespesaDAO {
         return despesa;
     }
     
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public ArrayList<Despesa> getAll() throws ClassNotFoundException, SQLException{
         String query = "select * from movimentacao where subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
@@ -164,6 +196,13 @@ public class DespesaDAO {
         return list;
     }
     
+    /**
+     *
+     * @param despesa
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean update(Despesa despesa) throws ClassNotFoundException, SQLException{
         StringBuilder columnsAndValues = new StringBuilder(255);
         
@@ -189,6 +228,13 @@ public class DespesaDAO {
         return result > 0;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public boolean delete(int id) throws ClassNotFoundException, SQLException{
         String sql = "delete from movimentacao where movimentacaoID = ?";
         try(PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)){

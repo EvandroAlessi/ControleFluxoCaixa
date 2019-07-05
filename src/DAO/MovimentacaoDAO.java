@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import Models.CategoriaConta;
 import Models.Movimentacao;
 import Models.SubCategoria;
@@ -70,6 +72,21 @@ public class MovimentacaoDAO {
         } catch (SQLException e) { throw e; }
         
         
+    }
+    
+    public double getSaldo() throws ClassNotFoundException, SQLException {
+        String query = "SELECT (SELECT SUM(valor) FROM movimentacao WHERE subcategoriaid in (\n" +
+            "select subcategoriaid from subcategoria where subcategoriaid in (\n" +
+            "select categoriacontaid from categoriaconta where positiva = 1))) - (SELECT SUM(valor) FROM movimentacao WHERE subcategoriaid in (\n" +
+            "select subcategoriaid from subcategoria where subcategoriaid in (\n" +
+            "select categoriacontaid from categoriaconta where positiva = 0))) as saldo;";
+        
+        ResultSet dados = contexto.executeQuery(query);
+        while(dados.next()){
+            return dados.getInt("saldo");
+        }
+        
+        return 0;
     }
     
     /**

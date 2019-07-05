@@ -84,6 +84,17 @@ public class MovimentacaoController {
         return null;
     }
     
+    public double getSaldo() {
+        try {
+            return new MovimentacaoDAO().getSaldo();
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+        
+        return 0;
+    }
+    
     /**
      *
      * @return

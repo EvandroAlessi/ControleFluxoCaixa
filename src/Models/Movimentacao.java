@@ -39,15 +39,6 @@ public class Movimentacao implements IPagamento {
         
         selectPayment(formaPagamento);
     }
-
-    
-    
-    public double getSaldo(){
-        MovimentacaoDAO service = new MovimentacaoDAO();
-        
-//        return service.getSaldo();
-        return 0;
-    }
     
     @Override
     public void selectPayment(int paymentType) {

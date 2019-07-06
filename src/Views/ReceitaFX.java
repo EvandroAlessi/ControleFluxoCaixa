@@ -14,10 +14,12 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,7 +39,9 @@ public class ReceitaFX extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria, apagar;
+    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria;
+    
+    private TableColumn<Receita, Void> apagar;
     private Stage mainStage;
     public ReceitaFX(Stage stage){
         mainStage = stage;
@@ -106,6 +110,38 @@ public class ReceitaFX extends GridPane{
             }
         });
         
+        Callback<TableColumn<Receita, Void>, TableCell<Receita, Void>> cellFactory = new Callback<TableColumn<Receita, Void>, TableCell<Receita, Void>>() {
+            @Override
+            public TableCell<Receita, Void> call(final TableColumn<Receita, Void> param) {
+                final TableCell<Receita, Void> cell = new TableCell<Receita, Void>() {
+
+                    private final Button btn = new Button("X");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Receita data = getTableView().getItems().get(getIndex());
+                            control.delete(data.getMovimentacaoID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        
+        apagar.setCellFactory(cellFactory);
+        
         table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
         
         
@@ -137,7 +173,7 @@ public class ReceitaFX extends GridPane{
             try {
                 form.start(mainStage);
             } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE, 
                         null, ex);
             }
         });

@@ -33,7 +33,7 @@ public class MenuLateralFX extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button resumo, relatorio, despesa, receita, categoria, sair;
+    Button resumo, despesa, receita, categoria, sair;
     Image grafico;
     ImageView imageView;
     
@@ -41,7 +41,6 @@ public class MenuLateralFX extends GridPane {
         vbTop = new VBox();
         vbBottom = new VBox();
         resumo = new Button("Resumos");
-        relatorio = new Button("Relatórios");
         despesa = new Button("Despesas");
         receita = new Button("Receitas");
         categoria = new Button("Categorias");
@@ -69,10 +68,6 @@ public class MenuLateralFX extends GridPane {
             main.switchCenter(Tela.RESUMO);
         });
         
-        relatorio.setOnAction((event) -> {
-            main.switchCenter(Tela.RELATORIO);
-        });
-        
         despesa.setOnAction((event) -> {
             main.switchCenter(Tela.DESPESA);
         });
@@ -95,7 +90,7 @@ public class MenuLateralFX extends GridPane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         
-        vbTop.getChildren().addAll(imageView,resumo,relatorio,despesa, receita, categoria);
+        vbTop.getChildren().addAll(imageView,resumo,despesa, receita, categoria);
         vbBottom.getChildren().addAll(sair);
         resumo.setMinWidth(150);
         resumo.setMinHeight(60);
@@ -103,8 +98,6 @@ public class MenuLateralFX extends GridPane {
         receita.setMinHeight(60);
         categoria.setMinWidth(150);
         categoria.setMinHeight(60);
-        relatorio.setMinWidth(150);
-        relatorio.setMinHeight(60);
         despesa.setMinWidth(150);
         despesa.setMinHeight(60);
         sair.setMinWidth(150);
@@ -119,10 +112,6 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
         categoria.setStyle("-fx-background-insets: 0,0; "
-                + "-fx-padding: 1; "
-                + "-fx-border: 0;"
-                + "-fx-font-weight: bold");
-        relatorio.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");

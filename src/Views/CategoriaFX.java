@@ -16,13 +16,16 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -39,12 +42,14 @@ public class CategoriaFX extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn categoria,subcategoria,tipo,apagar;
+    private TableColumn categoria,subcategoria,tipo;
+    private TableColumn<SubCategoria, Void> apagar;
     private Stage mainStage;
     
     public CategoriaFX(Stage stage){
         mainStage = stage;
         SubCategoriaController control = new SubCategoriaController();
+        CategoriaContaController control2 = new CategoriaContaController();
         titulo = new Label("Categorias");
         table = new TableView();
         categoria = new TableColumn("Categoria");
@@ -52,6 +57,8 @@ public class CategoriaFX extends GridPane{
         tipo = new TableColumn("Tipo");
         apagar = new TableColumn("x");
         cadastrar = new Button("Cadastrar");
+        
+        
         
         categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
         subcategoria.prefWidthProperty().bind(table.widthProperty().multiply(0.40));
@@ -74,7 +81,39 @@ public class CategoriaFX extends GridPane{
                     return new SimpleStringProperty("Despesa");
             }
         });
-         
+        
+        Callback<TableColumn<SubCategoria, Void>, TableCell<SubCategoria, Void>> cellFactory = new Callback<TableColumn<SubCategoria, Void>, TableCell<SubCategoria, Void>>() {
+            @Override
+            public TableCell<SubCategoria, Void> call(final TableColumn<SubCategoria, Void> param) {
+                final TableCell<SubCategoria, Void> cell = new TableCell<SubCategoria, Void>() {
+
+                    private final Button btn = new Button("X");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            SubCategoria data = getTableView().getItems().get(getIndex());
+                            control.delete(data.getSubCategoriaID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        apagar.setCellFactory(cellFactory);
+        
         table.getColumns().addAll(tipo,categoria,subcategoria,apagar);
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
@@ -83,7 +122,7 @@ public class CategoriaFX extends GridPane{
         List<SubCategoria> subcategorias = control.getAll();
         
         this.table.setItems(FXCollections.observableArrayList(subcategorias));
-        
+                
         titulo.setFont(new Font("Arial", 45));
         cadastrar.setMinSize(100, 50);
         ColumnConstraints c1 =  new ColumnConstraints();
@@ -103,9 +142,13 @@ public class CategoriaFX extends GridPane{
             CadastroCategoria form = new CadastroCategoria();
             try {
                 form.start(mainStage);
+                List<SubCategoria> subcategorias2 = control.getAll();
+                this.table.setItems(FXCollections.observableArrayList(subcategorias2));
             } catch (Exception ex) {
                 Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        
+        categoria.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 }

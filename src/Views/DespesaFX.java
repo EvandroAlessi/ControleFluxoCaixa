@@ -6,6 +6,7 @@
 package Views;
 
 import Controllers.DespesaController;
+import Models.CategoriaConta;
 import Models.Despesa;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,11 +14,13 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -36,7 +39,8 @@ public class DespesaFX extends GridPane{
     Label titulo;
     Button cadastrar;
     private TableView table;
-    private TableColumn data, pagamento, categoria, subcategoria, apagar;
+    private TableColumn data, pagamento, categoria, subcategoria;
+    private TableColumn<Despesa, Void> apagar;
     private TableColumn<String, DespesaFX> descricao = new TableColumn<>("Descrição");
     private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
     private Stage mainStage;
@@ -86,6 +90,38 @@ public class DespesaFX extends GridPane{
                 return new SimpleStringProperty("Indefinido");
             }
         });
+        
+        Callback<TableColumn<Despesa, Void>, TableCell<Despesa, Void>> cellFactory = new Callback<TableColumn<Despesa, Void>, TableCell<Despesa, Void>>() {
+            @Override
+            public TableCell<Despesa, Void> call(final TableColumn<Despesa, Void> param) {
+                final TableCell<Despesa, Void> cell = new TableCell<Despesa, Void>() {
+
+                    private final Button btn = new Button("X");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Despesa data = getTableView().getItems().get(getIndex());
+                            control.delete(data.getMovimentacaoID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        
+        apagar.setCellFactory(cellFactory);
         
         categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
             @Override

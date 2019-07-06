@@ -18,28 +18,23 @@ import javafx.scene.control.MenuItem;
 public class MenuSuperiorFX extends MenuBar{
         MenuBar menuSuperior; 
         Menu arquivo, cadastro;
-        MenuItem sair, resumo, relatorio, despesa, receita, categoria;
+        MenuItem sair, resumo, despesa, receita, categoria;
         
         public MenuSuperiorFX(MainFX main){
             arquivo = new Menu("Arquivo");
             cadastro = new Menu("Geral");
             resumo = new MenuItem("Resumo");
-            relatorio = new MenuItem("Relatório");
             despesa = new MenuItem("Despesas");
             receita = new MenuItem("Receitas");
             categoria = new MenuItem("Categorias");
             sair = new MenuItem("Sair");
             arquivo.getItems().add(sair);
-            cadastro.getItems().addAll(resumo, relatorio, despesa, receita, categoria);
+            cadastro.getItems().addAll(resumo, despesa, receita, categoria);
             
             getMenus().addAll(arquivo, cadastro);
             
             resumo.setOnAction((event) -> {
                 main.switchCenter(Tela.RESUMO);
-            });
-
-            relatorio.setOnAction((event) -> {
-                main.switchCenter(Tela.RELATORIO);
             });
 
             despesa.setOnAction((event) -> {

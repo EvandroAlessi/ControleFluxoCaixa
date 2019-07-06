@@ -47,7 +47,7 @@ public class CategoriaContaDAO {
         System.out.println(contexto.getConexao());
         try(PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
-            preparestatement.setBoolean(2, categoria.isPositiva());
+            preparestatement.setInt(2, (categoria.isPositiva()?1:0));
 
             //executando comando sql
             int result = preparestatement.executeUpdate();
@@ -64,11 +64,13 @@ public class CategoriaContaDAO {
     
     
     public boolean exists(String desc, boolean positiva) throws ClassNotFoundException, SQLException{
-        String query = "select categoriaContaID from categoriaConta where Descricao = '"+ desc +"' Positiva = '"+ positiva  +"';";
+        String query = "select categoriaContaID from categoriaConta where Descricao = '"+ desc +"' AND Positiva = '"+ (positiva?1:0)  +"';";
 
         ResultSet dados = contexto.executeQuery(query);
+        
+        dados.next();
 
-        return dados != null;
+        return dados.isClosed();
     }
     
     /**

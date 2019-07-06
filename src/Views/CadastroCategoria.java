@@ -10,6 +10,8 @@ import Controllers.SubCategoriaController;
 import Models.CategoriaConta;
 import Models.Receita;
 import Models.SubCategoria;
+import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
 import java.util.ListIterator;
 import static javafx.application.Application.launch;
@@ -82,6 +84,23 @@ public class CadastroCategoria {
         controlCategoria = new CategoriaContaController();
         categorias = controlCategoria.getAll();
         
+        novaCategoria.setOnAction(e->{
+            Stage stage = new Stage();
+            HBox hbox= new HBox();
+            TextField nome = new TextField();
+            Button button = new Button("Cadastrar");
+            button.setOnAction(ev->{
+                controlCategoria.create(new CategoriaConta(nome.getText(), true));
+                stage.close();
+                atualizarCategorias();
+            });
+            hbox.getChildren().addAll(nome, button);
+            Scene scene = new Scene(hbox);
+            stage.setScene(scene);
+            stage.showAndWait();
+           
+        });
+        
         cadastrar.setOnAction(e->{
             SubCategoria nSub = new SubCategoria();
             nSub.setSubCategoriaID(123123);
@@ -108,7 +127,16 @@ public class CadastroCategoria {
 //        this.control = control;
 //    }
     
-
+    public void atualizarCategorias(){
+        ListIterator<CategoriaConta> desc = categorias.listIterator();
+            combo.getItems().clear();
+            List<String> list = new ArrayList();
+            while(desc.hasNext()){
+                list.add(desc.next().getDescricao());
+            }
+            combo.setItems(FXCollections.observableArrayList(list));
+    }
+    
     public void start(Stage mainStage) throws Exception {
         dialog = new Stage();
         GridPane painel = criarFormulario();

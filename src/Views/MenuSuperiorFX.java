@@ -7,6 +7,7 @@ package Views;
 
 import CrossCutting.Enums.Tela;
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -19,7 +20,7 @@ public class MenuSuperiorFX extends MenuBar {
 
     MenuBar menuSuperior;
     Menu arquivo, cadastro;
-    MenuItem sair, resumo, despesa, receita, categoria;
+    MenuItem sair, resumo, despesa, receita, btnRelatorio, btnFuturo, categoria;
 
     public MenuSuperiorFX(MainFX main) {
         arquivo = new Menu("Arquivo");
@@ -28,9 +29,11 @@ public class MenuSuperiorFX extends MenuBar {
         despesa = new MenuItem("Despesas");
         receita = new MenuItem("Receitas");
         categoria = new MenuItem("Categorias");
+        btnRelatorio = new MenuItem("Ultimos lançamentos");
+        btnFuturo = new MenuItem("Lançamentos Futuros");
         sair = new MenuItem("Sair");
         arquivo.getItems().add(sair);
-        cadastro.getItems().addAll(resumo, despesa, receita, categoria);
+        cadastro.getItems().addAll(resumo, despesa, receita, btnRelatorio, btnFuturo, categoria);
 
         getMenus().addAll(arquivo, cadastro);
 
@@ -46,6 +49,14 @@ public class MenuSuperiorFX extends MenuBar {
             main.switchCenter(Tela.RECEITA);
         });
 
+        btnRelatorio.setOnAction((event) -> {
+            main.switchCenter(Tela.ULTIMOS);
+        });
+
+        btnFuturo.setOnAction((event) -> {
+            main.switchCenter(Tela.FUTURO);
+        });
+        
         categoria.setOnAction((event) -> {
             main.switchCenter(Tela.CATEGORIA);
         });

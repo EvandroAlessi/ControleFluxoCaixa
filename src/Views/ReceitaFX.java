@@ -76,7 +76,8 @@ public class ReceitaFX extends GridPane {
                 .multiply(0.10));
         tcPagamento.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
-
+        
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));

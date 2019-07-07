@@ -30,26 +30,23 @@ public class SubCategoriaController {
                 if (!dao.exists(subCategoria.getDescricao())) {
                     if (dao.create(subCategoria)) {
                         return subCategoria;
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("Não foi possivel criar a Subcategoria.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("Já existe uma Subcategoria com essa descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("Você deve selecionar uma Categoria e a SubCategoria deve ter uma descrição.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -58,65 +55,62 @@ public class SubCategoriaController {
     public SubCategoria get(int id) {
         try {
             SubCategoria subCategoria = new SubCategoriaDAO().get(id);
-            
+
             return subCategoria;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @return
      */
     public ArrayList<SubCategoria> getAll() {
-         try {
+        try {
             ArrayList<SubCategoria> subCategorias = new SubCategoriaDAO().getAll();
-            
+
             return subCategorias;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param subCategoria
      * @return
      */
     public SubCategoria update(SubCategoria subCategoria) {
-        try{
+        try {
             SubCategoriaDAO dao = new SubCategoriaDAO();
             if (subCategoria.getSubCategoriaID() != 0 && subCategoria.getCategoriaConta().getCategoriaContaID() != 0 && subCategoria.getDescricao() != null) {
                 if (!dao.exists(subCategoria.getDescricao())) {
                     if (dao.update(subCategoria)) {
                         return subCategoria;
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("Não foi possivel realizar a atualização.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("Já existe uma Subcategoria com essa descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("Você deve selecionar uma Categoria e a SubCategoria deve ter uma descrição.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -131,7 +125,7 @@ public class SubCategoriaController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return false;
     }
 }

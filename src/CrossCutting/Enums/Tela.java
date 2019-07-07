@@ -10,9 +10,11 @@ package CrossCutting.Enums;
  * @author evand
  */
 public enum Tela {
+    
     RESUMO,
     RELATORIO,
     RECEITA,
     DESPESA,
-    CATEGORIA
+    CATEGORIA,
+    SUBCATEGORIA
 }

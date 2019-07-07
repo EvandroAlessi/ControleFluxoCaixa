@@ -24,37 +24,33 @@ public class CategoriaContaController {
      * @return
      */
     public CategoriaConta create(CategoriaConta categoriaConta) {
-         try {
+        try {
             CategoriaContaDAO dao = new CategoriaContaDAO();
             if (categoriaConta.getDescricao() != null) {
-                if ( !dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
+                if (!dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
                     if (dao.create(categoriaConta)) {
-                       return categoriaConta;
-                    }
-                    else{
+                        return categoriaConta;
+                    } else {
                         Mensagem.aviso("Não foi possivel criar a categoria.");
                     }
-                }
-                else{
+                } else {
                     if (categoriaConta.isPositiva()) {
                         Mensagem.aviso("Já existe uma categoria de receita com essa Descrição.");
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("Já existe uma categoria de despesa com essa Descrição.");
                     }
                 }
+            } else {
+                Mensagem.aviso("A categoria deve ter uma Descrição.");
             }
-            else{
-               Mensagem.aviso("A categoria deve ter uma Descrição."); 
-            }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -70,64 +66,60 @@ public class CategoriaContaController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @return
      */
     public ArrayList<CategoriaConta> getAll() {
-         try {
+        try {
             ArrayList<CategoriaConta> categoriaContas = new CategoriaContaDAO().getAll();
-            
+
             return categoriaContas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param categoriaConta
      * @return
      */
     public CategoriaConta update(CategoriaConta categoriaConta) {
-        try{
+        try {
             CategoriaContaDAO dao = new CategoriaContaDAO();
             if (categoriaConta.getCategoriaContaID() != 0 && categoriaConta.getDescricao() != null) {
-                if ( !dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
+                if (!dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
                     if (dao.update(categoriaConta)) {
-                       return categoriaConta;
-                    }
-                    else{
+                        return categoriaConta;
+                    } else {
                         Mensagem.aviso("Não foi possivel realizar a Atualização.");
                     }
-                }
-                else{
+                } else {
                     if (categoriaConta.isPositiva()) {
                         Mensagem.aviso("Já existe uma categoria de receita com essa Descrição.");
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("Já existe uma categoria de despesa com essa Descrição.");
                     }
                 }
+            } else {
+                Mensagem.aviso("Deve ser selecionada uma categoria e a categoria deve ter uma Descrição.");
             }
-            else{
-               Mensagem.aviso("Deve ser selecionada uma categoria e a categoria deve ter uma Descrição."); 
-            }
-         } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
-         }
-        
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -142,7 +134,7 @@ public class CategoriaContaController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return false;
     }
 }

@@ -6,7 +6,6 @@
 package Views;
 
 import Controllers.ReceitaController;
-import Models.Despesa;
 import Models.Receita;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,7 +14,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
@@ -35,52 +37,53 @@ import javafx.util.Callback;
  *
  * @author SpaceBR
  */
-public class ReceitaFX extends GridPane{
-    Label titulo;
-    Button cadastrar;
-    private TableView table;
-    private TableColumn data, descricao, valor, pagamento, categoria, subcategoria;
-    
-    private TableColumn<Receita, Void> apagar;
+public class ReceitaFX extends GridPane {
+
+    Label lbTitulo;
+    Button btnCadastrar, btnEditar;
+    private TableView<Receita> table;
+    private TableColumn tcData, tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
+    private TableColumn<Receita, Void> tcApagar;
     private Stage mainStage;
-    public ReceitaFX(Stage stage){
+
+    public ReceitaFX(Stage stage) {
         mainStage = stage;
         ReceitaController control = new ReceitaController();
-        
-        titulo = new Label("Receitas");
+        lbTitulo = new Label("Receitas");
         table = new TableView();
-        data = new TableColumn("Ocorrência");
-        descricao = new TableColumn("Descrição");
-        valor = new TableColumn("Valor");
-        pagamento = new TableColumn("Forma de Pagamento");
-        cadastrar = new Button("Cadastrar");
-        categoria = new TableColumn("Categoria");
-        subcategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn("x");
-        
-        apagar.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.03));
-        subcategoria.prefWidthProperty().bind(table.widthProperty()
+        tcData = new TableColumn("Ocorrência");
+        tcDescricao = new TableColumn("Descrição");
+        tcValor = new TableColumn("Valor");
+        tcPagamento = new TableColumn("Forma de Pagamento");
+        btnCadastrar = new Button("Cadastrar");
+        btnEditar = new Button("Editar");
+        tcCategoria = new TableColumn("Categoria");
+        tcSubCategoria = new TableColumn("Subcategoria");
+        tcApagar = new TableColumn("");
+
+        tcApagar.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.06));
+        tcSubCategoria.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.15));
-        categoria.prefWidthProperty().bind(table.widthProperty()
+        tcCategoria.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.15));
-        data.prefWidthProperty().bind(table.widthProperty()
+        tcData.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
-        descricao.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.32));
-        valor.prefWidthProperty().bind(table.widthProperty()
+        tcDescricao.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.338));
+        tcValor.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
-        pagamento.prefWidthProperty().bind(
-                table.widthProperty().multiply(0.15));
-        
-        data.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
-        subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
-        descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        pagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+        tcPagamento.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.10));
+
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
+        tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tcPagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
-                switch(param.getValue().getFormaPagamento()){
+                switch (param.getValue().getFormaPagamento()) {
                     case 1:
                         return new SimpleStringProperty("Crédito");
                     case 2:
@@ -95,27 +98,27 @@ public class ReceitaFX extends GridPane{
                 return new SimpleStringProperty("Indefinido");
             }
         });
-        categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+        tcCategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
             @Override
             // obtem a descrição da categoria e converte para Observable
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
-                return new SimpleStringProperty(param.getValue().getSubcategoria().getCategoriaConta().getDescricao());
+                return new SimpleStringProperty(param.getValue().getSubCategoria().getCategoriaConta().getDescricao());
             }
         });
-        subcategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
+        tcSubCategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita, String>, ObservableValue<String>>() {
             @Override
             // obtem a descrição da subcategoria e converte para Observable
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Receita, String> param) {
-                return new SimpleStringProperty(param.getValue().getSubcategoria().getDescricao());
+                return new SimpleStringProperty(param.getValue().getSubCategoria().getDescricao());
             }
         });
-        
+
         Callback<TableColumn<Receita, Void>, TableCell<Receita, Void>> cellFactory = new Callback<TableColumn<Receita, Void>, TableCell<Receita, Void>>() {
             @Override
             public TableCell<Receita, Void> call(final TableColumn<Receita, Void> param) {
                 final TableCell<Receita, Void> cell = new TableCell<Receita, Void>() {
 
-                    private final Button btn = new Button("X");
+                    private final Button btn = new Button("Remover");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -136,44 +139,69 @@ public class ReceitaFX extends GridPane{
                         }
                     }
                 };
+
+                cell.setAlignment(Pos.CENTER);
                 return cell;
             }
         };
-        
-        apagar.setCellFactory(cellFactory);
-        
-        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
-        
-        
-        add(titulo, 0, 0);
-        add(cadastrar, 1, 0);
-        add(table,0,1);
-        
+
+        tcApagar.setCellFactory(cellFactory);
+        table.getColumns().addAll(tcData, tcCategoria, tcSubCategoria, tcDescricao, tcValor, tcPagamento, tcApagar);
+
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(btnCadastrar, btnEditar);
+        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(5));
+
+        add(lbTitulo, 0, 0);
+        add(hBox, 1, 0);
+        add(table, 0, 1);
+
         List<Receita> receitas = control.getAll();
-        
+
         this.table.setItems(FXCollections.observableArrayList(receitas));
-        
-        titulo.setFont(new Font("Arial", 45));
-        cadastrar.setMinSize(100, 50);
-        ColumnConstraints c1 =  new ColumnConstraints();
+
+        lbTitulo.setFont(new Font("Arial", 32));
+        lbTitulo.setPadding(new Insets(5, 5, 5, 10));
+        btnCadastrar.setMinSize(80, 40);
+        btnEditar.setMinSize(80, 40);
+        ColumnConstraints c1 = new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
-        
+
         RowConstraints r1 = new RowConstraints();
         RowConstraints r2 = new RowConstraints();
         //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
         getColumnConstraints().add(c1);
-        getRowConstraints().addAll(r1,r2);
-        setConstraints(titulo, 0, 0, 1, 1, HPos.CENTER, VPos.BASELINE);
-        setConstraints(cadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
+        getRowConstraints().addAll(r1, r2);
+        setConstraints(lbTitulo, 0, 0, 1, 1, HPos.LEFT, VPos.BASELINE);
+        setConstraints(btnCadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
         GridPane.setColumnSpan(table, 2);
-        
-        cadastrar.setOnAction(e ->{
+
+        btnEditar.disableProperty().bind(table.getSelectionModel().selectedItemProperty().isNull());
+
+        btnEditar.setOnAction(e -> {
             CadastroReceitaFX form = new CadastroReceitaFX();
             try {
-                form.start(mainStage);
+                form.start(mainStage, table.getSelectionModel().getSelectedItem());
+                table.refresh();
             } catch (Exception ex) {
-                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE,
+                        null, ex);
+            }
+        });
+
+        btnCadastrar.setOnAction(e -> {
+            CadastroReceitaFX form = new CadastroReceitaFX();
+            try {
+                form.start(mainStage, null);
+
+                if (form.getReceitaCriada() != null) {
+                    table.getItems().add(form.getReceitaCriada());
+                }
+
+            } catch (Exception ex) {
+                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE,
                         null, ex);
             }
         });

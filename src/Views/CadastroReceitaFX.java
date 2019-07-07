@@ -8,16 +8,14 @@ package Views;
 import Controllers.CategoriaContaController;
 import Controllers.ReceitaController;
 import Controllers.SubCategoriaController;
+import CrossCutting.Enums.FormaPagamento;
 import Models.CategoriaConta;
 import Models.Receita;
 import Models.SubCategoria;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -28,15 +26,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -47,141 +41,221 @@ import javafx.stage.Stage;
  * @author SpaceBR
  */
 public class CadastroReceitaFX {
-    private final Label lbData,lbSubCategoria,lbDescricao,lbValor,lbPagamento,lbTitle;
-    private final TextField txtDesc,txtValor;
-    private final DatePicker calendario;
-    private final Button cadastrar,cancelar;
-    private SubCategoriaController controlSubCategoria;
-    private List<SubCategoria> subCategorias;
-    private ComboBox comboSub,comboPgt;
-    private ReceitaController controlReceita;
+
+    private final Label lbData, lbSubCategoria, lbDescricao, lbValor, lbPagamento, lbTitle, lbCategoria;
+    private final TextField tfDescricao, tfValor;
+    private final DatePicker dpCalendario;
+    private final Button btnCadastrar, btnCancelar;
+    private final SubCategoriaController subCategoriaController;
+    private final CategoriaContaController categoriaController;
+    private final List<SubCategoria> subCategorias;
+    private final List<CategoriaConta> categoriasConta;
+    private ComboBox<String> cbPagamento;
+    private ComboBox<SubCategoria> cbSubCategoria;
+    private final ComboBox<CategoriaConta> cbCategoria;
+    private ReceitaController receitaController;
     private Stage dialog;
-    
+    private Receita receitaCriada;
+
     public CadastroReceitaFX() {
+        receitaCriada = null;
         lbDescricao = new Label("Descrição:");
-        txtDesc = new TextField();
-        txtValor = new TextField();
-        lbTitle = new Label("Cadastrar Receita");
+        tfDescricao = new TextField();
+        tfValor = new TextField();
+        lbTitle = new Label("Nova Receita");
         lbData = new Label("Ocorrência:");
         lbSubCategoria = new Label("Subcategoria:");
+        lbCategoria = new Label("Categoria:");
         lbValor = new Label("Valor:");
         lbPagamento = new Label("Pagamento:");
-        cadastrar = new Button("Cadastrar");
-        cancelar = new Button("Cancelar");
-        calendario = new DatePicker();
-        controlSubCategoria = new SubCategoriaController();
-        controlReceita = new ReceitaController();
-        subCategorias = controlSubCategoria.getAll();
-        comboSub = new ComboBox();
-        comboPgt = new ComboBox();
-        cadastrar.setOnAction(e ->{
-            // Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento
-            Receita nReceita = new Receita();
-            nReceita.setDescricao(txtDesc.getText());
-            nReceita.setDataOcorrencia(java.sql.Date.valueOf(calendario.getValue()));
-            nReceita.setValor(Double.parseDouble(txtValor.getText()));
-            nReceita.setFormaPagamento(switchPag((String) comboPgt.getValue()));
-            for (SubCategoria sub: subCategorias) {
-                if(sub.getDescricao()==comboSub.getValue()){
-                    nReceita.setSubcategoria(sub);
-                    break;
-                }
-                else
-                    nReceita.setSubcategoria(null);
+        btnCadastrar = new Button("Cadastrar");
+        btnCancelar = new Button("Cancelar");
+        dpCalendario = new DatePicker();
+        subCategoriaController = new SubCategoriaController();
+        categoriaController = new CategoriaContaController();
+        receitaController = new ReceitaController();
+        subCategorias = subCategoriaController.getAll();
+        categoriasConta = categoriaController.getAll();
+        cbSubCategoria = new ComboBox();
+        cbPagamento = new ComboBox();
+        cbCategoria = new ComboBox();
+
+        btnCadastrar.setOnAction(e -> {
+            if (receitaCriada == null) {
+                // Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento
+                Receita nReceita = new Receita();
+                nReceita.setDescricao(tfDescricao.getText());
+                nReceita.setDataOcorrencia(dpCalendario.getValue());
+                nReceita.setValor(Double.parseDouble(tfValor.getText()));
+                System.out.println(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                nReceita.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                nReceita.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
+                receitaController.create(nReceita);
+                receitaCriada = nReceita;
+            } else {
+                receitaCriada.setDescricao(tfDescricao.getText());
+                receitaCriada.setDataOcorrencia(dpCalendario.getValue());
+                receitaCriada.setValor(Double.parseDouble(tfValor.getText()));
+                receitaCriada.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                receitaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
+                receitaController.update(receitaCriada);
             }
-            System.out.println(nReceita);
-            System.out.println("subcat id: "+nReceita.getSubcategoria().getSubCategoriaID());
-            controlReceita.create(nReceita);
+
+            dialog.close();
         });
-        cancelar.setOnAction(e->{
+        btnCancelar.setOnAction(e -> {
             dialog.close();
         });
     }
-    
-    public int switchPag(String pgt){
-        switch(pgt){
-            case "Crédito":
-                return 1;
-            case "Dinheiro":
-                return 2;
-            case "Boleto":
-                return 3;
-            case "Depósito":
-                return 4;
-            case "Convênio":
-                return 5;
-        }
-        return 0;
-    }
 
-    public void start(Stage mainStage) throws Exception {
+    public void start(Stage mainStage, Receita receitaCriada) throws Exception {
         dialog = new Stage();
-        GridPane painel = criarFormulario();
-        dialog.setTitle("Cadastro Receita");
+        GridPane painel = criarFormulario(receitaCriada);
         dialog.initOwner(mainStage);
         dialog.initModality(Modality.APPLICATION_MODAL);
-        // Create the registration form pane
-        
-        // Create a scene with the registration form gridPane as the root node.
-        Scene scene = new Scene(painel, 400, 400);
-        // Set the scene in primary stage
+
+        Scene scene = new Scene(painel, 400, 420);
+
+        dialog.setResizable(false);
+        dialog.setMaxHeight(420);
+        dialog.setMaxWidth(400);
+        dialog.setMinHeight(420);
+        dialog.setMinWidth(400);
+
         dialog.setScene(scene);
         dialog.showAndWait();
-       
     }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 
-    private GridPane criarFormulario(){
+    private GridPane criarFormulario(Receita receitaCriada) {
         GridPane pane = new GridPane();
         HBox l1 = new HBox();
-        List<SubCategoria> receitas = new ArrayList<>();
-        for (SubCategoria receita: subCategorias) {
-            if(receita.getCategoriaConta().isPositiva())
-                receitas.add(receita);
+        List<SubCategoria> subCatReceita = new ArrayList<>();
+        for (SubCategoria receita : subCategorias) {
+            if (receita.getCategoriaConta().isPositiva()) {
+                subCatReceita.add(receita);
+            }
         }
-        ListIterator<SubCategoria> subIte = receitas.listIterator();
+        List<CategoriaConta> catReceita = new ArrayList<>();
+
+        for (CategoriaConta receita : categoriasConta) {
+            if (receita.isPositiva()) {
+                catReceita.add(receita);
+            }
+        }
+
+        ListIterator<SubCategoria> subIte = subCatReceita.listIterator();
         pane.setAlignment(Pos.TOP_CENTER);
         pane.setHgap(10);
         pane.setVgap(10);
-        pane.setPadding(new Insets(25, 25, 25, 25));
+        pane.setPadding(new Insets(25, 10, 25, 25));
 
-        comboPgt.getItems().addAll("Crédito","Dinheiro","Boleto","Depósito","Convênio");
-        while(subIte.hasNext()){
-            comboSub.getItems().addAll(FXCollections.observableArrayList(subIte.next().getDescricao()));
+        for (FormaPagamento c : FormaPagamento.values()) {
+            cbPagamento.getItems().add(c.toString());
         }
-        
-        l1.getChildren().addAll(cadastrar,cancelar);
+
+        cbCategoria.setItems(FXCollections.observableArrayList(catReceita));
+
+        cbSubCategoria.setDisable(false);
+
+        cbCategoria.getSelectionModel().selectedItemProperty().addListener((opcoes, valorAntigo, valorNovo) -> {
+            List<SubCategoria> subCatReceitaSelected = new ArrayList<>();
+            for (SubCategoria receita : subCatReceita) {
+                if (receita.getCategoriaConta().getCategoriaContaID() == valorNovo.getCategoriaContaID()) {
+                    subCatReceitaSelected.add(receita);
+                }
+            }
+            cbSubCategoria.setItems(FXCollections.observableArrayList(subCatReceitaSelected));
+            if (subCatReceitaSelected.size() > 0) {
+                cbSubCategoria.setDisable(false);
+                cbSubCategoria.getSelectionModel().selectFirst();
+            } else {
+                cbSubCategoria.setDisable(true);
+            }
+        });
+
+        ColumnConstraints c1 = new ColumnConstraints();
+        //c1.setHgrow(Priority.ALWAYS);
+        c1.setHalignment(HPos.CENTER);
+
+        RowConstraints r1 = new RowConstraints();
+        //r1.setVgrow(Priority.ALWAYS);
+        r1.setValignment(VPos.CENTER);
+
+        pane.getColumnConstraints().add(c1);
+        pane.getRowConstraints().add(r1);
+
+        cbCategoria.getSelectionModel().selectFirst();
+
+        l1.getChildren().addAll(btnCadastrar, btnCancelar);
         l1.setSpacing(10);
-       
+        l1.setPadding(new Insets(35, 0, -10, 0));
+        l1.setAlignment(Pos.CENTER);
+
+        lbTitle.setPadding(new Insets(0, 0, 25, 0));
+        lbTitle.setAlignment(Pos.CENTER);
+
+        cbPagamento.getSelectionModel().selectFirst();
+        dpCalendario.setValue(LocalDate.now());
+
+        cbCategoria.setPrefWidth(200);
+        cbSubCategoria.setPrefWidth(200);
+        cbPagamento.setPrefWidth(200);
+        tfDescricao.setPrefWidth(200);
+        tfValor.setPrefWidth(200);
+        dpCalendario.setPrefWidth(200);
+
         pane.add(lbTitle, 0, 0, 4, 1);
-        pane.add(lbSubCategoria,0,1);
-        pane.add(comboSub,1,1);
-        pane.add(lbDescricao,0,2);
-        pane.add(txtDesc,1,2);
-        pane.add(lbValor,0,3);
-        pane.add(txtValor,1,3);
-        pane.add(lbData,0,4);
-        pane.add(calendario,1,4);
-        pane.add(lbPagamento,0,5);
-        pane.add(comboPgt,1,5);
-        pane.add(l1,1,6,2,1);
+        pane.add(lbCategoria, 0, 1);
+        pane.add(cbCategoria, 1, 1);
+        pane.add(lbSubCategoria, 0, 2);
+        pane.add(cbSubCategoria, 1, 2);
+        pane.add(lbDescricao, 0, 3);
+        pane.add(tfDescricao, 1, 3);
+        pane.add(lbValor, 0, 4);
+        pane.add(tfValor, 1, 4);
+        pane.add(lbData, 0, 5);
+        pane.add(dpCalendario, 1, 5);
+        pane.add(lbPagamento, 0, 6);
+        pane.add(cbPagamento, 1, 6);
+        pane.add(l1, 0, 7, 2, 1);
 
+        lbTitle.setFont(Font.font("Arial", FontWeight.NORMAL, 23));
+        lbDescricao.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        lbCategoria.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        lbData.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        lbPagamento.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        lbSubCategoria.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        lbValor.setFont(Font.font("Arial", FontWeight.NORMAL, 17));
+        btnCadastrar.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+        btnCancelar.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
 
-        lbTitle.setFont(Font.font("Arial",FontWeight.NORMAL,27));
-        lbDescricao.setFont(Font.font("Arial",FontWeight.NORMAL,17));
-        lbData.setFont(Font.font("Arial",FontWeight.NORMAL,17));
-        lbPagamento.setFont(Font.font("Arial",FontWeight.NORMAL,17));
-        lbSubCategoria.setFont(Font.font("Arial",FontWeight.NORMAL,17));
-        lbValor.setFont(Font.font("Arial",FontWeight.NORMAL,17));
-        cadastrar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
-        cancelar.setFont(Font.font("Arial",FontWeight.NORMAL,15));
-        
+        if (receitaCriada != null) {
+            this.receitaCriada = receitaCriada;
+            this.lbTitle.setText("Editar Receita");
+            btnCadastrar.setText("Salvar");
+            this.tfDescricao.setText(receitaCriada.getDescricao());
+            this.tfValor.setText(String.valueOf(receitaCriada.getValor()));
+            this.cbPagamento.getSelectionModel().select(receitaCriada.getFormaPagamento());
+
+            for (CategoriaConta categoria : this.cbCategoria.getItems()) {
+                if (categoria.getCategoriaContaID() == receitaCriada.getSubCategoria().getCategoriaConta().getCategoriaContaID()) {
+                    this.cbCategoria.getSelectionModel().select(categoria);
+                }
+            }
+
+            for (SubCategoria subcategoria : this.cbSubCategoria.getItems()) {
+                if (subcategoria.getSubCategoriaID() == receitaCriada.getSubCategoria().getSubCategoriaID()) {
+                    this.cbSubCategoria.getSelectionModel().select(subcategoria);
+                }
+            }
+
+            //this.calendario.setValue(LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(receitaCriada.getDataOcorrencia()) ));
+        }
+
         return pane;
     }
-    
-    
+
+    public Receita getReceitaCriada() {
+        return receitaCriada;
+    }
 }

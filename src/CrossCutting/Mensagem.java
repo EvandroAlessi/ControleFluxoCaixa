@@ -16,7 +16,7 @@ import javafx.scene.layout.Priority;
 
 /**
  *
- * @author Diego
+ * @author evand
  */
 public class Mensagem {
     

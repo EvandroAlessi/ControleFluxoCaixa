@@ -49,6 +49,7 @@ public class SubCategoria {
 
     @Override
     public String toString() {
-        return "SubCategoria{" + "subCategoriaID=" + subCategoriaID + ", descricao=" + descricao + ", categoriaConta=" + categoriaConta + '}';
+//        return "SubCategoria{" + "subCategoriaID=" + subCategoriaID + ", descricao=" + descricao + ", categoriaConta=" + categoriaConta + '}';
+        return descricao;
     }
 }

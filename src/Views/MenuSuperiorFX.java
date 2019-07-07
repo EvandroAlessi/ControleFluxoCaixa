@@ -15,43 +15,49 @@ import javafx.scene.control.MenuItem;
  *
  * @author SpaceBR
  */
-public class MenuSuperiorFX extends MenuBar{
-        MenuBar menuSuperior; 
-        Menu arquivo, cadastro;
-        MenuItem sair, resumo, despesa, receita, categoria;
+public class MenuSuperiorFX extends MenuBar {
+
+    MenuBar menuSuperior;
+    Menu arquivo, cadastro;
+    MenuItem sair, resumo, despesa, receita, categoria, subCategoria;
+
+    public MenuSuperiorFX(MainFX main) {
+        arquivo = new Menu("Arquivo");
+        cadastro = new Menu("Geral");
+        resumo = new MenuItem("Resumo");
+        despesa = new MenuItem("Despesas");
+        receita = new MenuItem("Receitas");
+        categoria = new MenuItem("Categorias");
+        subCategoria = new MenuItem("SubCategorias");
+        sair = new MenuItem("Sair");
+        arquivo.getItems().add(sair);
+        cadastro.getItems().addAll(resumo, despesa, receita, categoria, subCategoria);
+
+        getMenus().addAll(arquivo, cadastro);
+
+        resumo.setOnAction((event) -> {
+            main.switchCenter(Tela.RESUMO);
+        });
+
+        despesa.setOnAction((event) -> {
+            main.switchCenter(Tela.DESPESA);
+        });
+
+        receita.setOnAction((event) -> {
+            main.switchCenter(Tela.RECEITA);
+        });
+
+        categoria.setOnAction((event) -> {
+            main.switchCenter(Tela.CATEGORIA);
+        });
         
-        public MenuSuperiorFX(MainFX main){
-            arquivo = new Menu("Arquivo");
-            cadastro = new Menu("Geral");
-            resumo = new MenuItem("Resumo");
-            despesa = new MenuItem("Despesas");
-            receita = new MenuItem("Receitas");
-            categoria = new MenuItem("Categorias");
-            sair = new MenuItem("Sair");
-            arquivo.getItems().add(sair);
-            cadastro.getItems().addAll(resumo, despesa, receita, categoria);
-            
-            getMenus().addAll(arquivo, cadastro);
-            
-            resumo.setOnAction((event) -> {
-                main.switchCenter(Tela.RESUMO);
-            });
+        subCategoria.setOnAction((event) -> {
+            main.switchCenter(Tela.SUBCATEGORIA);
+        });
 
-            despesa.setOnAction((event) -> {
-                main.switchCenter(Tela.DESPESA);
-            });
-
-            receita.setOnAction((event) -> {
-                main.switchCenter(Tela.RECEITA);
-            });
-
-            categoria.setOnAction((event) -> {
-                main.switchCenter(Tela.CATEGORIA);
-            });
-
-            sair.setOnAction((event) -> {
-                Platform.exit();
-                System.exit(0);
-            });
-        }    
+        sair.setOnAction((event) -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
 }

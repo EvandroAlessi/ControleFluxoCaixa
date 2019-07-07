@@ -16,35 +16,37 @@ import java.sql.Statement;
  * @author evand
  */
 public class Contexto {
+
     private String url = "jdbc:mysql://localhost:3306/controlefluxocaixa?useTimezone=true&serverTimezone=UTC";
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String usuario = "root";
     private String senha = "root";
     private static Connection conexao;
-    
-    public void getConnection() throws ClassNotFoundException, SQLException{
-        if(Contexto.conexao == null || Contexto.conexao.isClosed()){
+
+    public void getConnection() throws ClassNotFoundException, SQLException {
+        if (Contexto.conexao == null || Contexto.conexao.isClosed()) {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, usuario, senha); // conecta com o banco
-            System.out.println("Banco conectado");
         }
     }
-    
-    public int executeUpdate(String sql) throws ClassNotFoundException, SQLException{
+
+    public int executeUpdate(String sql) throws ClassNotFoundException, SQLException {
         getConnection();
         Statement sessao = getConexao().createStatement();
-        
+
         return sessao.executeUpdate(sql);
     }
-    
-    public ResultSet executeQuery(String query) throws ClassNotFoundException, SQLException{
+
+    public ResultSet executeQuery(String query) throws ClassNotFoundException, SQLException {
         getConnection();
         Statement sessao = getConexao().createStatement(
-                ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                ResultSet.CONCUR_READ_ONLY);
-        
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+        );
+
         return sessao.executeQuery(query);
     }
+
     /**
      * @return the url
      */

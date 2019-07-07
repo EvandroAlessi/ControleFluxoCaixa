@@ -29,26 +29,27 @@ import javafx.scene.layout.VBox;
  * @author SpaceBR
  */
 public class MenuLateralFX extends GridPane {
+
     GridPane menu;
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button resumo, despesa, receita, categoria, sair;
+    Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnSubCategoria, btnRelatorio, btnSair;
     Image grafico;
     ImageView imageView;
-    
+
     public MenuLateralFX(MainFX main) {
         vbTop = new VBox();
         vbBottom = new VBox();
-        resumo = new Button("Resumos");
-        despesa = new Button("Despesas");
-        receita = new Button("Receitas");
-        categoria = new Button("Categorias");
-        //pagamento = new Button("Formas de Pagamentos");
-        sair = new Button("Sair");
+        btnResumo = new Button("Resumo");
+        btnDespesa = new Button("Despesas");
+        btnReceita = new Button("Receitas");
+        btnCategoria = new Button("Categorias");
+        btnSubCategoria = new Button("SubCategorias");
+        btnRelatorio = new Button("Relatórios");
+        btnSair = new Button("Sair");
         vbRight = new VBox();
-        
-        
+
         try {
             grafico = new Image(new FileInputStream("src\\Resources\\grafico.png"));
         } catch (FileNotFoundException ex) {
@@ -63,87 +64,106 @@ public class MenuLateralFX extends GridPane {
             alert.showAndWait();
         }
         imageView = new ImageView(grafico);
-        
-        resumo.setOnAction((event) -> {
+
+        btnResumo.setOnAction((event) -> {
             main.switchCenter(Tela.RESUMO);
         });
         
-        despesa.setOnAction((event) -> {
+        btnRelatorio.setOnAction((event) -> {
+            main.switchCenter(Tela.RELATORIO);
+        });
+
+        btnDespesa.setOnAction((event) -> {
             main.switchCenter(Tela.DESPESA);
         });
-        
-        receita.setOnAction((event) -> {
+
+        btnReceita.setOnAction((event) -> {
             main.switchCenter(Tela.RECEITA);
         });
-        
-        categoria.setOnAction((event) -> {
+
+        btnCategoria.setOnAction((event) -> {
             main.switchCenter(Tela.CATEGORIA);
         });
         
-        sair.setOnAction((event) -> {
+        btnSubCategoria.setOnAction((event) -> {
+            main.switchCenter(Tela.SUBCATEGORIA);
+        });
+        
+        btnSair.setOnAction((event) -> {
             Platform.exit();
             System.exit(0);
         });
-        
+
         imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitWidth(80);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        
-        vbTop.getChildren().addAll(imageView,resumo,despesa, receita, categoria);
-        vbBottom.getChildren().addAll(sair);
-        resumo.setMinWidth(150);
-        resumo.setMinHeight(60);
-        receita.setMinWidth(150);
-        receita.setMinHeight(60);
-        categoria.setMinWidth(150);
-        categoria.setMinHeight(60);
-        despesa.setMinWidth(150);
-        despesa.setMinHeight(60);
-        sair.setMinWidth(150);
-        sair.setMinHeight(60);
 
-        resumo.setStyle("-fx-background-insets: 0,0; "
+        vbTop.getChildren().addAll(imageView, btnResumo, btnRelatorio, btnDespesa, btnReceita, btnCategoria, btnSubCategoria);
+        vbBottom.getChildren().addAll(btnSair);
+        btnRelatorio.setMinWidth(150);
+        btnRelatorio.setMinHeight(60);
+        btnResumo.setMinWidth(150);
+        btnResumo.setMinHeight(60);
+        btnReceita.setMinWidth(150);
+        btnReceita.setMinHeight(60);
+        btnDespesa.setMinWidth(150);
+        btnDespesa.setMinHeight(60);
+        btnCategoria.setMinWidth(150);
+        btnCategoria.setMinHeight(60);
+        btnSubCategoria.setMinWidth(150);
+        btnSubCategoria.setMinHeight(60);
+        btnSair.setMinWidth(150);
+        btnSair.setMinHeight(60);
+
+        btnResumo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold;");
-        receita.setStyle("-fx-background-insets: 0,0; "
+        btnRelatorio.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
-        categoria.setStyle("-fx-background-insets: 0,0; "
+        btnReceita.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
-        despesa.setStyle("-fx-background-insets: 0,0; "
+        btnCategoria.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
-        sair.setStyle("-fx-background-insets: 0,0; "
+        btnDespesa.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
-        
-        
+        btnSubCategoria.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        btnSair.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+
         add(vbTop, 0, 0);
         add(vbBottom, 0, 1);
         add(vbRight, 1, 0);
-        
+
         setRowSpan(vbRight, 2);
         vbRight.setStyle("-fx-background-color: #ddd");
-        
-        ColumnConstraints c1 =  new ColumnConstraints();
+
+        ColumnConstraints c1 = new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
         c1.setPrefWidth(150);
         c1.setHalignment(HPos.CENTER);
-        
-        ColumnConstraints c2 =  new ColumnConstraints();
+
+        ColumnConstraints c2 = new ColumnConstraints();
         c2.setHgrow(Priority.NEVER);
         c2.setPrefWidth(1);
         c2.setHalignment(HPos.CENTER);
         vbTop.setAlignment(Pos.TOP_CENTER);
         vbBottom.setAlignment(Pos.BOTTOM_CENTER);
-        
+
         RowConstraints r1 = new RowConstraints();
         r1.setVgrow(Priority.ALWAYS);
         r1.setValignment(VPos.CENTER);
@@ -153,7 +173,7 @@ public class MenuLateralFX extends GridPane {
         r2.setMaxHeight(120);
         r2.setMinHeight(120);
         r2.setValignment(VPos.CENTER);
-        
+
         getColumnConstraints().add(c1);
         getRowConstraints().add(r1);
         getRowConstraints().add(r2);

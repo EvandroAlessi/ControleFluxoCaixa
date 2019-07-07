@@ -5,20 +5,16 @@
  */
 package Views;
 
-import Controllers.DespesaController;
 import Controllers.MovimentacaoController;
 import DAO.DespesaDAO;
 import DAO.ReceitaDAO;
 import Models.Despesa;
 import Models.Receita;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import javafx.collections.ObservableList;
+import java.util.Locale;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -42,7 +38,8 @@ import javafx.stage.Stage;
  *
  * @author SpaceBR
  */
-public class ResumoFX extends GridPane { 
+public class ResumoFX extends GridPane {
+
     private TableView table;
     private TableColumn c1;
     private TableColumn c2;
@@ -52,7 +49,7 @@ public class ResumoFX extends GridPane {
     private NumberAxis yEixo;
     private CategoryAxis xAxis;
     private LineChart<String, Number> graficoLinha;
-    
+
     public ResumoFX(Stage stage) {
         try {
             MovimentacaoController control = new MovimentacaoController();
@@ -73,18 +70,20 @@ public class ResumoFX extends GridPane {
             HashMap<String, Double> dados = new HashMap();
 
             receitas.forEach((receita) -> {
-                if(!dados.containsKey((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900))){
-                    dados.put((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900), receita.getValor());
-                }else{
-                    dados.put((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900), receita.getValor() + dados.get((receita.getDataOcorrencia().getMonth() + 1) + "/" + (receita.getDataOcorrencia().getYear() + 1900)));
+                System.out.println(receita.getDataOcorrencia());
+                if (!(dados.containsKey(receita.getDataOcorrencia().getMonth() + "/" + receita.getDataOcorrencia().getYear()))) {
+                    dados.put(receita.getDataOcorrencia().getMonth() + "/"
+                            + receita.getDataOcorrencia().getYear(), receita.getValor());
+                } else {
+                    dados.put(receita.getDataOcorrencia().getMonth() + "/" + receita.getDataOcorrencia().getYear(), receita.getValor()
+                            + dados.get(receita.getDataOcorrencia().getMonth() + "/"
+                                    + receita.getDataOcorrencia().getYear()));
                 }
             });
-            
-           
 
-            for(String chave: dados.keySet()){
+            dados.keySet().forEach((chave) -> {
                 dataSeries1.getData().add(new XYChart.Data(chave, dados.get(chave)));
-            }
+            });
 
             XYChart.Series dataSeries2 = new XYChart.Series();
             dataSeries2.setName("Despesas");
@@ -93,49 +92,50 @@ public class ResumoFX extends GridPane {
 
             HashMap<String, Double> dados2 = new HashMap();
 
-            for(Despesa despesa: despesas){
-                System.out.println((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900));
-                if(!dados2.containsKey((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900))){
-                    dados2.put((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900), despesa.getValor());
-                }else{
-                    dados2.put((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900), despesa.getValor() + dados2.get((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900)));
+            despesas.forEach((despesa) -> {
+                //System.out.println(despesa.getDataOcorrencia().format(DateTimeFormatter.ofPattern("mm/YYYY")));
+                //System.out.println((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900));
+                if (!(dados2.containsKey(despesa.getDataOcorrencia().getMonth() + "/" + despesa.getDataOcorrencia().getYear()))) {
+                    dados2.put(despesa.getDataOcorrencia().getMonth() + "/"
+                            + despesa.getDataOcorrencia().getYear(), despesa.getValor());
+                } else {
+                    dados2.put(despesa.getDataOcorrencia().getMonth() + "/" + despesa.getDataOcorrencia().getYear(), despesa.getValor()
+                            + dados2.get(despesa.getDataOcorrencia().getMonth() + "/"
+                                    + despesa.getDataOcorrencia().getYear()));
                 }
-            }
+            });
 
-            for(String chave:  dados2.keySet() ){
-                
+            dados2.keySet().forEach((chave) -> {
                 dataSeries2.getData().add(new XYChart.Data(chave, dados2.get(chave)));
-            }
+            });
 
-           this.graficoLinha.setAxisSortingPolicy(LineChart.SortingPolicy.X_AXIS);
-            
+            this.graficoLinha.setAxisSortingPolicy(LineChart.SortingPolicy.X_AXIS);
+
             this.graficoLinha.getData().add(dataSeries1);
             this.graficoLinha.getData().add(dataSeries2);
-
 
             setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
 //
 //            add(getTable(),0,1);
 //            setColumnSpan(getTable(), 2);
 //            add(getGraficoBar(),0,0);
-            add(this.graficoLinha,0,1);
-            
-           double saldo = control.getSaldo();
-             
+            add(this.graficoLinha, 0, 1);
+
+            double saldo = control.getSaldo();
+
             Label label = new Label("SALDO \n" + saldo);
-            
+
             label.setAlignment(Pos.CENTER);
             Font font = new Font(70);
             label.setFont(font);
-            if(saldo >= 0){
+            if (saldo >= 0) {
                 label.setTextFill(Color.GREEN);
-            }else{
-                 label.setTextFill(Color.RED);
+            } else {
+                label.setTextFill(Color.RED);
             }
-            
-            
+
             add(label, 0, 0);
-            ColumnConstraints c1 =  new ColumnConstraints();
+            ColumnConstraints c1 = new ColumnConstraints();
             c1.setHgrow(Priority.ALWAYS);
             c1.setHalignment(HPos.CENTER);
 
@@ -145,7 +145,7 @@ public class ResumoFX extends GridPane {
 
             getColumnConstraints().add(c1);
             getRowConstraints().add(r1);
-        }catch(ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException | SQLException e) {
             //
         }
     }

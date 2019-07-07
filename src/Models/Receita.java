@@ -5,7 +5,7 @@
  */
 package Models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,11 +16,11 @@ public class Receita extends Movimentacao {
     public Receita() {
     }
 
-    public Receita(Date dataOcorrencia, String descricao, double valor, int formaPagamento) {
+    public Receita(LocalDate dataOcorrencia, String descricao, double valor, int formaPagamento) {
         super(dataOcorrencia, descricao, valor, formaPagamento);
     }
-    
-    public Receita(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
+
+    public Receita(LocalDate dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
         super(dataOcorrencia, descricao, valor, movimentacaoID, formaPagamento);
     }
 }

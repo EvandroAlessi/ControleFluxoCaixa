@@ -10,6 +10,7 @@ import CrossCutting.Mensagem;
 import DAO.DespesaDAO;
 import Models.Despesa;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,45 +28,38 @@ public class DespesaController {
     public Despesa create(Despesa despesa) {
         try {
             DespesaDAO dao = new DespesaDAO();
-            if (despesa.getSubcategoria() != null) {
-                if( despesa.getSubcategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null ) {
+            if (despesa.getSubCategoria() != null) {
+                if (despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null) {
                     if (despesa.getValor() != 0) {
                         if (despesa.getFormaPagamento() != 0) {
                             if (despesa.getDataOcorrencia() == null) {
-                                Date date = new Date();
-                                date.getTime();
-                                despesa.setDataOcorrencia(date);
+                                despesa.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.create(despesa)) {
                                 return despesa;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A receita deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A despesa deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A despesa deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -74,80 +68,73 @@ public class DespesaController {
     public Despesa get(int id) {
         try {
             Despesa despesa = new DespesaDAO().get(id);
-            
+
             return despesa;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @return
      */
     public ArrayList<Despesa> getAll() {
-         try {
+        try {
             ArrayList<Despesa> despesas = new DespesaDAO().getAll();
-            
+
             return despesas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param despesa
      * @return
      */
     public Despesa update(Despesa despesa) {
-        try{
+        try {
             DespesaDAO dao = new DespesaDAO();
-            if (despesa.getSubcategoria() != null) {
-                if (despesa.getMovimentacaoID() != 0 && despesa.getSubcategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null) {
+            if (despesa.getSubCategoria() != null) {
+                if (despesa.getMovimentacaoID() != 0 && despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null) {
                     if (despesa.getValor() != 0) {
                         if (despesa.getFormaPagamento() != 0) {
                             if (despesa.getDataOcorrencia() == null) {
-                                Date date = new Date();
-                                date.getTime();
-                                despesa.setDataOcorrencia(date);
+                                despesa.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.update(despesa)) {
                                 return despesa;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A receita deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A despesa deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A despesa deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -162,7 +149,7 @@ public class DespesaController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return false;
     }
 
@@ -170,7 +157,7 @@ public class DespesaController {
      *
      * @return
      */
-    public String[] getAllMetaData(){
+    public String[] getAllMetaData() {
         try {
             return new DespesaDAO().getAllMetaData();
         } catch (ClassNotFoundException | SQLException e) {

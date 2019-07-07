@@ -23,25 +23,25 @@ public class Log {
      *
      * @param exeption
      */
-    public static void saveLog(Exception exeption){
-        try { 
+    public static void saveLog(Exception exeption) {
+        try {
             File log = new File("log.txt");
-            if (log.createNewFile()) { 
-              System.out.println("criado: " + log.getName()); 
-            } else { 
-              System.out.println("já existe."); 
-            } 
-            
+            if (log.createNewFile()) {
+                System.out.println("criado: " + log.getName());
+            } else {
+                System.out.println("já existe.");
+            }
+
             try (FileWriter escrever = new FileWriter(log, true)) {
                 Date data = Calendar.getInstance().getTime();
                 SimpleDateFormat dataPTBR = new SimpleDateFormat("EEEEEE',' dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss");
                 escrever.append("\n" + dataPTBR.format(data) + "\n");
-                escrever.append("Mensagem:" + exeption.getMessage()+"\n");
+                escrever.append("Mensagem:" + exeption.getMessage() + "\n");
                 escrever.append("StackTrace:" + Arrays.toString(exeption.getStackTrace()) + "\n");
             }
         } catch (IOException e) {
-          System.out.println("erro.");
-          
-        } 
+            System.out.println("erro.");
+
+        }
     }
 }

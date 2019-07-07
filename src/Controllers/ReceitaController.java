@@ -10,6 +10,7 @@ import CrossCutting.Mensagem;
 import DAO.ReceitaDAO;
 import Models.Receita;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,45 +28,38 @@ public class ReceitaController {
     public Receita create(Receita receita) {
         try {
             ReceitaDAO dao = new ReceitaDAO();
-            if (receita.getSubcategoria() != null) {
-                if (receita.getSubcategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
+            if (receita.getSubCategoria() != null) {
+                if (receita.getSubCategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
                     if (receita.getValor() != 0) {
                         if (receita.getFormaPagamento() != 0) {
                             if (receita.getDataOcorrencia() == null) {
-                                Date date = new Date();
-                                date.getTime();
-                                receita.setDataOcorrencia(date);
+                                receita.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.create(receita)) {
                                 return receita;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A receita deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A receita deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A Receita deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
-         }
-        
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -74,80 +68,73 @@ public class ReceitaController {
     public Receita get(int id) {
         try {
             Receita receita = new ReceitaDAO().get(id);
-            
+
             return receita;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @return
      */
     public ArrayList<Receita> getAll() {
-         try {
+        try {
             ArrayList<Receita> receitas = new ReceitaDAO().getAll();
-            
+
             return receitas;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param receita
      * @return
      */
     public Receita update(Receita receita) {
-        try{
+        try {
             ReceitaDAO dao = new ReceitaDAO();
-            if (receita.getSubcategoria() != null) {
-                if (receita.getSubcategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
+            if (receita.getSubCategoria() != null) {
+                if (receita.getSubCategoria().getSubCategoriaID() != 0 && receita.getDescricao() != null) {
                     if (receita.getValor() != 0) {
                         if (receita.getFormaPagamento() != 0) {
                             if (receita.getDataOcorrencia() == null) {
-                                Date date = new Date();
-                                date.getTime();
-                                receita.setDataOcorrencia(date);
+                                receita.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.update(receita)) {
                                 return receita;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A receita deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A receita deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A Receita deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -162,7 +149,7 @@ public class ReceitaController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return false;
     }
 }

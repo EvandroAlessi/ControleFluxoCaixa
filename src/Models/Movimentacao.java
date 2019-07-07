@@ -5,8 +5,7 @@
  */
 package Models;
 
-import DAO.MovimentacaoDAO;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -14,24 +13,24 @@ import java.util.Date;
  */
 public class Movimentacao implements IPagamento {
     protected int movimentacaoID;
-    protected Date dataOcorrencia;
+    protected LocalDate dataOcorrencia;
     protected String descricao;
     protected double valor;
     protected int formaPagamento;
-    protected SubCategoria subcategoria;
+    protected SubCategoria subCategoria;
     
     public Movimentacao() {
         
     }
 
-    public Movimentacao(Date dataOcorrencia, String descricao, double valor, int formaPagamento) {
+    public Movimentacao(LocalDate dataOcorrencia, String descricao, double valor, int formaPagamento) {
         this.dataOcorrencia = dataOcorrencia;
         this.descricao = descricao;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
     }
     
-    public Movimentacao(Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
+    public Movimentacao(LocalDate dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
         this.dataOcorrencia = dataOcorrencia;
         this.descricao = descricao;
         this.valor = valor;
@@ -71,11 +70,11 @@ public class Movimentacao implements IPagamento {
         this.movimentacaoID = fluxoCaixaID;
     }
     
-    public Date getDataOcorrencia() {
+    public LocalDate getDataOcorrencia() {
         return dataOcorrencia;
     }
 
-    public void setDataOcorrencia(Date dataOcorrencia) {
+    public void setDataOcorrencia(LocalDate dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
 
@@ -103,17 +102,17 @@ public class Movimentacao implements IPagamento {
         this.formaPagamento = formaPagamento;
     }
 
-    public SubCategoria getSubcategoria() {
-        return subcategoria;
+    public SubCategoria getSubCategoria() {
+        return subCategoria;
     }
 
-    public void setSubcategoria(SubCategoria subcategoria) {
-        this.subcategoria = subcategoria;
+    public void setSubCategoria(SubCategoria subCategoria) {
+        this.subCategoria = subCategoria;
     }
 
     @Override
     public String toString() {
-        return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subcategoria + '}';
+        return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subCategoria + '}';
     }
     
 }

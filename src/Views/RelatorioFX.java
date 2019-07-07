@@ -33,7 +33,8 @@ import javafx.util.Callback;
  *
  * @author evand
  */
-public class RelatorioFX extends GridPane{
+public class RelatorioFX extends GridPane {
+
     Label titulo;
     Button cadastrar;
     private TableView table;
@@ -41,10 +42,11 @@ public class RelatorioFX extends GridPane{
     private TableColumn<String, DespesaFX> descricao = new TableColumn<>("Descrição");
     private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
     private Stage mainStage;
+
     public RelatorioFX(Stage stage) {
         mainStage = stage;
         DespesaController control = new DespesaController();
-        
+
         titulo = new Label("Despesas");
         table = new TableView();
         data = new TableColumn("Ocorrência");
@@ -55,7 +57,7 @@ public class RelatorioFX extends GridPane{
         categoria = new TableColumn("Categoria");
         subcategoria = new TableColumn("Subcategoria");
         apagar = new TableColumn("x");
-        
+
         apagar.prefWidthProperty().bind(table.widthProperty().multiply(0.03));
         subcategoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
         categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
@@ -63,7 +65,7 @@ public class RelatorioFX extends GridPane{
         descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.32));
         valor.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
         pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        
+
         data.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
         subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
@@ -71,7 +73,7 @@ public class RelatorioFX extends GridPane{
         pagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
-                switch(param.getValue().getFormaPagamento()){
+                switch (param.getValue().getFormaPagamento()) {
                     case 1:
                         return new SimpleStringProperty("Crédito");
                     case 2:
@@ -86,53 +88,52 @@ public class RelatorioFX extends GridPane{
                 return new SimpleStringProperty("Indefinido");
             }
         });
-        
+
         categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
-                return new SimpleStringProperty(param.getValue().getSubcategoria().getCategoriaConta().getDescricao());
+                return new SimpleStringProperty(param.getValue().getSubCategoria().getCategoriaConta().getDescricao());
             }
         });
         subcategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
-                return new SimpleStringProperty(param.getValue().getSubcategoria().getDescricao());
+                return new SimpleStringProperty(param.getValue().getSubCategoria().getDescricao());
             }
         });
-        
-        table.getColumns().addAll(data,categoria,subcategoria,descricao,valor,pagamento,apagar);
-        
+
+        table.getColumns().addAll(data, categoria, subcategoria, descricao, valor, pagamento, apagar);
+
         List<Despesa> despesas = control.getAll();
         this.table.setItems(FXCollections.observableArrayList(despesas));
-        
+
         add(titulo, 0, 0);
         add(cadastrar, 1, 0);
-        add(table,0,1);
-        
-        
+        add(table, 0, 1);
+
         titulo.setFont(new Font("Arial", 45));
         cadastrar.setMinSize(100, 50);
-        ColumnConstraints c1 =  new ColumnConstraints();
+        ColumnConstraints c1 = new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
-        
+
         RowConstraints r1 = new RowConstraints();
         RowConstraints r2 = new RowConstraints();
         //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
         getColumnConstraints().add(c1);
-        getRowConstraints().addAll(r1,r2);
+        getRowConstraints().addAll(r1, r2);
         setConstraints(titulo, 0, 0, 1, 1, HPos.CENTER, VPos.BASELINE);
         setConstraints(cadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
         GridPane.setColumnSpan(table, 2);
-        
-        cadastrar.setOnAction(e ->{
-            CadastroDespesaFX form= new CadastroDespesaFX();
+
+        cadastrar.setOnAction(e -> {
+            CadastroDespesaFX form = new CadastroDespesaFX();
             try {
-                form.start(mainStage);
+                form.start(mainStage, null);
             } catch (Exception ex) {
                 Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
-    
+
 }

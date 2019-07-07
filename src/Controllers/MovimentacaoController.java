@@ -10,6 +10,7 @@ import CrossCutting.Mensagem;
 import DAO.MovimentacaoDAO;
 import Models.Movimentacao;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,45 +28,38 @@ public class MovimentacaoController {
     public Movimentacao create(Movimentacao movimentacao) {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if (movimentacao.getSubcategoria() != null) {
-                if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+            if (movimentacao.getSubCategoria() != null) {
+                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null) {
                     if (movimentacao.getValor() != 0) {
                         if (movimentacao.getFormaPagamento() != 0) {
                             if (movimentacao.getDataOcorrencia() == null) {
-                                Date date = new Date();
-                                date.getTime();
-                                movimentacao.setDataOcorrencia(date);
+                                movimentacao.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.create(movimentacao)) {
                                 return movimentacao;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A movimentacao deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A movimentacao deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
-             Log.saveLog(e);
-             Mensagem.excecao(e);
-         }
-        
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -74,16 +68,16 @@ public class MovimentacaoController {
     public Movimentacao get(int id) {
         try {
             Movimentacao movimentacao = new MovimentacaoDAO().get(id);
-            
+
             return movimentacao;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     public double getSaldo() {
         try {
             return new MovimentacaoDAO().getSaldo();
@@ -91,74 +85,69 @@ public class MovimentacaoController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return 0;
     }
-    
+
     /**
      *
      * @return
      */
     public ArrayList<Movimentacao> getAll() {
-         try {
+        try {
             ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll();
-            
+
             return movimentacoes;
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return null;
     }
-    
+
     /**
      *
      * @param movimentacao
      * @return
      */
     public Movimentacao update(Movimentacao movimentacao) {
-        try{
+        try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
-            if (movimentacao.getSubcategoria() != null) {
-                if( movimentacao.getSubcategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null ) {
+            if (movimentacao.getSubCategoria() != null) {
+                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null) {
                     if (movimentacao.getValor() != 0) {
                         if (movimentacao.getFormaPagamento() != 0) {
                             if (movimentacao.getDataOcorrencia() == null) {
                                 Date date = new Date();
                                 date.getTime();
-                                movimentacao.setDataOcorrencia(date);
+                                movimentacao.setDataOcorrencia(LocalDate.now());
                             }
                             if (dao.update(movimentacao)) {
                                 return movimentacao;
-                            }
-                            else{
+                            } else {
                                 Mensagem.aviso("Não foi possivel cadastrar a receita.");
                             }
-                        }
-                        else{
+                        } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
-                    }
-                    else{
+                    } else {
                         Mensagem.aviso("A movimentacao deve ter um valor para a receita.");
                     }
-                }
-                else{
+                } else {
                     Mensagem.aviso("A movimentacao deve ter uma Descricao.");
                 }
-            }
-            else{
+            } else {
                 Mensagem.aviso("A despesa deve ter uma Categoria.");
             }
-         } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);
             Mensagem.excecao(e);
-         }
-        
+        }
+
         return null;
     }
-    
+
     /**
      *
      * @param id
@@ -173,7 +162,7 @@ public class MovimentacaoController {
             Log.saveLog(e);
             Mensagem.excecao(e);
         }
-        
+
         return false;
     }
 }

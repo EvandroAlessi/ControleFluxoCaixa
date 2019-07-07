@@ -7,8 +7,8 @@ package Views;
 
 /**
  *
- * @author SpaceBR
+ * @author evand
  */
-public class EditDespesaFX {
+public class CadastroSubCategoriaFX {
     
 }

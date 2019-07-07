@@ -34,7 +34,7 @@ public class MenuLateralFX extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnSubCategoria, btnRelatorio, btnSair;
+    Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
     Image grafico;
     ImageView imageView;
 
@@ -45,8 +45,8 @@ public class MenuLateralFX extends GridPane {
         btnDespesa = new Button("Despesas");
         btnReceita = new Button("Receitas");
         btnCategoria = new Button("Categorias");
-        btnSubCategoria = new Button("SubCategorias");
-        btnRelatorio = new Button("Relatórios");
+        btnRelatorio = new Button("Ultimos lançamentos");
+        btnFuturo = new Button("Lançamentos Futuros");
         btnSair = new Button("Sair");
         vbRight = new VBox();
 
@@ -70,9 +70,13 @@ public class MenuLateralFX extends GridPane {
         });
         
         btnRelatorio.setOnAction((event) -> {
-            main.switchCenter(Tela.RELATORIO);
+            main.switchCenter(Tela.ULTIMOS);
         });
-
+        
+        btnFuturo.setOnAction((event) -> {
+            main.switchCenter(Tela.FUTURO);
+        });
+        
         btnDespesa.setOnAction((event) -> {
             main.switchCenter(Tela.DESPESA);
         });
@@ -85,10 +89,6 @@ public class MenuLateralFX extends GridPane {
             main.switchCenter(Tela.CATEGORIA);
         });
         
-        btnSubCategoria.setOnAction((event) -> {
-            main.switchCenter(Tela.SUBCATEGORIA);
-        });
-        
         btnSair.setOnAction((event) -> {
             Platform.exit();
             System.exit(0);
@@ -99,10 +99,12 @@ public class MenuLateralFX extends GridPane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
 
-        vbTop.getChildren().addAll(imageView, btnResumo, btnRelatorio, btnDespesa, btnReceita, btnCategoria, btnSubCategoria);
+        vbTop.getChildren().addAll(imageView, btnResumo, btnRelatorio, btnFuturo, btnDespesa, btnReceita, btnCategoria);
         vbBottom.getChildren().addAll(btnSair);
         btnRelatorio.setMinWidth(150);
         btnRelatorio.setMinHeight(60);
+        btnFuturo.setMinWidth(150);
+        btnFuturo.setMinHeight(60);
         btnResumo.setMinWidth(150);
         btnResumo.setMinHeight(60);
         btnReceita.setMinWidth(150);
@@ -111,8 +113,6 @@ public class MenuLateralFX extends GridPane {
         btnDespesa.setMinHeight(60);
         btnCategoria.setMinWidth(150);
         btnCategoria.setMinHeight(60);
-        btnSubCategoria.setMinWidth(150);
-        btnSubCategoria.setMinHeight(60);
         btnSair.setMinWidth(150);
         btnSair.setMinHeight(60);
 
@@ -121,6 +121,10 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold;");
         btnRelatorio.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold");
+        btnFuturo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
@@ -133,10 +137,6 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
         btnDespesa.setStyle("-fx-background-insets: 0,0; "
-                + "-fx-padding: 1; "
-                + "-fx-border: 0;"
-                + "-fx-font-weight: bold");
-        btnSubCategoria.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");

@@ -5,18 +5,20 @@
  */
 package Views;
 
-import Controllers.DespesaController;
-import Models.Despesa;
+import Controllers.MovimentacaoController;
+import Models.Movimentacao;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,44 +37,59 @@ import javafx.util.Callback;
  */
 public class RelatorioFX extends GridPane {
 
-    Label titulo;
-    Button cadastrar;
-    private TableView table;
-    private TableColumn data, pagamento, categoria, subcategoria, apagar;
-    private TableColumn<String, DespesaFX> descricao = new TableColumn<>("Descrição");
-    private TableColumn<Double, DespesaFX> valor = new TableColumn<>("Valor");
+    Label lbTitulo;
+    //Button btnCadastrar, btnEditar;
+    private TableView<Movimentacao> table;
+    private TableColumn tcData, tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
+    //private TableColumn<Movimentacao, Void> apagar;
+    private TableColumn tcTipo;
     private Stage mainStage;
 
-    public RelatorioFX(Stage stage) {
+    public RelatorioFX(Stage stage, boolean untilNow) {
         mainStage = stage;
-        DespesaController control = new DespesaController();
-
-        titulo = new Label("Despesas");
+        MovimentacaoController control = new MovimentacaoController();
+        lbTitulo = new Label("Últimos lançamentos");
         table = new TableView();
-        data = new TableColumn("Ocorrência");
-        descricao = new TableColumn("Descrição");
-        valor = new TableColumn("Valor");
-        pagamento = new TableColumn("Forma de Pagamento");
-        cadastrar = new Button("Cadastrar");
-        categoria = new TableColumn("Categoria");
-        subcategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn("x");
+        tcData = new TableColumn("Ocorrência");
+        tcDescricao = new TableColumn("Descrição");
+        tcValor = new TableColumn("Valor");
+        tcPagamento = new TableColumn("Forma de Pagamento");
+        tcCategoria = new TableColumn("Categoria");
+        tcSubCategoria = new TableColumn("Subcategoria");
+        tcTipo = new TableColumn("Tipo");
 
-        apagar.prefWidthProperty().bind(table.widthProperty().multiply(0.03));
-        subcategoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        categoria.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
-        data.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        descricao.prefWidthProperty().bind(table.widthProperty().multiply(0.32));
-        valor.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
-        pagamento.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+        tcTipo.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.06));
+        tcSubCategoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        tcCategoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
+        tcData.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.06));
+        tcDescricao.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.378));
+        tcValor.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.10));
+        tcPagamento.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.10));
 
-        data.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
-        subcategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
-        descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        pagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+        tcTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movimentacao, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Movimentacao, String> param) {
+                if (param.getValue().getSubCategoria().getCategoriaConta().isPositiva()) {
+                    return new SimpleStringProperty("Receita");
+                } else {
+                    return new SimpleStringProperty("Despesa");
+                }
+            }
+        });
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
+        tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tcPagamento.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movimentacao, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Movimentacao, String> param) {
                 switch (param.getValue().getFormaPagamento()) {
                     case 1:
                         return new SimpleStringProperty("Crédito");
@@ -88,52 +105,73 @@ public class RelatorioFX extends GridPane {
                 return new SimpleStringProperty("Indefinido");
             }
         });
-
-        categoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+        tcCategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movimentacao, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+            // obtem a descrição da categoria e converte para Observable
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Movimentacao, String> param) {
                 return new SimpleStringProperty(param.getValue().getSubCategoria().getCategoriaConta().getDescricao());
             }
         });
-        subcategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa, String>, ObservableValue<String>>() {
+        tcSubCategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movimentacao, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Despesa, String> param) {
+            // obtem a descrição da subcategoria e converte para Observable
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Movimentacao, String> param) {
                 return new SimpleStringProperty(param.getValue().getSubCategoria().getDescricao());
             }
         });
 
-        table.getColumns().addAll(data, categoria, subcategoria, descricao, valor, pagamento, apagar);
+        Callback<TableColumn<Movimentacao, Void>, TableCell<Movimentacao, Void>> cellFactory = new Callback<TableColumn<Movimentacao, Void>, TableCell<Movimentacao, Void>>() {
+            @Override
+            public TableCell<Movimentacao, Void> call(final TableColumn<Movimentacao, Void> param) {
+                final TableCell<Movimentacao, Void> cell = new TableCell<Movimentacao, Void>() {
 
-        List<Despesa> despesas = control.getAll();
-        this.table.setItems(FXCollections.observableArrayList(despesas));
+                    private final Button btn = new Button("Remover");
 
-        add(titulo, 0, 0);
-        add(cadastrar, 1, 0);
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Movimentacao data = getTableView().getItems().get(getIndex());
+                            control.delete(data.getMovimentacaoID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        };
+
+        table.getColumns().addAll(tcTipo, tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria);
+
+        add(lbTitulo, 0, 0);
         add(table, 0, 1);
 
-        titulo.setFont(new Font("Arial", 45));
-        cadastrar.setMinSize(100, 50);
+        List<Movimentacao> movimentacoes = control.getAll(untilNow);
+
+        this.table.setItems(FXCollections.observableArrayList(movimentacoes));
+
+        lbTitulo.setFont(new Font("Arial", 32));
+        lbTitulo.setPadding(new Insets(5, 5, 5, 10));
         ColumnConstraints c1 = new ColumnConstraints();
         c1.setHgrow(Priority.ALWAYS);
 
         RowConstraints r1 = new RowConstraints();
         RowConstraints r2 = new RowConstraints();
-        //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
         getColumnConstraints().add(c1);
         getRowConstraints().addAll(r1, r2);
-        setConstraints(titulo, 0, 0, 1, 1, HPos.CENTER, VPos.BASELINE);
-        setConstraints(cadastrar, 0, 0, 1, 1, HPos.RIGHT, VPos.CENTER);
+        setConstraints(lbTitulo, 0, 0, 1, 1, HPos.LEFT, VPos.BASELINE);
         GridPane.setColumnSpan(table, 2);
-
-        cadastrar.setOnAction(e -> {
-            CadastroDespesaFX form = new CadastroDespesaFX();
-            try {
-                form.start(mainStage, null);
-            } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
     }
-
 }

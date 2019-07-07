@@ -11,10 +11,8 @@ import DAO.ReceitaDAO;
 import Models.Despesa;
 import Models.Receita;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -93,8 +91,6 @@ public class ResumoFX extends GridPane {
             HashMap<String, Double> dados2 = new HashMap();
 
             despesas.forEach((despesa) -> {
-                //System.out.println(despesa.getDataOcorrencia().format(DateTimeFormatter.ofPattern("mm/YYYY")));
-                //System.out.println((despesa.getDataOcorrencia().getMonth() + 1) + "/" + (despesa.getDataOcorrencia().getYear() + 1900));
                 if (!(dados2.containsKey(despesa.getDataOcorrencia().getMonth() + "/" + despesa.getDataOcorrencia().getYear()))) {
                     dados2.put(despesa.getDataOcorrencia().getMonth() + "/"
                             + despesa.getDataOcorrencia().getYear(), despesa.getValor());
@@ -116,9 +112,6 @@ public class ResumoFX extends GridPane {
 
             setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
 //
-//            add(getTable(),0,1);
-//            setColumnSpan(getTable(), 2);
-//            add(getGraficoBar(),0,0);
             add(this.graficoLinha, 0, 1);
 
             double saldo = control.getSaldo();

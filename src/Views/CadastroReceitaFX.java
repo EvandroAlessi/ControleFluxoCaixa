@@ -82,12 +82,10 @@ public class CadastroReceitaFX {
 
         btnCadastrar.setOnAction(e -> {
             if (receitaCriada == null) {
-                // Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento
                 Receita nReceita = new Receita();
                 nReceita.setDescricao(tfDescricao.getText());
                 nReceita.setDataOcorrencia(dpCalendario.getValue());
                 nReceita.setValor(Double.parseDouble(tfValor.getText()));
-                System.out.println(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
                 nReceita.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
                 nReceita.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                 receitaController.create(nReceita);

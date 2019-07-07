@@ -51,7 +51,7 @@ public class SubCategoriaDAO {
         String sql = "insert into subCategoria(descricao, categoriaContaID)values(?, ?)";
         try (PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, subCategoria.getDescricao()); //substitui o ? pelo dado do usuario
-            preparestatement.setInt(2, subCategoria.getSubCategoriaID());
+            preparestatement.setInt(2, subCategoria.getCategoriaConta().getCategoriaContaID());
 
             //executando comando sql
             int result = preparestatement.executeUpdate();
@@ -74,7 +74,7 @@ public class SubCategoriaDAO {
 
         ResultSet dados = contexto.executeQuery(query);
 
-        return dados != null;
+        return dados == null;
     }
 
     /**
@@ -185,7 +185,7 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
-        String sql = "delete from subCategoria where subCategoria = ?";
+        String sql = "delete from subCategoria where subCategoriaid = ?";
         try (PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();

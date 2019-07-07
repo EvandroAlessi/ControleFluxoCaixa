@@ -94,7 +94,7 @@ public class CategoriaContaDAO {
 
         return categoria;
     }
-
+    
     /**
      * Busca todas as cateogiras existentes no banco de dados
      *
@@ -103,7 +103,35 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public ArrayList<CategoriaConta> getAll() throws SQLException, ClassNotFoundException {
-        String query = "select * from categoriaconta;";
+        String query = "select * from categoriaconta order by descricao;";
+        ArrayList<CategoriaConta> lista = new ArrayList<>();
+
+        ResultSet dados = contexto.executeQuery(query);
+
+        while (dados.next()) {
+            CategoriaConta categoria = new CategoriaConta();
+            categoria.setDescricao(dados.getString("Descricao"));
+            categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
+            categoria.setPositiva(dados.getBoolean("positiva"));
+
+            System.out.println(categoria.toString());
+
+            lista.add(categoria);
+        }
+
+        return lista;
+    }
+    
+    /**
+     * Busca todas as cateogiras existentes no banco de dados
+     *
+     * @param positiva despesa/receita
+     * @return ArrayList<CategoriaConta> lista de todas as categoria
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public ArrayList<CategoriaConta> getAll(boolean positiva) throws SQLException, ClassNotFoundException {
+        String query = "select * from categoriaconta where Positiva = '" + (positiva ? 1 : 0) + "' order by descricao;";
         ArrayList<CategoriaConta> lista = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);

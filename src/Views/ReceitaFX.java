@@ -6,10 +6,10 @@
 package Views;
 
 import Controllers.ReceitaController;
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import Models.Receita;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -42,7 +42,8 @@ public class ReceitaFX extends GridPane {
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
     private TableView<Receita> table;
-    private TableColumn tcData, tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
+    private TableColumn<Receita, String> tcData;
+    private TableColumn tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
     private TableColumn<Receita, Void> tcApagar;
     private Stage mainStage;
 
@@ -76,7 +77,6 @@ public class ReceitaFX extends GridPane {
         tcPagamento.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
 
-        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -146,7 +146,7 @@ public class ReceitaFX extends GridPane {
         };
 
         tcApagar.setCellFactory(cellFactory);
-        table.getColumns().addAll(tcData, tcCategoria, tcSubCategoria, tcDescricao, tcValor, tcPagamento, tcApagar);
+        table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);
 
         HBox hBox = new HBox();
         hBox.getChildren().addAll(btnCadastrar, btnEditar);
@@ -186,8 +186,8 @@ public class ReceitaFX extends GridPane {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
             } catch (Exception ex) {
-                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
 
@@ -195,14 +195,14 @@ public class ReceitaFX extends GridPane {
             CadastroReceitaFX form = new CadastroReceitaFX();
             try {
                 form.start(mainStage, null);
-
+                //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
                 if (form.getReceitaCriada() != null) {
                     table.getItems().add(form.getReceitaCriada());
                 }
 
             } catch (Exception ex) {
-                Logger.getLogger(ReceitaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
     }

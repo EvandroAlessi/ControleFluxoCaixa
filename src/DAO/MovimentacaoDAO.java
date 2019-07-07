@@ -145,8 +145,10 @@ public class MovimentacaoDAO {
      * @return @throws ClassNotFoundException
      * @throws SQLException
      */
-    public ArrayList<Movimentacao> getAll() throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao order by dataocorrencia desc;";
+    public ArrayList<Movimentacao> getAll(boolean untilNow) throws ClassNotFoundException, SQLException {
+        String query = "select * from movimentacao where dataocorrencia"
+                + (untilNow ? " <= NOW() " : " > NOW() ")
+                + "order by dataocorrencia desc;";
         ArrayList<Movimentacao> list = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);
@@ -191,7 +193,7 @@ public class MovimentacaoDAO {
 
         return list;
     }
-
+    
     /**
      *
      * @param movimentacao

@@ -58,7 +58,9 @@ public class DespesaDAO {
             preparestatement.setInt(4, despesa.getFormaPagamento());
             preparestatement.setInt(5, despesa.getSubCategoria().getSubCategoriaID());
             //executando comando sql
-
+            System.out.println(preparestatement);
+            System.out.println(sql);
+            System.out.println(despesa.toString());
             int result = preparestatement.executeUpdate();
             if (result > 0) {
                 ResultSet id = preparestatement.getGeneratedKeys();
@@ -149,10 +151,11 @@ public class DespesaDAO {
      * @throws SQLException
      */
     public ArrayList<Despesa> getAll() throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao where subcategoriaid in "
+        String query = "select * from movimentacao where dataocorrencia <= NOW() AND subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
                 + "(select categoriacontaid from categoriaconta where positiva = 0)) order by dataocorrencia desc;";
         ArrayList<Despesa> list = new ArrayList<>();
+        
         ResultSet dados = contexto.executeQuery(query);
 
         while (dados.next()) {

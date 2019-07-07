@@ -9,6 +9,7 @@ import Controllers.CategoriaContaController;
 import Controllers.DespesaController;
 import Controllers.SubCategoriaController;
 import CrossCutting.Enums.FormaPagamento;
+import CrossCutting.Mensagem;
 import Models.CategoriaConta;
 import Models.Despesa;
 import Models.SubCategoria;
@@ -82,16 +83,13 @@ public class CadastroDespesaFX {
 
         btnCadastrar.setOnAction(e -> {
             if (despesaCriada == null) {
-                // Date dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento
                 Despesa nDespesa = new Despesa();
                 nDespesa.setDescricao(tfDescricao.getText());
                 nDespesa.setDataOcorrencia(dpCalendario.getValue());
                 nDespesa.setValor(Double.parseDouble(tfValor.getText()));
-                System.out.println(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
                 nDespesa.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
                 nDespesa.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
-                despesaController.create(nDespesa);
-                despesaCriada = nDespesa;
+                despesaCriada = despesaController.create(nDespesa);
             } else {
                 despesaCriada.setDescricao(tfDescricao.getText());
                 despesaCriada.setDataOcorrencia(dpCalendario.getValue());
@@ -100,9 +98,14 @@ public class CadastroDespesaFX {
                 despesaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                 despesaController.update(despesaCriada);
             }
-
+            if (despesaCriada != null) {
+                dialog.close();
+            } else {
+                Mensagem.aviso("Não foi possivel criar a categoria.");
+            }
             dialog.close();
         });
+
         btnCancelar.setOnAction(e -> {
             dialog.close();
         });
@@ -131,14 +134,14 @@ public class CadastroDespesaFX {
         HBox l1 = new HBox();
         List<SubCategoria> subCatDespesa = new ArrayList<>();
         for (SubCategoria despesa : subCategorias) {
-            if (despesa.getCategoriaConta().isPositiva()) {
+            if (!despesa.getCategoriaConta().isPositiva()) {
                 subCatDespesa.add(despesa);
             }
         }
         List<CategoriaConta> catDespesa = new ArrayList<>();
 
         for (CategoriaConta despesa : categoriasConta) {
-            if (despesa.isPositiva()) {
+            if (!despesa.isPositiva()) {
                 catDespesa.add(despesa);
             }
         }

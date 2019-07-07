@@ -142,7 +142,7 @@ public class ReceitaDAO {
      * @throws SQLException
      */
     public ArrayList<Receita> getAll() throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao where subcategoriaid in "
+        String query = "select * from movimentacao where dataocorrencia <= NOW() AND subcategoriaid in "
                 + "(select subcategoriaid from subcategoria where subcategoriaid in "
                 + "(select categoriacontaid from categoriaconta where positiva = 1)) order by dataocorrencia desc;";
         ArrayList<Receita> list = new ArrayList<>();
@@ -156,7 +156,9 @@ public class ReceitaDAO {
             receita.setDataOcorrencia(dados.getDate("dataOcorrencia").toLocalDate());
             receita.setValor(dados.getDouble("valor"));
             receita.setFormaPagamento(dados.getInt("formaPagamento"));
-
+            
+            System.out.println(receita.getDescricao() + receita.getDataOcorrencia());
+            
             String querySub = "select * from subcategoria where SubCategoriaid = '"
                     + dados.getInt("SubCategoriaID")
                     + "';";
@@ -168,6 +170,7 @@ public class ReceitaDAO {
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
+                
                 String queryCat = "select * from categoriaConta where categoriaContaid = '"
                         + dadosSub.getInt("CategoriaContaID")
                         + "';";

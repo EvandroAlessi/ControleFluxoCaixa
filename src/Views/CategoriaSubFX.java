@@ -5,8 +5,8 @@
  */
 package Views;
 
-import Controllers.CategoriaContaController;
-import Models.CategoriaConta;
+import Controllers.SubCategoriaController;
+import Models.SubCategoria;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,48 +37,48 @@ import javafx.util.Callback;
  *
  * @author SpaceBR
  */
-public class CategoriaFX extends GridPane {
+public class CategoriaSubFX extends GridPane {
 
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
-    private TableView<CategoriaConta> table;
+    private TableView<SubCategoria> table;
     private TableColumn tcDescricao, tcTipo;
-    private TableColumn<CategoriaConta, Void> tcApagar;
+    private TableColumn<SubCategoria, Void> tcApagar;
+    private TableColumn<SubCategoria, String> tcTipoCategoria;
     private Stage mainStage;
 
-    public CategoriaFX(Stage stage) {
+    public CategoriaSubFX(Stage stage) {
         mainStage = stage;
-        //SubCategoriaController control = new SubCategoriaController();
-        CategoriaContaController categoriaController = new CategoriaContaController();
+        SubCategoriaController subCategoriaController = new SubCategoriaController();
         lbTitulo = new Label("Categorias");
         table = new TableView();
         tcDescricao = new TableColumn("Descricao");
-        //subcategoria = new TableColumn("Subcategoria");
         tcTipo = new TableColumn("Tipo");
         tcApagar = new TableColumn("");
+        tcTipoCategoria = new TableColumn("Tipo Categoria");
         btnCadastrar = new Button("Cadastrar");
         btnEditar = new Button("Editar");
 
         tcDescricao.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.638));
-        //subcategoria.prefWidthProperty().bind(table.widthProperty()
-        //.multiply(0.35));
+        tcTipoCategoria.prefWidthProperty().bind(table.widthProperty()
+                .multiply(0.15));
         tcTipo.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.30));
+                .multiply(0.15));
         tcApagar.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.06));
 
-        //subcategoria.setCellValueFactory(new PropertyValueFactory("descricao"));
-        tcDescricao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CategoriaConta, String>, ObservableValue<String>>() {
+        tcDescricao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategoria, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<CategoriaConta, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<SubCategoria, String> param) {
                 return new SimpleStringProperty(param.getValue().getDescricao());
             }
         });
-        tcTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CategoriaConta, String>, ObservableValue<String>>() {
+
+        tcTipo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategoria, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<CategoriaConta, String> param) {
-                if (param.getValue().isPositiva()) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<SubCategoria, String> param) {
+                if (param.getValue().getCategoriaConta().isPositiva()) {
                     return new SimpleStringProperty("Receita");
                 } else {
                     return new SimpleStringProperty("Despesa");
@@ -86,17 +86,24 @@ public class CategoriaFX extends GridPane {
             }
         });
 
-        Callback<TableColumn<CategoriaConta, Void>, TableCell<CategoriaConta, Void>> cellFactory = new Callback<TableColumn<CategoriaConta, Void>, TableCell<CategoriaConta, Void>>() {
+        tcTipoCategoria.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategoria, String>, ObservableValue<String>>() {
             @Override
-            public TableCell<CategoriaConta, Void> call(final TableColumn<CategoriaConta, Void> param) {
-                final TableCell<CategoriaConta, Void> cell = new TableCell<CategoriaConta, Void>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<SubCategoria, String> param) {
+                return new SimpleStringProperty(param.getValue().getCategoriaConta().getDescricao());
+            }
+        });
+
+        Callback<TableColumn<SubCategoria, Void>, TableCell<SubCategoria, Void>> cellFactory = new Callback<TableColumn<SubCategoria, Void>, TableCell<SubCategoria, Void>>() {
+            @Override
+            public TableCell<SubCategoria, Void> call(final TableColumn<SubCategoria, Void> param) {
+                final TableCell<SubCategoria, Void> cell = new TableCell<SubCategoria, Void>() {
 
                     private final Button btn = new Button("Remover");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            CategoriaConta data = getTableView().getItems().get(getIndex());
-                            categoriaController.delete(data.getCategoriaContaID());
+                            SubCategoria data = getTableView().getItems().get(getIndex());
+                            subCategoriaController.delete(data.getSubCategoriaID());
                             table.getItems().remove(data);
                             table.refresh();
                         });
@@ -116,7 +123,7 @@ public class CategoriaFX extends GridPane {
                 return cell;
             }
         };
-        
+
         tcApagar.setCellFactory(cellFactory);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(5));
@@ -125,12 +132,12 @@ public class CategoriaFX extends GridPane {
         btnEditar.setMinSize(80, 40);
         hBox.getChildren().addAll(btnCadastrar, btnEditar);
 
-        table.getColumns().addAll(tcTipo, tcDescricao, tcApagar);
+        table.getColumns().addAll(tcTipo, tcDescricao, tcTipoCategoria, tcApagar);
         add(lbTitulo, 0, 0);
         add(hBox, 1, 0);
         add(table, 0, 1);
 
-        List<CategoriaConta> categorias = categoriaController.getAll();
+        List<SubCategoria> categorias = subCategoriaController.getAll();
 
         this.table.setItems(FXCollections.observableArrayList(categorias));
 
@@ -141,7 +148,6 @@ public class CategoriaFX extends GridPane {
 
         RowConstraints r1 = new RowConstraints();
         RowConstraints r2 = new RowConstraints();
-        //r1.setPercentHeight(5);
         r2.setVgrow(Priority.ALWAYS);
         getColumnConstraints().add(c1);
         getRowConstraints().addAll(r1, r2);
@@ -152,7 +158,7 @@ public class CategoriaFX extends GridPane {
         btnEditar.disableProperty().bind(table.getSelectionModel().selectedItemProperty().isNull());
 
         btnEditar.setOnAction(e -> {
-            CadastroCategoriaFX form = new CadastroCategoriaFX();
+            CadastroCategoriaSubFX form = new CadastroCategoriaSubFX();
             try {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
@@ -163,12 +169,12 @@ public class CategoriaFX extends GridPane {
         });
 
         btnCadastrar.setOnAction(e -> {
-            CadastroCategoriaFX form = new CadastroCategoriaFX();
+            CadastroCategoriaSubFX form = new CadastroCategoriaSubFX();
             try {
                 form.start(mainStage, null);
 
-                if (form.getCategoriaContaCriada() != null) {
-                    table.getItems().add(form.getCategoriaContaCriada());
+                if (form.getSubCategoriaCriada() != null) {
+                    table.getItems().add(form.getSubCategoriaCriada());
                 }
 
             } catch (Exception ex) {

@@ -29,7 +29,7 @@ public class DespesaController {
         try {
             DespesaDAO dao = new DespesaDAO();
             if (despesa.getSubCategoria() != null) {
-                if (despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null) {
+                if (despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao().trim().length() > 0 && despesa.getDescricao() != null) {
                     if (despesa.getValor() != 0) {
                         if (despesa.getFormaPagamento() != 0) {
                             if (despesa.getDataOcorrencia() == null) {
@@ -104,7 +104,7 @@ public class DespesaController {
         try {
             DespesaDAO dao = new DespesaDAO();
             if (despesa.getSubCategoria() != null) {
-                if (despesa.getMovimentacaoID() != 0 && despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao() != null) {
+                if (despesa.getMovimentacaoID() != 0 && despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao().trim().length() > 0 && despesa.getDescricao() != null) {
                     if (despesa.getValor() != 0) {
                         if (despesa.getFormaPagamento() != 0) {
                             if (despesa.getDataOcorrencia() == null) {

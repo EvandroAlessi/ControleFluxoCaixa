@@ -19,7 +19,7 @@ public class MenuSuperiorFX extends MenuBar {
 
     MenuBar menuSuperior;
     Menu arquivo, cadastro;
-    MenuItem sair, resumo, despesa, receita, categoria, subCategoria;
+    MenuItem sair, resumo, despesa, receita, categoria;
 
     public MenuSuperiorFX(MainFX main) {
         arquivo = new Menu("Arquivo");
@@ -28,10 +28,9 @@ public class MenuSuperiorFX extends MenuBar {
         despesa = new MenuItem("Despesas");
         receita = new MenuItem("Receitas");
         categoria = new MenuItem("Categorias");
-        subCategoria = new MenuItem("SubCategorias");
         sair = new MenuItem("Sair");
         arquivo.getItems().add(sair);
-        cadastro.getItems().addAll(resumo, despesa, receita, categoria, subCategoria);
+        cadastro.getItems().addAll(resumo, despesa, receita, categoria);
 
         getMenus().addAll(arquivo, cadastro);
 
@@ -49,10 +48,6 @@ public class MenuSuperiorFX extends MenuBar {
 
         categoria.setOnAction((event) -> {
             main.switchCenter(Tela.CATEGORIA);
-        });
-        
-        subCategoria.setOnAction((event) -> {
-            main.switchCenter(Tela.SUBCATEGORIA);
         });
 
         sair.setOnAction((event) -> {

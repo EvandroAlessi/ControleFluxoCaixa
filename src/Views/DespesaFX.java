@@ -6,10 +6,11 @@
 package Views;
 
 import Controllers.DespesaController;
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import Models.Despesa;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import static javafx.scene.layout.GridPane.setConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
@@ -42,8 +44,9 @@ public class DespesaFX extends GridPane {
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
     private TableView<Despesa> table;
-    private TableColumn tcData, tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
-    private TableColumn<Despesa, Void> apagar;
+    private TableColumn<Despesa, LocalDate> tcData;
+    private TableColumn tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
+    private TableColumn<Despesa, Void> tcApagar;
     private Stage mainStage;
 
     public DespesaFX(Stage stage) {
@@ -59,9 +62,9 @@ public class DespesaFX extends GridPane {
         btnEditar = new Button("Editar");
         tcCategoria = new TableColumn("Categoria");
         tcSubCategoria = new TableColumn("Subcategoria");
-        apagar = new TableColumn("");
+        tcApagar = new TableColumn("");
 
-        apagar.prefWidthProperty().bind(table.widthProperty()
+        tcApagar.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.06));
         tcSubCategoria.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.15));
@@ -145,8 +148,8 @@ public class DespesaFX extends GridPane {
             }
         };
 
-        apagar.setCellFactory(cellFactory);
-        table.getColumns().addAll(tcData, tcCategoria, tcSubCategoria, tcDescricao, tcValor, tcPagamento, apagar);
+        tcApagar.setCellFactory(cellFactory);
+        table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);
 
         HBox hBox = new HBox();
         hBox.getChildren().addAll(btnCadastrar, btnEditar);
@@ -186,8 +189,8 @@ public class DespesaFX extends GridPane {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
             } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
 
@@ -195,14 +198,14 @@ public class DespesaFX extends GridPane {
             CadastroDespesaFX form = new CadastroDespesaFX();
             try {
                 form.start(mainStage, null);
-
+                //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
                 if (form.getDespesaCriada() != null) {
                     table.getItems().add(form.getDespesaCriada());
                 }
 
             } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
     }

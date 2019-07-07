@@ -12,9 +12,10 @@ package CrossCutting.Enums;
 public enum Tela {
     
     RESUMO,
-    RELATORIO,
+    ULTIMOS,
     RECEITA,
     DESPESA,
     CATEGORIA,
-    SUBCATEGORIA
+    SUBCATEGORIA,
+    FUTURO
 }

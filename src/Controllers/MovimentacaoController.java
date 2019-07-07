@@ -29,7 +29,7 @@ public class MovimentacaoController {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
             if (movimentacao.getSubCategoria() != null) {
-                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null) {
+                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao().trim().length() > 0 && movimentacao.getDescricao() != null) {
                     if (movimentacao.getValor() != 0) {
                         if (movimentacao.getFormaPagamento() != 0) {
                             if (movimentacao.getDataOcorrencia() == null) {
@@ -93,9 +93,9 @@ public class MovimentacaoController {
      *
      * @return
      */
-    public ArrayList<Movimentacao> getAll() {
+    public ArrayList<Movimentacao> getAll(boolean untilNow) {
         try {
-            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll();
+            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll(untilNow);
 
             return movimentacoes;
         } catch (ClassNotFoundException | SQLException e) {
@@ -115,7 +115,7 @@ public class MovimentacaoController {
         try {
             MovimentacaoDAO dao = new MovimentacaoDAO();
             if (movimentacao.getSubCategoria() != null) {
-                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao() != null) {
+                if (movimentacao.getSubCategoria().getSubCategoriaID() != 0 && movimentacao.getDescricao().trim().length() > 0 && movimentacao.getDescricao() != null) {
                     if (movimentacao.getValor() != 0) {
                         if (movimentacao.getFormaPagamento() != 0) {
                             if (movimentacao.getDataOcorrencia() == null) {

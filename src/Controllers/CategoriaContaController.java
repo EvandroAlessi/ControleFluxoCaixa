@@ -26,7 +26,7 @@ public class CategoriaContaController {
     public CategoriaConta create(CategoriaConta categoriaConta) {
         try {
             CategoriaContaDAO dao = new CategoriaContaDAO();
-            if (categoriaConta.getDescricao() != null) {
+            if (categoriaConta.getDescricao().trim().length() > 0 && categoriaConta.getDescricao().trim().length() > 0 && categoriaConta.getDescricao() != null) {
                 if (!dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
                     if (dao.create(categoriaConta)) {
                         return categoriaConta;
@@ -86,7 +86,25 @@ public class CategoriaContaController {
 
         return null;
     }
+    
+    /**
+     *
+     * @param positiva
+     * @return
+     */
+    public ArrayList<CategoriaConta> getAll(boolean positiva) {
+        try {
+            ArrayList<CategoriaConta> categoriaContas = new CategoriaContaDAO().getAll(positiva);
 
+            return categoriaContas;
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
+        return null;
+    }
+    
     /**
      *
      * @param categoriaConta
@@ -95,7 +113,7 @@ public class CategoriaContaController {
     public CategoriaConta update(CategoriaConta categoriaConta) {
         try {
             CategoriaContaDAO dao = new CategoriaContaDAO();
-            if (categoriaConta.getCategoriaContaID() != 0 && categoriaConta.getDescricao() != null) {
+            if (categoriaConta.getCategoriaContaID() != 0 && categoriaConta.getDescricao().trim().length() > 0 && categoriaConta.getDescricao() != null) {
                 if (!dao.exists(categoriaConta.getDescricao(), categoriaConta.isPositiva())) {
                     if (dao.update(categoriaConta)) {
                         return categoriaConta;

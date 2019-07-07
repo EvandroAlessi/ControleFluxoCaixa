@@ -38,7 +38,7 @@ public class MainFX extends Application {
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
 
-        switchCenter(Tela.RESUMO);
+        switchCenter(Tela.CATEGORIA);
         primaryStage.setMaximized(true); // Tela cheia
         Scene scene = new Scene(root, 700, 700);
         stage.setMinHeight(600);
@@ -54,7 +54,7 @@ public class MainFX extends Application {
     }
 
     /**
-     *
+     * Alternar entre as telas exibidas
      * @param tela
      */
     public void switchCenter(Tela tela) {
@@ -62,8 +62,11 @@ public class MainFX extends Application {
             case RESUMO:
                 root.setCenter(new ResumoFX(this.stage));
                 break;
-            case RELATORIO:
-                root.setCenter(new RelatorioFX(this.stage));
+            case ULTIMOS:
+                root.setCenter(new RelatorioFX(this.stage, true));
+                break;
+            case FUTURO:
+                root.setCenter(new RelatorioFX(this.stage, false));
                 break;
             case RECEITA:
                 root.setCenter(new ReceitaFX(this.stage));
@@ -72,7 +75,7 @@ public class MainFX extends Application {
                 root.setCenter(new DespesaFX(this.stage));
                 break;
             case CATEGORIA:
-                root.setCenter(new CategoriaFX(this.stage));
+                root.setCenter(new CategoriaSubFX(this.stage));
                 break;
             case SUBCATEGORIA:
                 //root.setCenter(new SubCategoriaFX(this.stage));

@@ -9,7 +9,6 @@ import Controllers.ReceitaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Receita;
-import static Views.MenuLateralFX.btnSaldo;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.binding.Bindings;
@@ -292,9 +291,9 @@ public class ReceitaFX extends GridPane {
                 //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
                 if (form.getReceitaCriada() != null && (form.getReceitaCriada().getDataOcorrencia().equals(LocalDate.now()) || form.getReceitaCriada().getDataOcorrencia().isBefore(LocalDate.now()))&& form.getReceitaCriada().getDescricao() != null) {
                     table.getItems().add(form.getReceitaCriada());
-                    btnSaldo.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
-                            0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
-                            true, true, true, true, true, true, null));
+//                    btnSaldo.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+//                            0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+//                            true, true, true, true, true, true, null));
                 }
 
             } catch (Exception ex) {

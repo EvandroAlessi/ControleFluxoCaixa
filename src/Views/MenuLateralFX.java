@@ -10,6 +10,7 @@ import CrossCutting.Enums.Tela;
 import CrossCutting.Log;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import static javafx.scene.input.DataFormat.URL;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -64,20 +66,7 @@ public class MenuLateralFX extends GridPane {
         vbRight = new VBox();
         saldo = new MovimentacaoController().getSaldo();
         
-        try {
-            grafico = new Image(new FileInputStream("src\\Resources\\icon-05.png"));
-        } catch (FileNotFoundException ex) {
-            Log.saveLog(ex);
-            Label img = new Label("Imagem não encontrada");
-            img.setMinWidth(150);
-            img.setMinHeight(150);
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Aviso");
-            alert.setHeaderText("Imagem não encontrada");
-            alert.setContentText("Não foi possível encontrar uma imagem");
-            vbTop.getChildren().add(img);
-            alert.showAndWait();
-        }
+        grafico = new Image(MenuLateralFX.class.getResourceAsStream("/Resources/Icon-05.png"));
         imageView = new ImageView(grafico);
 
         btnResumo.setOnAction((event) -> {

@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import Models.SubCategoria;
 import Models.CategoriaConta;
 import java.sql.PreparedStatement;
@@ -190,7 +192,8 @@ public class SubCategoriaDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw e;
+            Log.saveLog(e);
+            return false;
         }
 
         return true;

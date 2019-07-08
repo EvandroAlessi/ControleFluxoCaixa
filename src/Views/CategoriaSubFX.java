@@ -110,9 +110,10 @@ public class CategoriaSubFX extends GridPane {
                 final TableCell<SubCategoria, Void> cell = new TableCell<SubCategoria, Void>() {
 
                     private final Button btn = new Button("Remover");
+
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Alert dialog= new Alert(Alert.AlertType.WARNING);
+                            Alert dialog = new Alert(Alert.AlertType.WARNING);
                             ButtonType btnSim = new ButtonType("Sim");
                             ButtonType btnNao = new ButtonType("Não");
                             dialog.setTitle("Confimação de exclusão");
@@ -122,10 +123,17 @@ public class CategoriaSubFX extends GridPane {
                             dialog.showAndWait().ifPresent(b -> {
                                 if (b == btnSim) {
                                     SubCategoria data = getTableView().getItems().get(getIndex());
-                                    System.out.println(data.getSubCategoriaID());
-                                    subCategoriaController.delete(data.getSubCategoriaID());
-                                    table.getItems().remove(data);
-                                    table.refresh();
+                                    if (subCategoriaController.delete(data.getSubCategoriaID())) {
+                                        table.getItems().remove(data);
+                                        table.refresh();
+                                    } else {
+                                        dialog.close();
+                                        if (data.getCategoriaConta().isPositiva()) {
+                                            Mensagem.aviso("Existem receitas cadastradas para está categoria, só é possivel apagar a categoria se ela não estiver vinculada a receitas.");
+                                        } else {
+                                            Mensagem.aviso("Existem despesas cadastradas para está categoria, só é possivel apagar a categoria se ela não estiver vinculada a despesas.");
+                                        }
+                                    }
                                 } else {
                                     dialog.close();
                                 }
@@ -147,7 +155,7 @@ public class CategoriaSubFX extends GridPane {
                 return cell;
             }
         };
-        
+
         table.setRowFactory(new Callback<TableView<SubCategoria>, TableRow<SubCategoria>>() {
             public TableRow<SubCategoria> call(TableView<SubCategoria> tableView) {
                 final TableRow<SubCategoria> row = new TableRow<>();
@@ -173,7 +181,7 @@ public class CategoriaSubFX extends GridPane {
                             dialog.close();
                         }
                     });
-                    
+
                 });
 
                 editaItem.setOnAction(e -> {
@@ -191,7 +199,7 @@ public class CategoriaSubFX extends GridPane {
                         Bindings.when(Bindings.isNotNull(row.itemProperty()))
                                 .then(rowMenu)
                                 .otherwise((ContextMenu) null));
-                
+
                 row.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
                         if (e.getClickCount() == 2 && (!row.isEmpty())) {
@@ -206,11 +214,11 @@ public class CategoriaSubFX extends GridPane {
                         }
                     }
                 });
-                
+
                 return row;
             }
         });
-        
+
         tcApagar.setCellFactory(cellFactory);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(5));
@@ -271,7 +279,7 @@ public class CategoriaSubFX extends GridPane {
                 }
 
             } catch (Exception ex) {
-                 Log.saveLog(ex);
+                Log.saveLog(ex);
                 Mensagem.excecao(ex);
             }
         });

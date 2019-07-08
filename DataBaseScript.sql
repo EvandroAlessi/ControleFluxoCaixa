@@ -37,52 +37,80 @@ CREATE TABLE IF NOT EXISTS Movimentacao (
 	   ON DELETE RESTRICT
 );
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria1',1);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Moradia',0);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria2',0);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Transporte',0);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria3',0);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Vestuario',0);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria4',0);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Lazer',0);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria5',1);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Emprego',1);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria6',1);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Investimento',1);
 
-INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Categoria7',1);
+INSERT INTO CategoriaConta(Descricao, Positiva) VALUES('Freelancer',1);
 
 
 Select * from CategoriaConta;
 
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'SubCategoria1');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'Água');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(2, 'SubCategoria2');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'Energia');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(3, 'SubCategoria3');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'Gás');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(4, 'SubCategoria4');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'Condominio');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'SubCategoria5');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(1, 'Internet');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'SubCategoria6');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(2, 'Carro');
 
-INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'SubCategoria7');
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(2, 'Onibus');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(2, 'Bicicleta');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(3, 'Camisas');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(3, 'Sapatos');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(3, 'Blazers');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(3, 'Calças');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(4, 'Salário');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(4, 'Horas extras');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(4, 'bonus');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'Habitação');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'Bolsa de valores');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(5, 'Selic');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(6, 'Programação');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(6, 'Design');
+
+INSERT INTO SubCategoria(CategoriaContaID, Descricao) VALUES(6, 'Consultoria');
 
 
 Select * from Movimentacao;
 
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(1, '2019/07/01', 'Mov001', 1000, 4);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(1, '2019/03/06', 'mov001', 100, 4);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(2, '2019/07/01', 'Mov002', 1000, 2);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(2, '2019/07/01', 'Mov002', 120, 2);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(1, '2019/07/01', 'Mov003', 1000, 1);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(1, '2019/09/08', 'Mov003', 360, 1);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(4, '2019/07/01', 'Mov004', 1000, 1);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(4, '2019/06/07', 'Mov004', 1475, 1);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(7, '2019/07/01', 'Mov005', 1000, 4);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(7, '2019/07/15', 'Mov005', 22.35, 4);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(3, '2019/07/01', 'Mov006', 1000, 3);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(3, '2019/04/22', 'Mov006', 295, 3);
 
-INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(6, '2019/07/01', 'Mov007', 1000, 2);
+INSERT INTO Movimentacao(SubCategoriaID, DataOcorrencia, Descricao, Valor, FormaPagamento) VALUES(6, '2019/08/11', 'Mov007', 785, 2);

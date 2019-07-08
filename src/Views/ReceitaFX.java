@@ -9,6 +9,7 @@ import Controllers.ReceitaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Receita;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -206,7 +207,7 @@ public class ReceitaFX extends GridPane {
             try {
                 form.start(mainStage, null);
                 //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
-                if (form.getReceitaCriada() != null) {
+                if (form.getReceitaCriada() != null && form.getReceitaCriada().getDataOcorrencia().isBefore(LocalDate.now()) && form.getReceitaCriada().getDescricao() != null) {
                     table.getItems().add(form.getReceitaCriada());
                 }
 

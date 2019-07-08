@@ -30,7 +30,7 @@ public class MenuSuperiorFX extends MenuBar {
         despesa = new MenuItem("Despesas");
         receita = new MenuItem("Receitas");
         categoria = new MenuItem("Categorias");
-        ultimos = new MenuItem("Ultimos lançamentos");
+        ultimos = new MenuItem("Últimos lançamentos");
         futuros = new MenuItem("Lançamentos Futuros");
         sair = new MenuItem("Sair");
         arquivo.getItems().add(sair);

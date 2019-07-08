@@ -48,7 +48,7 @@ public class MenuLateralFX extends GridPane {
         btnDespesa = new Button("Despesas");
         btnReceita = new Button("Receitas");
         btnCategoria = new Button("Categorias");
-        btnRelatorio = new Button("Ultimos lançamentos");
+        btnRelatorio = new Button("Últimos lançamentos");
         btnFuturo = new Button("Lançamentos Futuros");
         btnSair = new Button("Sair");
         vbRight = new VBox();

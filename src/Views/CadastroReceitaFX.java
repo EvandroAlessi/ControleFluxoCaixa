@@ -9,6 +9,7 @@ import Controllers.CategoriaContaController;
 import Controllers.ReceitaController;
 import Controllers.SubCategoriaController;
 import CrossCutting.Enums.FormaPagamento;
+import CrossCutting.Mensagem;
 import Models.CategoriaConta;
 import Models.Receita;
 import Models.SubCategoria;
@@ -80,27 +81,72 @@ public class CadastroReceitaFX {
         cbPagamento = new ComboBox();
         cbCategoria = new ComboBox();
 
-        btnCadastrar.setOnAction(e -> {
+         btnCadastrar.setOnAction(e -> {
+            boolean ok = false;
             if (receitaCriada == null) {
                 Receita nReceita = new Receita();
-                nReceita.setDescricao(tfDescricao.getText());
-                nReceita.setDataOcorrencia(dpCalendario.getValue());
-                nReceita.setValor(Double.parseDouble(tfValor.getText()));
-                nReceita.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
-                nReceita.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
-                receitaController.create(nReceita);
-                receitaCriada = nReceita;
+                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
+                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                        nReceita.setDescricao(tfDescricao.getText());
+                        nReceita.setDataOcorrencia(dpCalendario.getValue());
+                        nReceita.setValor(Double.parseDouble(tfValor.getText()));
+                        nReceita.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        nReceita.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
+                        receitaCriada = receitaController.create(nReceita);
+                        if (receitaCriada != null) {
+                            ok = true;
+                        }
+                    } else {
+                        tfValor.setStyle("-fx-text-box-border: red ;"
+                                + " -fx-focus-color: red ;");
+                        Mensagem.informacao("A Receita deve ter um valor!");
+                    }
+                } else {
+                    tfDescricao.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Receita deve ter uma Descrição!");
+                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
+                        tfValor.setStyle("-fx-text-box-border: red ;"
+                                + " -fx-focus-color: red ;");
+                        Mensagem.informacao("A Receita deve ter um valor!");
+                    }
+                }
             } else {
-                receitaCriada.setDescricao(tfDescricao.getText());
-                receitaCriada.setDataOcorrencia(dpCalendario.getValue());
-                receitaCriada.setValor(Double.parseDouble(tfValor.getText()));
-                receitaCriada.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
-                receitaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
-                receitaController.update(receitaCriada);
+                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
+                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                        receitaCriada.setDescricao(tfDescricao.getText());
+                        receitaCriada.setDataOcorrencia(dpCalendario.getValue());
+                        receitaCriada.setValor(Double.parseDouble(tfValor.getText()));
+                        receitaCriada.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        receitaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
+                        receitaCriada = receitaController.update(receitaCriada);
+                        if (receitaCriada != null) {
+                            ok = true;
+                        }
+                    } else {
+                        tfValor.setStyle("-fx-text-box-border: red ;"
+                                + " -fx-focus-color: red ;");
+                        
+                        Mensagem.informacao("A Receita deve ter um valor!");
+                    }
+                } else {
+                    tfDescricao.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Receita deve ter uma Descrição!");
+                    
+                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
+                        tfValor.setStyle("-fx-text-box-border: red ;"
+                                + " -fx-focus-color: red ;");
+                        Mensagem.informacao("A Receita deve ter um valor!");
+                    }
+                }
             }
 
-            dialog.close();
+            if (ok) {
+                dialog.close();
+            }
         });
+
         btnCancelar.setOnAction(e -> {
             dialog.close();
         });

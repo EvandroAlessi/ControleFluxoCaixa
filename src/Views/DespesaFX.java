@@ -288,8 +288,7 @@ public class DespesaFX extends GridPane {
             CadastroDespesaFX form = new CadastroDespesaFX();
             try {
                 form.start(mainStage, null);
-                //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
-                if (form.getDespesaCriada() != null) {
+                if (form.getDespesaCriada() != null && (form.getDespesaCriada().getDataOcorrencia().equals(LocalDate.now()) || form.getDespesaCriada().getDataOcorrencia().isBefore(LocalDate.now()))&& form.getDespesaCriada().getDescricao() != null) {
                     table.getItems().add(form.getDespesaCriada());
                 }
 

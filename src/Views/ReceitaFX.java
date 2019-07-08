@@ -9,14 +9,13 @@ import Controllers.ReceitaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Receita;
+import static Views.MenuLateralFX.btnSaldo;
 import java.time.LocalDate;
 import java.util.List;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -25,7 +24,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -35,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -291,8 +290,11 @@ public class ReceitaFX extends GridPane {
             try {
                 form.start(mainStage, null);
                 //&& form.getDespesaCriada().getDataOcorrencia() <= LocalDate.now()
-                if (form.getReceitaCriada() != null && form.getReceitaCriada().getDataOcorrencia().isBefore(LocalDate.now()) && form.getReceitaCriada().getDescricao() != null) {
+                if (form.getReceitaCriada() != null && (form.getReceitaCriada().getDataOcorrencia().equals(LocalDate.now()) || form.getReceitaCriada().getDataOcorrencia().isBefore(LocalDate.now()))&& form.getReceitaCriada().getDescricao() != null) {
                     table.getItems().add(form.getReceitaCriada());
+                    btnSaldo.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                            0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                            true, true, true, true, true, true, null));
                 }
 
             } catch (Exception ex) {

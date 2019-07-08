@@ -46,7 +46,6 @@ public class MainFX extends Application {
         stage.setMinWidth(800);
         primaryStage.setTitle("Controle de Fluxo de Caixa");
         primaryStage.setScene(scene);
-
         primaryStage.show();
     }
 

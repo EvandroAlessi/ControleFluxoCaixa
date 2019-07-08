@@ -99,11 +99,10 @@ public class CadastroCategoriaSubFX {
             if (tfDescricao.getText().trim().length() != 0) {
                 if (subCategoriaCriada == null) {
                     SubCategoria nSubCategoria = new SubCategoria();
-
+                    
                     nSubCategoria.setDescricao(tfDescricao.getText());
                     nSubCategoria.setCategoriaConta(cbCategoria.getSelectionModel().getSelectedItem());
-                    subCategoriaController.create(nSubCategoria);
-                    subCategoriaCriada = nSubCategoria;
+                    subCategoriaCriada = subCategoriaController.create(nSubCategoria);
                 } else {
                     subCategoriaCriada.setDescricao(tfDescricao.getText());
                     subCategoriaCriada.setCategoriaConta(cbCategoria.getSelectionModel().getSelectedItem());

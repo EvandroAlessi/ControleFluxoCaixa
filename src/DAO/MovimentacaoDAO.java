@@ -75,10 +75,10 @@ public class MovimentacaoDAO {
     }
 
     public double getSaldo() throws ClassNotFoundException, SQLException {
-        String query = "SELECT (SELECT SUM(valor) FROM movimentacao WHERE subcategoriaid in (\n"
+        String query = "SELECT (SELECT SUM(valor) FROM movimentacao WHERE dataocorrencia <= NOW() AND subcategoriaid in (\n"
                 + "select subcategoriaid from subcategoria where subcategoriaid in (\n"
                 + "select categoriacontaid from categoriaconta where positiva = 1))) "
-                + "- (SELECT SUM(valor) FROM movimentacao WHERE subcategoriaid in (\n"
+                + "- (SELECT SUM(valor) FROM movimentacao WHERE dataocorrencia <= NOW() AND subcategoriaid in (\n"
                 + "select subcategoriaid from subcategoria where subcategoriaid in (\n"
                 + "select categoriacontaid from categoriaconta where positiva = 0))) as saldo;";
 

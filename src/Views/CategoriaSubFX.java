@@ -170,7 +170,6 @@ public class CategoriaSubFX extends GridPane {
                     dialog.showAndWait().ifPresent(b -> {
                         if (b == btnSim) {
                             SubCategoria data = table.getSelectionModel().getSelectedItem();
-                            System.out.println(data.getSubCategoriaID());
                             subCategoriaController.delete(data.getSubCategoriaID());
                             table.getItems().remove(data);
                             table.refresh();

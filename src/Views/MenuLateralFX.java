@@ -11,6 +11,8 @@ import CrossCutting.Log;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,9 +41,10 @@ public class MenuLateralFX extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button btnSaldo, btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
+    Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
     Image grafico;
     ImageView imageView;
+    Button btnSaldo;
     double saldo;
 
     public MenuLateralFX(MainFX main) {
@@ -185,9 +188,36 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-background-color: #d64646;"
                 + "-fx-color: white;");
         
+        
+        btnSaldo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                saldo = new MovimentacaoController().getSaldo();
+                btnSaldo.setText("Saldo Atual\nR$ " + saldo);
+                if (saldo > 0) {
+                    btnSaldo.setStyle("-fx-background-insets: 0,0; "
+                            + "-fx-padding: 1; "
+                            + "-fx-border: 0;"
+                            + "-fx-font-weight: bold;"
+                            + "-fx-background-color: green;"
+                            + "-fx-color: white;"
+                            + "-fx-alignment: center;"
+                            + "-fx-font-size: 17;");
+                } else {
+                    btnSaldo.setStyle("-fx-background-insets: 0,0; "
+                            + "-fx-padding: 1; "
+                            + "-fx-border: 0;"
+                            + "-fx-font-weight: bold;"
+                            + "-fx-background-color: red;"
+                            + "-fx-color: white;"
+                            + "-fx-alignment: center;"
+                            + "-fx-font-size: 17;");
+                }
+            }
+        });
+        
         btnSair.setTextFill(Color.WHITE);
         btnSaldo.setTextFill(Color.WHITE);
-        //btnSaldo.setFont(new Font("Arial", 18));
         btnSaldo.setAlignment(Pos.CENTER);
         btnSaldo.setText("Saldo Atual\nR$ " + saldo);
         

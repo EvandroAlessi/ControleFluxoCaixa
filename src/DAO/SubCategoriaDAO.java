@@ -185,12 +185,12 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
-        String sql = "delete from subCategoria where subCategoriaid = ?";
+        String sql = "delete from SubCategoria where subCategoriaID = ?";
         try (PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            return false;
+            throw e;
         }
 
         return true;

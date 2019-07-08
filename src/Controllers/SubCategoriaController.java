@@ -118,6 +118,7 @@ public class SubCategoriaController {
      */
     public boolean delete(int id) {
         try {
+            System.out.println(id);
             if (id != 0) {
                 return new SubCategoriaDAO().delete(id);
             }

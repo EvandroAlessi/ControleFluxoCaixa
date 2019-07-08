@@ -12,6 +12,7 @@ import Models.Receita;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,9 +26,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
@@ -61,13 +65,13 @@ public class ReceitaFX extends GridPane {
         tcData = new TableColumn("Ocorrência");
         tcDescricao = new TableColumn("Descrição");
         tcValor = new TableColumn("Valor");
-        tcPagamento = new TableColumn("Forma de Pagamento");
+        tcPagamento = new TableColumn("Pagamento");
         btnCadastrar = new Button("Cadastrar");
         btnEditar = new Button("Editar");
         tcCategoria = new TableColumn("Categoria");
         tcSubCategoria = new TableColumn("Subcategoria");
         tcApagar = new TableColumn("Ações");
-        
+
         tcApagar.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.06));
         tcSubCategoria.prefWidthProperty().bind(table.widthProperty()
@@ -82,7 +86,7 @@ public class ReceitaFX extends GridPane {
                 .multiply(0.10));
         tcPagamento.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
-        
+
         tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
@@ -129,7 +133,7 @@ public class ReceitaFX extends GridPane {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            Alert dialog = new Alert(Alert.AlertType.WARNING);
                             ButtonType btnSim = new ButtonType("Sim");
                             ButtonType btnNao = new ButtonType("Não");
                             dialog.setTitle("Confimação de exclusão");
@@ -164,14 +168,61 @@ public class ReceitaFX extends GridPane {
                 return cell;
             }
         };
-        
+
+        table.setRowFactory(new Callback<TableView<Receita>, TableRow<Receita>>() {
+            public TableRow<Receita> call(TableView<Receita> tableView) {
+                final TableRow<Receita> row = new TableRow<>();
+                final ContextMenu rowMenu = new ContextMenu();
+                MenuItem removeItem = new MenuItem("Remover");
+                MenuItem editaItem = new MenuItem("Editar");
+                removeItem.setOnAction(e -> {
+                    Alert dialog = new Alert(Alert.AlertType.WARNING);
+                    ButtonType btnSim = new ButtonType("Sim");
+                    ButtonType btnNao = new ButtonType("Não");
+                    dialog.setTitle("Confimação de exclusão");
+                    dialog.setHeaderText("Deseja realmente excluir?");
+                    dialog.setContentText("Tem certeza?");
+                    dialog.getButtonTypes().setAll(btnSim, btnNao);
+                    dialog.showAndWait().ifPresent(b -> {
+                        if (b == btnSim) {
+                            Receita data = table.getSelectionModel().getSelectedItem();
+                            control.delete(data.getMovimentacaoID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                            table.getItems().remove(row.getItem());
+                        } else {
+                            dialog.close();
+                        }
+                    });
+                    
+                });
+
+                editaItem.setOnAction(e -> {
+                    CadastroReceitaFX form = new CadastroReceitaFX();
+                    try {
+                        form.start(mainStage, table.getSelectionModel().getSelectedItem());
+                        table.refresh();
+                    } catch (Exception ex) {
+                        Log.saveLog(ex);
+                        Mensagem.excecao(ex);
+                    }
+                });
+                rowMenu.getItems().addAll(editaItem, removeItem);
+                row.contextMenuProperty().bind(
+                        Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                .then(rowMenu)
+                                .otherwise((ContextMenu) null));
+                return row;
+            }
+        });
+
         tcApagar.setCellFactory(cellFactory);
         table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);
         table.setTableMenuButtonVisible(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tcCategoria.setVisible(false);
         tcSubCategoria.setVisible(false);
-        
+
         HBox hBox = new HBox();
         hBox.getChildren().addAll(btnCadastrar, btnEditar);
         hBox.setSpacing(10);
@@ -187,7 +238,7 @@ public class ReceitaFX extends GridPane {
         this.setPadding(new Insets(5));
         this.setHgap(5);
         this.setVgap(5);
-        
+
         lbTitulo.setFont(new Font("Arial", 24));
         lbTitulo.setPadding(new Insets(15, 15, 15, 5));
         btnCadastrar.setMinSize(80, 40);

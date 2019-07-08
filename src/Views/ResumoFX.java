@@ -70,7 +70,6 @@ public class ResumoFX extends GridPane {
         HashMap<String, HashMap<String, Double>> dados = new HashMap();
         
         for(Receita receita: receitas){
-            System.out.println(receita.toString());
             if (!(dados.containsKey(receita.getSubCategoria().getCategoriaConta().getDescricao()))) {
                 dados.put(receita.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
                 dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), receita.getValor());
@@ -105,7 +104,6 @@ public class ResumoFX extends GridPane {
         HashMap<String, HashMap<String, Double>> dados2 = new HashMap();
         
         for(Despesa despesa: despesas){
-            System.out.println(despesa.toString());
             if (!(dados2.containsKey(despesa.getSubCategoria().getCategoriaConta().getDescricao()))) {
                 dados2.put(despesa.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
                 dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), despesa.getValor());

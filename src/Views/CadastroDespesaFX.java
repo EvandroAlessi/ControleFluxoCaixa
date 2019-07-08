@@ -65,7 +65,7 @@ public class CadastroDespesaFX {
         tfValor = new TextField();
         lbTitle = new Label("Nova Despesa");
         lbData = new Label("Ocorrência:");
-        lbSubCategoria = new Label("Subcategoria:");
+        lbSubCategoria = new Label("Tipo Despesa:");
         lbCategoria = new Label("Categoria:");
         lbValor = new Label("Valor:");
         lbPagamento = new Label("Pagamento:");

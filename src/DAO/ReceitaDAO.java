@@ -240,7 +240,7 @@ public class ReceitaDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            return false;
+            throw e;
         }
 
         return true;

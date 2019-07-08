@@ -6,11 +6,14 @@
 package Views;
 
 import Controllers.SubCategoriaController;
+import CrossCutting.Log;
+import CrossCutting.Mensagem;
 import Models.Despesa;
 import Models.SubCategoria;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,9 +25,12 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.ColumnConstraints;
@@ -102,10 +108,9 @@ public class CategoriaSubFX extends GridPane {
                 final TableCell<SubCategoria, Void> cell = new TableCell<SubCategoria, Void>() {
 
                     private final Button btn = new Button("Remover");
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            Alert dialog= new Alert(Alert.AlertType.WARNING);
                             ButtonType btnSim = new ButtonType("Sim");
                             ButtonType btnNao = new ButtonType("Não");
                             dialog.setTitle("Confimação de exclusão");
@@ -115,6 +120,7 @@ public class CategoriaSubFX extends GridPane {
                             dialog.showAndWait().ifPresent(b -> {
                                 if (b == btnSim) {
                                     SubCategoria data = getTableView().getItems().get(getIndex());
+                                    System.out.println(data.getSubCategoriaID());
                                     subCategoriaController.delete(data.getSubCategoriaID());
                                     table.getItems().remove(data);
                                     table.refresh();
@@ -139,7 +145,54 @@ public class CategoriaSubFX extends GridPane {
                 return cell;
             }
         };
+        
+        table.setRowFactory(new Callback<TableView<SubCategoria>, TableRow<SubCategoria>>() {
+            public TableRow<SubCategoria> call(TableView<SubCategoria> tableView) {
+                final TableRow<SubCategoria> row = new TableRow<>();
+                final ContextMenu rowMenu = new ContextMenu();
+                MenuItem removeItem = new MenuItem("Remover");
+                MenuItem editaItem = new MenuItem("Editar");
+                removeItem.setOnAction(e -> {
+                    Alert dialog = new Alert(Alert.AlertType.WARNING);
+                    ButtonType btnSim = new ButtonType("Sim");
+                    ButtonType btnNao = new ButtonType("Não");
+                    dialog.setTitle("Confimação de exclusão");
+                    dialog.setHeaderText("Deseja realmente excluir?");
+                    dialog.setContentText("Tem certeza?");
+                    dialog.getButtonTypes().setAll(btnSim, btnNao);
+                    dialog.showAndWait().ifPresent(b -> {
+                        if (b == btnSim) {
+                            SubCategoria data = table.getSelectionModel().getSelectedItem();
+                            System.out.println(data.getSubCategoriaID());
+                            subCategoriaController.delete(data.getSubCategoriaID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                        } else {
+                            dialog.close();
+                        }
+                    });
+                    
+                });
 
+                editaItem.setOnAction(e -> {
+                    CadastroCategoriaSubFX form = new CadastroCategoriaSubFX();
+                    try {
+                        form.start(mainStage, table.getSelectionModel().getSelectedItem());
+                        table.refresh();
+                    } catch (Exception ex) {
+                        Log.saveLog(ex);
+                        Mensagem.excecao(ex);
+                    }
+                });
+                rowMenu.getItems().addAll(editaItem, removeItem);
+                row.contextMenuProperty().bind(
+                        Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                .then(rowMenu)
+                                .otherwise((ContextMenu) null));
+                return row;
+            }
+        });
+        
         tcApagar.setCellFactory(cellFactory);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(5));
@@ -185,8 +238,8 @@ public class CategoriaSubFX extends GridPane {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
             } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
 
@@ -200,8 +253,8 @@ public class CategoriaSubFX extends GridPane {
                 }
 
             } catch (Exception ex) {
-                Logger.getLogger(DespesaFX.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                 Log.saveLog(ex);
+                Mensagem.excecao(ex);
             }
         });
 

@@ -65,7 +65,7 @@ public class CadastroReceitaFX {
         tfValor = new TextField();
         lbTitle = new Label("Nova Receita");
         lbData = new Label("Ocorrência:");
-        lbSubCategoria = new Label("Subcategoria:");
+        lbSubCategoria = new Label("Tipo Receita:");
         lbCategoria = new Label("Categoria:");
         lbValor = new Label("Valor:");
         lbPagamento = new Label("Pagamento:");

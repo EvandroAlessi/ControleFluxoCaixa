@@ -9,9 +9,9 @@ import Controllers.DespesaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Despesa;
-import Models.Receita;
 import java.time.LocalDate;
 import java.util.List;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,9 +24,12 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
@@ -60,7 +63,7 @@ public class DespesaFX extends GridPane {
         tcData = new TableColumn("Ocorrência");
         tcDescricao = new TableColumn("Descrição");
         tcValor = new TableColumn("Valor");
-        tcPagamento = new TableColumn("Forma de Pagamento");
+        tcPagamento = new TableColumn("Pagamento");
         btnCadastrar = new Button("Cadastrar");
         btnEditar = new Button("Editar");
         tcCategoria = new TableColumn("Categoria");
@@ -125,10 +128,9 @@ public class DespesaFX extends GridPane {
                 final TableCell<Despesa, Void> cell = new TableCell<Despesa, Void>() {
 
                     private final Button btn = new Button("Remover");
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            Alert dialog= new Alert(Alert.AlertType.WARNING);
                             ButtonType btnSim = new ButtonType("Sim");
                             ButtonType btnNao = new ButtonType("Não");
                             dialog.setTitle("Confimação de exclusão");
@@ -163,6 +165,53 @@ public class DespesaFX extends GridPane {
                 return cell;
             }
         };
+        
+        table.setRowFactory(new Callback<TableView<Despesa>, TableRow<Despesa>>() {
+            public TableRow<Despesa> call(TableView<Despesa> tableView) {
+                final TableRow<Despesa> row = new TableRow<>();
+                final ContextMenu rowMenu = new ContextMenu();
+                MenuItem removeItem = new MenuItem("Remover");
+                MenuItem editaItem = new MenuItem("Editar");
+                removeItem.setOnAction(e -> {
+                    Alert dialog = new Alert(Alert.AlertType.WARNING);
+                    ButtonType btnSim = new ButtonType("Sim");
+                    ButtonType btnNao = new ButtonType("Não");
+                    dialog.setTitle("Confimação de exclusão");
+                    dialog.setHeaderText("Deseja realmente excluir?");
+                    dialog.setContentText("Tem certeza?");
+                    dialog.getButtonTypes().setAll(btnSim, btnNao);
+                    dialog.showAndWait().ifPresent(b -> {
+                        if (b == btnSim) {
+                            Despesa data = table.getSelectionModel().getSelectedItem();
+                            control.delete(data.getMovimentacaoID());
+                            table.getItems().remove(data);
+                            table.refresh();
+                            table.getItems().remove(row.getItem());
+                        } else {
+                            dialog.close();
+                        }
+                    });
+                    
+                });
+
+                editaItem.setOnAction(e -> {
+                    CadastroDespesaFX form = new CadastroDespesaFX();
+                    try {
+                        form.start(mainStage, table.getSelectionModel().getSelectedItem());
+                        table.refresh();
+                    } catch (Exception ex) {
+                        Log.saveLog(ex);
+                        Mensagem.excecao(ex);
+                    }
+                });
+                rowMenu.getItems().addAll(editaItem, removeItem);
+                row.contextMenuProperty().bind(
+                        Bindings.when(Bindings.isNotNull(row.itemProperty()))
+                                .then(rowMenu)
+                                .otherwise((ContextMenu) null));
+                return row;
+            }
+        });
 
         tcApagar.setCellFactory(cellFactory);
         table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);

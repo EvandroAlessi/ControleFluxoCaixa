@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.text.Font;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -32,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import static javafx.scene.layout.GridPane.setConstraints;
@@ -209,6 +211,22 @@ public class DespesaFX extends GridPane {
                         Bindings.when(Bindings.isNotNull(row.itemProperty()))
                                 .then(rowMenu)
                                 .otherwise((ContextMenu) null));
+                
+                row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent e) {
+                        if (e.getClickCount() == 2 && (!row.isEmpty())) {
+                            CadastroDespesaFX form = new CadastroDespesaFX();
+                            try {
+                                form.start(mainStage, table.getSelectionModel().getSelectedItem());
+                                table.refresh();
+                            } catch (Exception ex) {
+                                Log.saveLog(ex);
+                                Mensagem.excecao(ex);
+                            }
+                        }
+                    }
+                });
+                
                 return row;
             }
         });

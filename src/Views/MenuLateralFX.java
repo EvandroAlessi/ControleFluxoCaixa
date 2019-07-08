@@ -20,6 +20,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -102,8 +103,21 @@ public class MenuLateralFX extends GridPane {
         });
         
         btnSair.setOnAction((event) -> {
-            Platform.exit();
-            System.exit(0);
+            Alert dialog = new Alert(Alert.AlertType.WARNING);
+            ButtonType btnSim = new ButtonType("Sim");
+            ButtonType btnNao = new ButtonType("Não");
+            dialog.setTitle("Confimação de saída");
+            dialog.setHeaderText("Deseja realmente sair?");
+            dialog.setContentText("Tem certeza?");
+            dialog.getButtonTypes().setAll(btnSim, btnNao);
+            dialog.showAndWait().ifPresent(b -> {
+                if (b == btnSim) {
+                    Platform.exit();
+                    System.exit(0);
+                } else {
+                    dialog.close();
+                }
+            });
         });
 
         imageView.setFitHeight(120);

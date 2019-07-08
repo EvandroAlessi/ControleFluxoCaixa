@@ -7,9 +7,13 @@ package Views;
 
 import CrossCutting.Enums.Tela;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -46,6 +50,26 @@ public class MainFX extends Application {
         stage.setMinWidth(800);
         primaryStage.setTitle("Controle de Fluxo de Caixa");
         primaryStage.setScene(scene);
+        
+        stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e-> {
+            e.consume();
+            Alert dialog = new Alert(Alert.AlertType.WARNING);
+            ButtonType btnSim = new ButtonType("Sim");
+            ButtonType btnNao = new ButtonType("Não");
+            dialog.setTitle("Confimação de saída");
+            dialog.setHeaderText("Deseja realmente sair?");
+            dialog.setContentText("Tem certeza?");
+            dialog.getButtonTypes().setAll(btnSim, btnNao);
+            dialog.showAndWait().ifPresent(b -> {
+                if (b == btnSim) {
+                    Platform.exit();
+                    System.exit(0);
+                } else {
+                    dialog.close();
+                }
+            });
+        });
+        
         primaryStage.show();
     }
 

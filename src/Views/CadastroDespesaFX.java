@@ -83,10 +83,38 @@ public class CadastroDespesaFX {
 
         btnCadastrar.setOnAction(e -> {
             boolean ok = false;
-            if (despesaCriada == null) {
-                Despesa nDespesa = new Despesa();
-                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
-                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+            if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
+                if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                    if (cbSubCategoria.getSelectionModel().getSelectedItem() != null) {
+                        ok = true;
+                    } else {
+                        Mensagem.aviso("A Despesa deve ter um Tipo de Despesa.");
+                    }
+                } else {
+                    tfValor.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Despesa deve ter um valor!");
+                }
+            } else {
+                tfDescricao.setStyle("-fx-text-box-border: red ;"
+                        + " -fx-focus-color: red ;");
+                Mensagem.informacao("A Despesa deve ter uma Descrição!");
+                if (cbSubCategoria.getSelectionModel().getSelectedItem() == null) {
+                    Mensagem.aviso("A Despesa deve ter um Tipo de Despesa.");
+                }
+                if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
+                    tfValor.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Despesa deve ter um valor!");
+                }
+            }
+            if (ok) {
+                ok = false;
+                if (despesaCriada == null) {
+
+                    Despesa nDespesa = new Despesa();
+
+                    try {
                         nDespesa.setDescricao(tfDescricao.getText());
                         nDespesa.setDataOcorrencia(dpCalendario.getValue());
                         nDespesa.setValor(Double.parseDouble(tfValor.getText()));
@@ -96,24 +124,11 @@ public class CadastroDespesaFX {
                         if (despesaCriada != null) {
                             ok = true;
                         }
-                    } else {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
+                    } catch (Exception ex) {
+                        Mensagem.informacao("O valor deve ser um número!");
                     }
                 } else {
-                    tfDescricao.setStyle("-fx-text-box-border: red ;"
-                            + " -fx-focus-color: red ;");
-                    Mensagem.informacao("A Receita deve ter uma Descrição!");
-                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
-                    }
-                }
-            } else {
-                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
-                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                    try {
                         despesaCriada.setDescricao(tfDescricao.getText());
                         despesaCriada.setDataOcorrencia(dpCalendario.getValue());
                         despesaCriada.setValor(Double.parseDouble(tfValor.getText()));
@@ -123,27 +138,14 @@ public class CadastroDespesaFX {
                         if (despesaCriada != null) {
                             ok = true;
                         }
-                    } else {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-
-                        Mensagem.informacao("A Receita deve ter um valor!");
-                    }
-                } else {
-                    tfDescricao.setStyle("-fx-text-box-border: red ;"
-                            + " -fx-focus-color: red ;");
-                    Mensagem.informacao("A Receita deve ter uma Descrição!");
-
-                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
+                    } catch (Exception ex) {
+                        Mensagem.informacao("O valor deve ser um número!");
                     }
                 }
-            }
 
-            if (ok) {
-                dialog.close();
+                if (ok) {
+                    dialog.close();
+                }
             }
         });
 

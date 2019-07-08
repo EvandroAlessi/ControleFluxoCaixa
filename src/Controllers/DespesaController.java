@@ -30,7 +30,7 @@ public class DespesaController {
             DespesaDAO dao = new DespesaDAO();
             if (despesa.getSubCategoria() != null) {
                 if (despesa.getSubCategoria().getSubCategoriaID() != 0 && despesa.getDescricao().trim().length() > 0 && despesa.getDescricao() != null) {
-                    if (despesa.getValor() != 0) {
+                    if (despesa.getValor() > 0) {
                         if (despesa.getFormaPagamento() != 0) {
                             if (despesa.getDataOcorrencia() == null) {
                                 despesa.setDataOcorrencia(LocalDate.now());
@@ -38,19 +38,19 @@ public class DespesaController {
                             if (dao.create(despesa)) {
                                 return despesa;
                             } else {
-                                Mensagem.aviso("Não foi possivel cadastrar a receita.");
+                                Mensagem.aviso("Não foi possivel cadastrar a Despesa.");
                             }
                         } else {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
                     } else {
-                        Mensagem.aviso("A receita deve ter um valor para a receita.");
+                        Mensagem.aviso("A Despesa deve ter um valor e ele não pode ser negativo.");
                     }
                 } else {
-                    Mensagem.aviso("A despesa deve ter uma Descricao.");
+                    Mensagem.aviso("A Despesa deve ter uma Descricao.");
                 }
             } else {
-                Mensagem.aviso("A despesa deve ter uma Categoria.");
+                Mensagem.aviso("A despesa deve ter um Tipo de Despesa.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);

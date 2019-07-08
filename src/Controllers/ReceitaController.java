@@ -30,7 +30,7 @@ public class ReceitaController {
             ReceitaDAO dao = new ReceitaDAO();
             if (receita.getSubCategoria() != null) {
                 if (receita.getSubCategoria().getSubCategoriaID() != 0 && receita.getDescricao().trim().length() > 0 && receita.getDescricao() != null) {
-                    if (receita.getValor() != 0) {
+                    if (receita.getValor() > 0) {
                         if (receita.getFormaPagamento() != 0) {
                             if (receita.getDataOcorrencia() == null) {
                                 receita.setDataOcorrencia(LocalDate.now());
@@ -44,13 +44,13 @@ public class ReceitaController {
                             Mensagem.aviso("Deve ser selecionada uma forma de pagamento.");
                         }
                     } else {
-                        Mensagem.aviso("A receita deve ter um valor para a receita.");
+                        Mensagem.aviso("A receita deve ter um valor  e ele não pode ser negativo.");
                     }
                 } else {
                     Mensagem.aviso("A receita deve ter uma Descricao.");
                 }
             } else {
-                Mensagem.aviso("A Receita deve ter uma Categoria.");
+                Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);

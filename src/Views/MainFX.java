@@ -6,6 +6,7 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
@@ -53,19 +55,20 @@ public class MainFX extends Application {
         
         stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e-> {
             e.consume();
-            Alert dialog = new Alert(Alert.AlertType.WARNING);
             ButtonType btnSim = new ButtonType("Sim");
             ButtonType btnNao = new ButtonType("Não");
-            dialog.setTitle("Confimação de saída");
-            dialog.setHeaderText("Deseja realmente sair?");
-            dialog.setContentText("Tem certeza?");
-            dialog.getButtonTypes().setAll(btnSim, btnNao);
-            dialog.showAndWait().ifPresent(b -> {
-                if (b == btnSim) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
+            alert.setHeaderText("Deseja realmente sair?");
+            alert.setContentText("Tem certeza?");
+            Window window = alert.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(ev -> alert.hide());
+            Optional<ButtonType> result = alert.showAndWait();
+            result.ifPresent(res->{
+                if (res.equals(btnSim)) {
                     Platform.exit();
                     System.exit(0);
-                } else {
-                    dialog.close();
+                } else if (res.equals(btnNao)) {
+                    alert.close();
                 }
             });
         });

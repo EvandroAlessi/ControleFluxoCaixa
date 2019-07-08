@@ -29,7 +29,6 @@ public class CategoriaContaDAO {
 
         for (int i = 1; i <= fields.getColumnCount(); i++) {
             columns[i - 1] = fields.getColumnName(i);
-            System.out.println(columns[i - 1]);
         }
 
         return columns;
@@ -44,7 +43,6 @@ public class CategoriaContaDAO {
      */
     public boolean create(CategoriaConta categoria) throws SQLException, ClassNotFoundException {
         String sql = "insert into categoriaconta(Descricao, Positiva)values(?,?)";
-        System.out.println(contexto.getConexao());
         try (PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
             preparestatement.setInt(2, (categoria.isPositiva() ? 1 : 0));
@@ -114,8 +112,6 @@ public class CategoriaContaDAO {
             categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
             categoria.setPositiva(dados.getBoolean("positiva"));
 
-            System.out.println(categoria.toString());
-
             lista.add(categoria);
         }
 
@@ -141,8 +137,6 @@ public class CategoriaContaDAO {
             categoria.setDescricao(dados.getString("Descricao"));
             categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
             categoria.setPositiva(dados.getBoolean("positiva"));
-
-            System.out.println(categoria.toString());
 
             lista.add(categoria);
         }

@@ -36,7 +36,6 @@ public class SubCategoriaDAO {
 
         for (int i = 1; i <= fields.getColumnCount(); i++) {
             columns[i - 1] = fields.getColumnName(i);
-            System.out.println(columns[i - 1]);
         }
 
         return columns;
@@ -87,7 +86,6 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public SubCategoria get(int id) throws ClassNotFoundException, SQLException {
-        System.out.println("1");
         String query = "select * from subCategoria where subCategoriaid = '" + id + "';";
         SubCategoria subCategoria = new SubCategoria();
 

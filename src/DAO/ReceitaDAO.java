@@ -36,7 +36,6 @@ public class ReceitaDAO {
 
         for (int i = 1; i <= fields.getColumnCount(); i++) {
             columns[i - 1] = fields.getColumnName(i);
-            System.out.println(columns[i - 1]);
         }
 
         return columns;
@@ -156,8 +155,6 @@ public class ReceitaDAO {
             receita.setDataOcorrencia(dados.getDate("dataOcorrencia").toLocalDate());
             receita.setValor(dados.getDouble("valor"));
             receita.setFormaPagamento(dados.getInt("formaPagamento"));
-            
-            System.out.println(receita.getDescricao() + receita.getDataOcorrencia());
             
             String querySub = "select * from subcategoria where SubCategoriaid = '"
                     + dados.getInt("SubCategoriaID")

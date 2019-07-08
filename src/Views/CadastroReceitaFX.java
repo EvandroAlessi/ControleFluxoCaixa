@@ -65,8 +65,8 @@ public class CadastroReceitaFX {
         tfValor = new TextField();
         lbTitle = new Label("Nova Receita");
         lbData = new Label("Ocorrência:");
-        lbSubCategoria = new Label("Tipo Receita:");
-        lbCategoria = new Label("Categoria:");
+        lbSubCategoria = new Label("Categoria:");
+        lbCategoria = new Label("Tipo Receita:");
         lbValor = new Label("Valor:");
         lbPagamento = new Label("Pagamento:");
         btnCadastrar = new Button("Cadastrar");
@@ -78,15 +78,43 @@ public class CadastroReceitaFX {
         subCategorias = subCategoriaController.getAll();
         categoriasConta = categoriaController.getAll();
         cbSubCategoria = new ComboBox();
-        cbPagamento= new ComboBox();
+        cbPagamento = new ComboBox();
         cbCategoria = new ComboBox();
 
         btnCadastrar.setOnAction(e -> {
             boolean ok = false;
-            if (receitaCriada == null) {
-                Receita nReceita = new Receita();
-                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
-                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+            if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
+                if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                    if (cbSubCategoria.getSelectionModel().getSelectedItem() != null) {
+                        ok = true;
+                    } else {
+                        Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
+                    }
+                } else {
+                    tfValor.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Receita deve ter um valor!");
+                }
+            } else {
+                tfDescricao.setStyle("-fx-text-box-border: red ;"
+                        + " -fx-focus-color: red ;");
+                Mensagem.informacao("A Receita deve ter uma Descrição!");
+                if (cbSubCategoria.getSelectionModel().getSelectedItem() == null) {
+                    Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
+                }
+                if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
+                    tfValor.setStyle("-fx-text-box-border: red ;"
+                            + " -fx-focus-color: red ;");
+                    Mensagem.informacao("A Receita deve ter um valor!");
+                }
+            }
+            if (ok) {
+                ok = false;
+                if (receitaCriada == null) {
+
+                    Receita nReceita = new Receita();
+
+                    try {
                         nReceita.setDescricao(tfDescricao.getText());
                         nReceita.setDataOcorrencia(dpCalendario.getValue());
                         nReceita.setValor(Double.parseDouble(tfValor.getText()));
@@ -96,24 +124,11 @@ public class CadastroReceitaFX {
                         if (receitaCriada != null) {
                             ok = true;
                         }
-                    } else {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
+                    } catch (Exception ex) {
+                        Mensagem.informacao("O valor deve ser um número!");
                     }
                 } else {
-                    tfDescricao.setStyle("-fx-text-box-border: red ;"
-                            + " -fx-focus-color: red ;");
-                    Mensagem.informacao("A Receita deve ter uma Descrição!");
-                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
-                    }
-                }
-            } else {
-                if (tfDescricao.getText().trim().length() > 0 && tfDescricao.getText() != null) {
-                    if (tfValor.getText().trim().length() > 0 && tfValor.getText() != null) {
+                    try {
                         receitaCriada.setDescricao(tfDescricao.getText());
                         receitaCriada.setDataOcorrencia(dpCalendario.getValue());
                         receitaCriada.setValor(Double.parseDouble(tfValor.getText()));
@@ -123,27 +138,14 @@ public class CadastroReceitaFX {
                         if (receitaCriada != null) {
                             ok = true;
                         }
-                    } else {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-
-                        Mensagem.informacao("A Receita deve ter um valor!");
-                    }
-                } else {
-                    tfDescricao.setStyle("-fx-text-box-border: red ;"
-                            + " -fx-focus-color: red ;");
-                    Mensagem.informacao("A Receita deve ter uma Descrição!");
-
-                    if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
-                        tfValor.setStyle("-fx-text-box-border: red ;"
-                                + " -fx-focus-color: red ;");
-                        Mensagem.informacao("A Receita deve ter um valor!");
+                    } catch (Exception ex) {
+                        Mensagem.informacao("O valor deve ser um número!");
                     }
                 }
-            }
 
-            if (ok) {
-                dialog.close();
+                if (ok) {
+                    dialog.close();
+                }
             }
         });
 

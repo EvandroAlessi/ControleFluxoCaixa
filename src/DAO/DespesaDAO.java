@@ -36,7 +36,6 @@ public class DespesaDAO {
 
         for (int i = 1; i <= fields.getColumnCount(); i++) {
             columns[i - 1] = fields.getColumnName(i);
-            System.out.println(columns[i - 1]);
         }
 
         return columns;
@@ -57,10 +56,8 @@ public class DespesaDAO {
             preparestatement.setDouble(3, despesa.getValor()); //substitui o ? pelo dado do usuario
             preparestatement.setInt(4, despesa.getFormaPagamento());
             preparestatement.setInt(5, despesa.getSubCategoria().getSubCategoriaID());
+            
             //executando comando sql
-            System.out.println(preparestatement);
-            System.out.println(sql);
-            System.out.println(despesa.toString());
             int result = preparestatement.executeUpdate();
             if (result > 0) {
                 ResultSet id = preparestatement.getGeneratedKeys();

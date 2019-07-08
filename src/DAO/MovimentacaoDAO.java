@@ -36,7 +36,6 @@ public class MovimentacaoDAO {
 
         for (int i = 1; i <= fields.getColumnCount(); i++) {
             columns[i - 1] = fields.getColumnName(i);
-            System.out.println(columns[i - 1]);
         }
 
         return columns;

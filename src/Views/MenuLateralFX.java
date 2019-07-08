@@ -10,6 +10,7 @@ import CrossCutting.Enums.Tela;
 import CrossCutting.Log;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +32,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Window;
 
 /**
  *
@@ -103,19 +105,20 @@ public class MenuLateralFX extends GridPane {
         });
         
         btnSair.setOnAction((event) -> {
-            Alert dialog = new Alert(Alert.AlertType.WARNING);
             ButtonType btnSim = new ButtonType("Sim");
             ButtonType btnNao = new ButtonType("Não");
-            dialog.setTitle("Confimação de saída");
-            dialog.setHeaderText("Deseja realmente sair?");
-            dialog.setContentText("Tem certeza?");
-            dialog.getButtonTypes().setAll(btnSim, btnNao);
-            dialog.showAndWait().ifPresent(b -> {
-                if (b == btnSim) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
+            alert.setHeaderText("Deseja realmente sair?");
+            alert.setContentText("Tem certeza?");
+            Window window = alert.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> alert.hide());
+            Optional<ButtonType> result = alert.showAndWait();
+            result.ifPresent(res->{
+                if (res.equals(btnSim)) {
                     Platform.exit();
                     System.exit(0);
-                } else {
-                    dialog.close();
+                } else if (res.equals(btnNao)) {
+                    alert.close();
                 }
             });
         });

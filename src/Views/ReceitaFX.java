@@ -10,8 +10,13 @@ import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Receita;
 import static Views.MenuLateralFX.btnSaldo;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -42,6 +47,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Callback;
 
 /**
@@ -53,7 +59,7 @@ public class ReceitaFX extends GridPane {
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
     private TableView<Receita> table;
-    private TableColumn<Receita, String> tcData;
+    private TableColumn<Receita, LocalDate> tcData;
     private TableColumn tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
     private TableColumn<Receita, Void> tcApagar;
     private Stage mainStage;
@@ -89,6 +95,20 @@ public class ReceitaFX extends GridPane {
                 .multiply(0.10));
 
         tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+//        tcData.setCellFactory(column -> {
+//            TableCell<Receita, LocalDate> cell = new TableCell<Receita, LocalDate>() {
+//                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+//                
+//                
+//                protected void updateItem(LocalDate item, boolean empty) {
+//                    super.updateItem(item, empty);
+//                    
+//                        setText(format.format(Date.from(item.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+//                }
+//            };
+//
+//            return cell;
+//        });
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -177,21 +197,23 @@ public class ReceitaFX extends GridPane {
                 MenuItem removeItem = new MenuItem("Remover");
                 MenuItem editaItem = new MenuItem("Editar");
                 removeItem.setOnAction(e -> {
-                    Alert dialog = new Alert(Alert.AlertType.WARNING);
                     ButtonType btnSim = new ButtonType("Sim");
                     ButtonType btnNao = new ButtonType("Não");
+                    Alert dialog = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
                     dialog.setTitle("Confimação de exclusão");
                     dialog.setHeaderText("Deseja realmente excluir?");
                     dialog.setContentText("Tem certeza?");
-                    dialog.getButtonTypes().setAll(btnSim, btnNao);
-                    dialog.showAndWait().ifPresent(b -> {
-                        if (b == btnSim) {
+                    Window window = dialog.getDialogPane().getScene().getWindow();
+                    window.setOnCloseRequest(ev -> dialog.hide());
+                    Optional<ButtonType> result = dialog.showAndWait();
+                    result.ifPresent(res -> {
+                        if (res.equals(btnSim)) {
                             Receita data = table.getSelectionModel().getSelectedItem();
                             control.delete(data.getMovimentacaoID());
                             table.getItems().remove(data);
                             table.refresh();
                             table.getItems().remove(row.getItem());
-                        } else {
+                        } else if (res.equals(btnNao)) {
                             dialog.close();
                         }
                     });

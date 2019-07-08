@@ -88,7 +88,7 @@ public class CadastroReceitaFX {
                     if (cbSubCategoria.getSelectionModel().getSelectedItem() != null) {
                         ok = true;
                     } else {
-                        Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
+                        Mensagem.aviso("A Receita deve ter um Categoria.");
                     }
                 } else {
                     tfValor.setStyle("-fx-text-box-border: red ;"
@@ -100,7 +100,7 @@ public class CadastroReceitaFX {
                         + " -fx-focus-color: red ;");
                 Mensagem.informacao("A Receita deve ter uma Descrição!");
                 if (cbSubCategoria.getSelectionModel().getSelectedItem() == null) {
-                    Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
+                    Mensagem.aviso("A Receita deve ter um Categoria.");
                 }
                 if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
                     tfValor.setStyle("-fx-text-box-border: red ;"

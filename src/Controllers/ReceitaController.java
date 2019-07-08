@@ -50,7 +50,7 @@ public class ReceitaController {
                     Mensagem.aviso("A receita deve ter uma Descricao.");
                 }
             } else {
-                Mensagem.aviso("A Receita deve ter um Tipo de Receita.");
+                Mensagem.aviso("A Receita deve ter um Categoria.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);

@@ -88,7 +88,7 @@ public class DespesaFX extends GridPane {
         tcPagamento.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
 
-        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dateF"));
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));

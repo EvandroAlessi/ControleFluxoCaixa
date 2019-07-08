@@ -50,7 +50,7 @@ public class DespesaController {
                     Mensagem.aviso("A Despesa deve ter uma Descricao.");
                 }
             } else {
-                Mensagem.aviso("A despesa deve ter um Tipo de Despesa.");
+                Mensagem.aviso("A despesa deve ter um Categoria.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             Log.saveLog(e);

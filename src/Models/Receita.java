@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
@@ -22,5 +24,12 @@ public class Receita extends Movimentacao {
 
     public Receita(LocalDate dataOcorrencia, String descricao, double valor, int movimentacaoID, int formaPagamento) {
         super(dataOcorrencia, descricao, valor, movimentacaoID, formaPagamento);
+    }
+    
+    public String getDateF(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String data = sdf.format(Date.valueOf(getDataOcorrencia()));
+        
+        return data;
     }
 }

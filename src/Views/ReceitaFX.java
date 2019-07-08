@@ -59,7 +59,7 @@ public class ReceitaFX extends GridPane {
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
     private TableView<Receita> table;
-    private TableColumn<Receita, LocalDate> tcData;
+    private TableColumn<Receita, String> tcData;
     private TableColumn tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
     private TableColumn<Receita, Void> tcApagar;
     private Stage mainStage;
@@ -94,7 +94,7 @@ public class ReceitaFX extends GridPane {
         tcPagamento.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.10));
 
-        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dateF"));
 //        tcData.setCellFactory(column -> {
 //            TableCell<Receita, LocalDate> cell = new TableCell<Receita, LocalDate>() {
 //                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");

@@ -65,8 +65,8 @@ public class CadastroDespesaFX {
         tfValor = new TextField();
         lbTitle = new Label("Nova Despesa");
         lbData = new Label("Ocorrência:");
-        lbSubCategoria = new Label("Tipo Despesa:");
-        lbCategoria = new Label("Categoria:");
+        lbSubCategoria = new Label("Categoria:");
+        lbCategoria = new Label("Tipo Despesa:");
         lbValor = new Label("Valor:");
         lbPagamento = new Label("Pagamento:");
         btnCadastrar = new Button("Cadastrar");
@@ -88,7 +88,7 @@ public class CadastroDespesaFX {
                     if (cbSubCategoria.getSelectionModel().getSelectedItem() != null) {
                         ok = true;
                     } else {
-                        Mensagem.aviso("A Despesa deve ter um Tipo de Despesa.");
+                        Mensagem.aviso("A Despesa deve ter um Categoria.");
                     }
                 } else {
                     tfValor.setStyle("-fx-text-box-border: red ;"
@@ -100,7 +100,7 @@ public class CadastroDespesaFX {
                         + " -fx-focus-color: red ;");
                 Mensagem.informacao("A Despesa deve ter uma Descrição!");
                 if (cbSubCategoria.getSelectionModel().getSelectedItem() == null) {
-                    Mensagem.aviso("A Despesa deve ter um Tipo de Despesa.");
+                    Mensagem.aviso("A Despesa deve ter um Categoria.");
                 }
                 if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
                     tfValor.setStyle("-fx-text-box-border: red ;"

@@ -51,7 +51,7 @@ public class CadastroReceitaFX {
     private final CategoriaContaController categoriaController;
     private final List<SubCategoria> subCategorias;
     private final List<CategoriaConta> categoriasConta;
-    private ComboBox<String> cbPagamento;
+    private ComboBox<FormaPagamento> cbPagamento;
     private ComboBox<SubCategoria> cbSubCategoria;
     private final ComboBox<CategoriaConta> cbCategoria;
     private ReceitaController receitaController;
@@ -78,7 +78,7 @@ public class CadastroReceitaFX {
         subCategorias = subCategoriaController.getAll();
         categoriasConta = categoriaController.getAll();
         cbSubCategoria = new ComboBox();
-        cbPagamento = new ComboBox();
+        cbPagamento= new ComboBox();
         cbCategoria = new ComboBox();
 
         btnCadastrar.setOnAction(e -> {
@@ -90,7 +90,7 @@ public class CadastroReceitaFX {
                         nReceita.setDescricao(tfDescricao.getText());
                         nReceita.setDataOcorrencia(dpCalendario.getValue());
                         nReceita.setValor(Double.parseDouble(tfValor.getText()));
-                        nReceita.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        nReceita.setFormaPagamento(cbPagamento.getSelectionModel().getSelectedItem().getValue());
                         nReceita.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                         receitaCriada = receitaController.create(nReceita);
                         if (receitaCriada != null) {
@@ -117,7 +117,7 @@ public class CadastroReceitaFX {
                         receitaCriada.setDescricao(tfDescricao.getText());
                         receitaCriada.setDataOcorrencia(dpCalendario.getValue());
                         receitaCriada.setValor(Double.parseDouble(tfValor.getText()));
-                        receitaCriada.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        receitaCriada.setFormaPagamento(cbPagamento.getSelectionModel().getSelectedItem().getValue());
                         receitaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                         receitaCriada = receitaController.update(receitaCriada);
                         if (receitaCriada != null) {
@@ -193,9 +193,7 @@ public class CadastroReceitaFX {
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 10, 25, 25));
 
-        for (FormaPagamento c : FormaPagamento.values()) {
-            cbPagamento.getItems().add(c.toString());
-        }
+        cbPagamento.getItems().addAll(FormaPagamento.values());
 
         cbCategoria.setItems(FXCollections.observableArrayList(catReceita));
 
@@ -279,7 +277,7 @@ public class CadastroReceitaFX {
             btnCadastrar.setText("Salvar");
             this.tfDescricao.setText(receitaCriada.getDescricao());
             this.tfValor.setText(String.valueOf(receitaCriada.getValor()));
-            this.cbPagamento.getSelectionModel().select(receitaCriada.getFormaPagamento());
+            this.cbPagamento.getSelectionModel().select(receitaCriada.getFormaPagamento() - 1);
 
             for (CategoriaConta categoria : this.cbCategoria.getItems()) {
                 if (categoria.getCategoriaContaID() == receitaCriada.getSubCategoria().getCategoriaConta().getCategoriaContaID()) {

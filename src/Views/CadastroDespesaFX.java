@@ -51,7 +51,7 @@ public class CadastroDespesaFX {
     private final CategoriaContaController categoriaController;
     private final List<SubCategoria> subCategorias;
     private final List<CategoriaConta> categoriasConta;
-    private ComboBox<String> cbPagamento;
+    private ComboBox<FormaPagamento> cbPagamento;
     private ComboBox<SubCategoria> cbSubCategoria;
     private final ComboBox<CategoriaConta> cbCategoria;
     private DespesaController despesaController;
@@ -90,7 +90,7 @@ public class CadastroDespesaFX {
                         nDespesa.setDescricao(tfDescricao.getText());
                         nDespesa.setDataOcorrencia(dpCalendario.getValue());
                         nDespesa.setValor(Double.parseDouble(tfValor.getText()));
-                        nDespesa.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        nDespesa.setFormaPagamento(cbPagamento.getSelectionModel().getSelectedItem().getValue());
                         nDespesa.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                         despesaCriada = despesaController.create(nDespesa);
                         if (despesaCriada != null) {
@@ -117,7 +117,7 @@ public class CadastroDespesaFX {
                         despesaCriada.setDescricao(tfDescricao.getText());
                         despesaCriada.setDataOcorrencia(dpCalendario.getValue());
                         despesaCriada.setValor(Double.parseDouble(tfValor.getText()));
-                        despesaCriada.setFormaPagamento(FormaPagamento.valueOf(cbPagamento.getSelectionModel().getSelectedItem()).getValue());
+                        despesaCriada.setFormaPagamento(cbPagamento.getSelectionModel().getSelectedItem().getValue());
                         despesaCriada.setSubCategoria(cbSubCategoria.getSelectionModel().getSelectedItem());
                         despesaCriada = despesaController.update(despesaCriada);
                         if (despesaCriada != null) {
@@ -193,9 +193,7 @@ public class CadastroDespesaFX {
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 10, 25, 25));
 
-        for (FormaPagamento c : FormaPagamento.values()) {
-            cbPagamento.getItems().add(c.toString());
-        }
+        cbPagamento.getItems().addAll(FormaPagamento.values());
 
         cbCategoria.setItems(FXCollections.observableArrayList(catDespesa));
 
@@ -279,7 +277,7 @@ public class CadastroDespesaFX {
             btnCadastrar.setText("Salvar");
             this.tfDescricao.setText(despesaCriada.getDescricao());
             this.tfValor.setText(String.valueOf(despesaCriada.getValor()));
-            this.cbPagamento.getSelectionModel().select(despesaCriada.getFormaPagamento());
+            this.cbPagamento.getSelectionModel().select(despesaCriada.getFormaPagamento() - 1);
 
             for (CategoriaConta categoria : this.cbCategoria.getItems()) {
                 if (categoria.getCategoriaContaID() == despesaCriada.getSubCategoria().getCategoriaConta().getCategoriaContaID()) {

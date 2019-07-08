@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Controllers.MovimentacaoController;
 import CrossCutting.Enums.Tela;
 import CrossCutting.Log;
 import java.io.FileInputStream;
@@ -26,6 +27,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -37,14 +39,16 @@ public class MenuLateralFX extends GridPane {
     VBox vbTop;
     VBox vbBottom;
     VBox vbRight;
-    Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
+    Button btnSaldo, btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
     Image grafico;
     ImageView imageView;
+    double saldo;
 
     public MenuLateralFX(MainFX main) {
         vbTop = new VBox();
         vbBottom = new VBox();
         btnResumo = new Button("Resumo");
+        btnSaldo = new Button();
         btnDespesa = new Button("Despesas");
         btnReceita = new Button("Receitas");
         btnCategoria = new Button("Categorias");
@@ -52,7 +56,8 @@ public class MenuLateralFX extends GridPane {
         btnFuturo = new Button("Lançamentos Futuros");
         btnSair = new Button("Sair");
         vbRight = new VBox();
-
+        saldo = new MovimentacaoController().getSaldo();
+        
         try {
             grafico = new Image(new FileInputStream("src\\Resources\\icon-05.png"));
         } catch (FileNotFoundException ex) {
@@ -103,47 +108,76 @@ public class MenuLateralFX extends GridPane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         btnResumo.setPadding(new Insets(25));
-        vbTop.getChildren().addAll(imageView, btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo);
+        vbTop.getChildren().addAll(imageView, btnSaldo, btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo);
         vbBottom.getChildren().addAll(btnSair);
-        btnRelatorio.setMinWidth(150);
-        btnRelatorio.setMinHeight(60);
-        btnFuturo.setMinWidth(150);
-        btnFuturo.setMinHeight(60);
         btnResumo.setMinWidth(150);
         btnResumo.setMinHeight(60);
+        btnSaldo.setMinWidth(150);
+        btnSaldo.setMinHeight(60);
         btnReceita.setMinWidth(150);
         btnReceita.setMinHeight(60);
         btnDespesa.setMinWidth(150);
         btnDespesa.setMinHeight(60);
         btnCategoria.setMinWidth(150);
         btnCategoria.setMinHeight(60);
+        btnRelatorio.setMinWidth(150);
+        btnRelatorio.setMinHeight(60);
+        btnFuturo.setMinWidth(150);
+        btnFuturo.setMinHeight(60);
         btnSair.setMinWidth(150);
         btnSair.setMinHeight(60);
+        
+        if (saldo > 0) {
+            btnSaldo.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold;"
+                + "-fx-background-color: green;"
+                + "-fx-color: white;"
+                + "-fx-alignment: center;" 
+                + "-fx-font-size: 17;");
+        }
+        else{
+            btnSaldo.setStyle("-fx-background-insets: 0,0; "
+                + "-fx-padding: 1; "
+                + "-fx-border: 0;"
+                + "-fx-font-weight: bold;"
+                + "-fx-background-color: red;"
+                + "-fx-color: white;"
+                + "-fx-alignment: center;" 
+                + "-fx-font-size: 17;");
+        }
         
         btnResumo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold;");
+        
         btnRelatorio.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
+        
         btnFuturo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
+        
         btnReceita.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
+        
         btnCategoria.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
+        
         btnDespesa.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
                 + "-fx-font-weight: bold");
+        
         btnSair.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
@@ -152,6 +186,10 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-color: white;");
         
         btnSair.setTextFill(Color.WHITE);
+        btnSaldo.setTextFill(Color.WHITE);
+        //btnSaldo.setFont(new Font("Arial", 18));
+        btnSaldo.setAlignment(Pos.CENTER);
+        btnSaldo.setText("Saldo Atual\nR$ " + saldo);
         
         add(vbTop, 0, 0);
         add(vbBottom, 0, 1);

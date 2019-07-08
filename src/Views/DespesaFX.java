@@ -9,6 +9,7 @@ import Controllers.DespesaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Despesa;
+import static Views.MenuLateralFX.btnSaldo;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.binding.Bindings;
@@ -290,6 +291,7 @@ public class DespesaFX extends GridPane {
                 form.start(mainStage, null);
                 if (form.getDespesaCriada() != null && (form.getDespesaCriada().getDataOcorrencia().equals(LocalDate.now()) || form.getDespesaCriada().getDataOcorrencia().isBefore(LocalDate.now()))&& form.getDespesaCriada().getDescricao() != null) {
                     table.getItems().add(form.getDespesaCriada());
+                    btnSaldo.fire();
                 }
 
             } catch (Exception ex) {

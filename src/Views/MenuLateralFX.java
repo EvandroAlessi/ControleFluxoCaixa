@@ -45,7 +45,7 @@ public class MenuLateralFX extends GridPane {
     Button btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo, btnSair;
     Image grafico;
     ImageView imageView;
-    Button btnSaldo;
+    public static Button btnSaldo;
     double saldo;
 
     public MenuLateralFX(MainFX main) {

@@ -21,7 +21,10 @@ import javafx.geometry.Pos;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -126,10 +129,23 @@ public class ReceitaFX extends GridPane {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Receita data = getTableView().getItems().get(getIndex());
-                            control.delete(data.getMovimentacaoID());
-                            table.getItems().remove(data);
-                            table.refresh();
+                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            ButtonType btnSim = new ButtonType("Sim");
+                            ButtonType btnNao = new ButtonType("Não");
+                            dialog.setTitle("Confimação de exclusão");
+                            dialog.setHeaderText("Deseja realmente excluir?");
+                            dialog.setContentText("Tem certeza?");
+                            dialog.getButtonTypes().setAll(btnSim, btnNao);
+                            dialog.showAndWait().ifPresent(b -> {
+                                if (b == btnSim) {
+                                    Receita data = getTableView().getItems().get(getIndex());
+                                    control.delete(data.getMovimentacaoID());
+                                    table.getItems().remove(data);
+                                    table.refresh();
+                                } else {
+                                    dialog.close();
+                                }
+                            });
                         });
                     }
 
@@ -148,7 +164,7 @@ public class ReceitaFX extends GridPane {
                 return cell;
             }
         };
-
+        
         tcApagar.setCellFactory(cellFactory);
         table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);
         table.setTableMenuButtonVisible(true);

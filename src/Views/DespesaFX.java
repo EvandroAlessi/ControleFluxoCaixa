@@ -9,6 +9,7 @@ import Controllers.DespesaController;
 import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Despesa;
+import Models.Receita;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,7 +21,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -125,10 +128,23 @@ public class DespesaFX extends GridPane {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Despesa data = getTableView().getItems().get(getIndex());
-                            control.delete(data.getMovimentacaoID());
-                            table.getItems().remove(data);
-                            table.refresh();
+                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            ButtonType btnSim = new ButtonType("Sim");
+                            ButtonType btnNao = new ButtonType("Não");
+                            dialog.setTitle("Confimação de exclusão");
+                            dialog.setHeaderText("Deseja realmente excluir?");
+                            dialog.setContentText("Tem certeza?");
+                            dialog.getButtonTypes().setAll(btnSim, btnNao);
+                            dialog.showAndWait().ifPresent(b -> {
+                                if (b == btnSim) {
+                                    Despesa data = getTableView().getItems().get(getIndex());
+                                    control.delete(data.getMovimentacaoID());
+                                    table.getItems().remove(data);
+                                    table.refresh();
+                                } else {
+                                    dialog.close();
+                                }
+                            });
                         });
                     }
 

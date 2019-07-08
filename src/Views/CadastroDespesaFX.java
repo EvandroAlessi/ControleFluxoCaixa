@@ -126,14 +126,14 @@ public class CadastroDespesaFX {
                     } else {
                         tfValor.setStyle("-fx-text-box-border: red ;"
                                 + " -fx-focus-color: red ;");
-                        
+
                         Mensagem.informacao("A Receita deve ter um valor!");
                     }
                 } else {
                     tfDescricao.setStyle("-fx-text-box-border: red ;"
                             + " -fx-focus-color: red ;");
                     Mensagem.informacao("A Receita deve ter uma Descrição!");
-                    
+
                     if (tfValor.getText().trim().length() == 0 || tfValor.getText() == null) {
                         tfValor.setStyle("-fx-text-box-border: red ;"
                                 + " -fx-focus-color: red ;");

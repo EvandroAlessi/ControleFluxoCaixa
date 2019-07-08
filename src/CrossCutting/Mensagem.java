@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
@@ -19,38 +20,36 @@ import javafx.scene.layout.Priority;
  * @author evand
  */
 public class Mensagem {
-    
-    public static void informacao(String informacao){
+
+    public static void informacao(String informacao) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Informação");
         alert.setHeaderText(null);
         alert.setContentText(informacao);
         alert.showAndWait();
     }
-    
-    public static void erro(String erro){
+
+    public static void erro(String erro) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Erro");
         alert.setHeaderText(null);
         alert.setContentText(erro);
-        alert.showAndWait();    
+        alert.showAndWait();
     }
-    
-    public static void aviso(String aviso){
+
+    public static void aviso(String aviso) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Aviso");
         alert.setHeaderText(null);
         alert.setContentText(aviso);
-        alert.showAndWait();    
+        alert.showAndWait();
     }
-    
-    public static void excecao(Exception exception){
+
+    public static void excecao(Exception exception) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Erro no Sistema");
         alert.setHeaderText(exception.getMessage());
-        //alert.setContentText(exception.getMessage());
 
-        // Create expandable Exception.
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
@@ -72,10 +71,8 @@ public class Mensagem {
         expContent.add(label, 0, 0);
         expContent.add(textArea, 0, 1);
 
-        // Set expandable Exception into the dialog pane.
         alert.getDialogPane().setExpandableContent(expContent);
-        
+
         alert.showAndWait();
     }
-    
 }

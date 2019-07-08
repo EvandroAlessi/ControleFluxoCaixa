@@ -6,6 +6,7 @@
 package Views;
 
 import Controllers.SubCategoriaController;
+import Models.Despesa;
 import Models.SubCategoria;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,7 +19,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -102,10 +105,23 @@ public class CategoriaSubFX extends GridPane {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            SubCategoria data = getTableView().getItems().get(getIndex());
-                            subCategoriaController.delete(data.getSubCategoriaID());
-                            table.getItems().remove(data);
-                            table.refresh();
+                            Alert dialog= new Alert(Alert.AlertType.CONFIRMATION);
+                            ButtonType btnSim = new ButtonType("Sim");
+                            ButtonType btnNao = new ButtonType("Não");
+                            dialog.setTitle("Confimação de exclusão");
+                            dialog.setHeaderText("Deseja realmente excluir?");
+                            dialog.setContentText("Tem certeza?");
+                            dialog.getButtonTypes().setAll(btnSim, btnNao);
+                            dialog.showAndWait().ifPresent(b -> {
+                                if (b == btnSim) {
+                                    SubCategoria data = getTableView().getItems().get(getIndex());
+                                    subCategoriaController.delete(data.getSubCategoriaID());
+                                    table.getItems().remove(data);
+                                    table.refresh();
+                                } else {
+                                    dialog.close();
+                                }
+                            });
                         });
                     }
 
@@ -135,7 +151,7 @@ public class CategoriaSubFX extends GridPane {
         table.getColumns().addAll(tcTipo, tcDescricao, tcTipoCategoria, tcApagar);
         table.setTableMenuButtonVisible(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
+
         add(lbTitulo, 0, 0);
         add(hBox, 1, 0);
         add(table, 0, 1);
@@ -146,7 +162,7 @@ public class CategoriaSubFX extends GridPane {
         this.setPadding(new Insets(5));
         this.setHgap(5);
         this.setVgap(5);
-        
+
         lbTitulo.setFont(new Font("Arial", 24));
         lbTitulo.setPadding(new Insets(15, 15, 15, 5));
         ColumnConstraints c1 = new ColumnConstraints();

@@ -62,7 +62,7 @@ public class DespesaFX extends GridPane {
         btnEditar = new Button("Editar");
         tcCategoria = new TableColumn("Categoria");
         tcSubCategoria = new TableColumn("Subcategoria");
-        tcApagar = new TableColumn("");
+        tcApagar = new TableColumn("Ações");
 
         tcApagar.prefWidthProperty().bind(table.widthProperty()
                 .multiply(0.06));
@@ -150,7 +150,11 @@ public class DespesaFX extends GridPane {
 
         tcApagar.setCellFactory(cellFactory);
         table.getColumns().addAll(tcData, tcDescricao, tcPagamento, tcValor, tcCategoria, tcSubCategoria, tcApagar);
-
+        table.setTableMenuButtonVisible(true);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tcCategoria.setVisible(false);
+        tcSubCategoria.setVisible(false);
+        
         HBox hBox = new HBox();
         hBox.getChildren().addAll(btnCadastrar, btnEditar);
         hBox.setSpacing(10);
@@ -163,9 +167,12 @@ public class DespesaFX extends GridPane {
         List<Despesa> despesas = control.getAll();
 
         this.table.setItems(FXCollections.observableArrayList(despesas));
-
-        lbTitulo.setFont(new Font("Arial", 32));
-        lbTitulo.setPadding(new Insets(5, 5, 5, 10));
+        this.setPadding(new Insets(5));
+        this.setHgap(5);
+        this.setVgap(5);
+        
+        lbTitulo.setFont(new Font("Arial", 24));
+        lbTitulo.setPadding(new Insets(15, 15, 15, 5));
         btnCadastrar.setMinSize(80, 40);
         btnEditar.setMinSize(80, 40);
         ColumnConstraints c1 = new ColumnConstraints();

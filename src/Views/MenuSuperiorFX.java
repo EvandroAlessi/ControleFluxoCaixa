@@ -19,23 +19,26 @@ import javafx.scene.control.MenuItem;
 public class MenuSuperiorFX extends MenuBar {
 
     MenuBar menuSuperior;
-    Menu arquivo, cadastro;
-    MenuItem sair, resumo, despesa, receita, btnRelatorio, btnFuturo, categoria;
+    Menu arquivo, cadastro, relatorios;
+    MenuItem sair, resumo, despesa, receita, ultimos, futuros, categoria;
 
     public MenuSuperiorFX(MainFX main) {
         arquivo = new Menu("Arquivo");
         cadastro = new Menu("Geral");
+        relatorios = new Menu("Relatórios");
         resumo = new MenuItem("Resumo");
         despesa = new MenuItem("Despesas");
         receita = new MenuItem("Receitas");
         categoria = new MenuItem("Categorias");
-        btnRelatorio = new MenuItem("Ultimos lançamentos");
-        btnFuturo = new MenuItem("Lançamentos Futuros");
+        ultimos = new MenuItem("Ultimos lançamentos");
+        futuros = new MenuItem("Lançamentos Futuros");
         sair = new MenuItem("Sair");
         arquivo.getItems().add(sair);
-        cadastro.getItems().addAll(resumo, despesa, receita, btnRelatorio, btnFuturo, categoria);
-
-        getMenus().addAll(arquivo, cadastro);
+        
+        cadastro.getItems().addAll(resumo, despesa, receita, categoria);
+        relatorios.getItems().addAll(ultimos, futuros);
+        
+        getMenus().addAll(arquivo, cadastro, relatorios);
 
         resumo.setOnAction((event) -> {
             main.switchCenter(Tela.RESUMO);
@@ -49,11 +52,11 @@ public class MenuSuperiorFX extends MenuBar {
             main.switchCenter(Tela.RECEITA);
         });
 
-        btnRelatorio.setOnAction((event) -> {
+        ultimos.setOnAction((event) -> {
             main.switchCenter(Tela.ULTIMOS);
         });
 
-        btnFuturo.setOnAction((event) -> {
+        futuros.setOnAction((event) -> {
             main.switchCenter(Tela.FUTURO);
         });
         

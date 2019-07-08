@@ -5,15 +5,15 @@
  */
 package Views;
 
+import Controllers.DespesaController;
 import Controllers.MovimentacaoController;
-import DAO.DespesaDAO;
-import DAO.ReceitaDAO;
+import Controllers.ReceitaController;
 import Models.Despesa;
 import Models.Receita;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.chart.BarChart;
@@ -47,100 +47,171 @@ public class ResumoFX extends GridPane {
     private NumberAxis yEixo;
     private CategoryAxis xAxis;
     private LineChart<String, Number> graficoLinha;
-
+    private MovimentacaoController movimentacaoController;
+    
     public ResumoFX(Stage stage) {
-        try {
-            MovimentacaoController control = new MovimentacaoController();
-            setxAxis(new CategoryAxis());
-            setyAxis(new NumberAxis());
-            setxEixo(new NumberAxis());
-            setyEixo(new NumberAxis());
-            getxAxis().setLabel("TESTE");
-            getyAxis().setLabel("VALOR");
-            setTable(new TableView());
+        movimentacaoController = new MovimentacaoController();
+        setxAxis(new CategoryAxis());
+        setyAxis(new NumberAxis());
+        setxEixo(new NumberAxis());
+        setyEixo(new NumberAxis());
+        getxAxis().setLabel("TESTE");
+        getyAxis().setLabel("VALOR");
+        setTable(new TableView());
+        
+        
+        BarChart<String,Number> bc = new BarChart<String,Number>(new CategoryAxis(),new NumberAxis());
+        bc.setTitle("Receitas por Categoria");
+        xAxis.setLabel("Categoria");       
+        yAxis.setLabel("Valor");     
+        
+        List<Receita> receitas = new ReceitaController().getAll();
 
-            this.graficoLinha = new LineChart<>(new CategoryAxis(), new NumberAxis());
-            XYChart.Series dataSeries1 = new XYChart.Series();
-            dataSeries1.setName("Receitas");
-
-            List<Receita> receitas = new ReceitaDAO().getAll();
-
-            HashMap<String, Double> dados = new HashMap();
-
-            receitas.forEach((receita) -> {
-                System.out.println(receita.getDataOcorrencia());
-                if (!(dados.containsKey(receita.getDataOcorrencia().getMonth() + "/" + receita.getDataOcorrencia().getYear()))) {
-                    dados.put(receita.getDataOcorrencia().getMonth() + "/"
-                            + receita.getDataOcorrencia().getYear(), receita.getValor());
-                } else {
-                    dados.put(receita.getDataOcorrencia().getMonth() + "/" + receita.getDataOcorrencia().getYear(), receita.getValor()
-                            + dados.get(receita.getDataOcorrencia().getMonth() + "/"
-                                    + receita.getDataOcorrencia().getYear()));
-                }
-            });
-
-            dados.keySet().forEach((chave) -> {
-                dataSeries1.getData().add(new XYChart.Data(chave, dados.get(chave)));
-            });
-
-            XYChart.Series dataSeries2 = new XYChart.Series();
-            dataSeries2.setName("Despesas");
-
-            List<Despesa> despesas = new DespesaDAO().getAll();
-
-            HashMap<String, Double> dados2 = new HashMap();
-
-            despesas.forEach((despesa) -> {
-                if (!(dados2.containsKey(despesa.getDataOcorrencia().getMonth() + "/" + despesa.getDataOcorrencia().getYear()))) {
-                    dados2.put(despesa.getDataOcorrencia().getMonth() + "/"
-                            + despesa.getDataOcorrencia().getYear(), despesa.getValor());
-                } else {
-                    dados2.put(despesa.getDataOcorrencia().getMonth() + "/" + despesa.getDataOcorrencia().getYear(), despesa.getValor()
-                            + dados2.get(despesa.getDataOcorrencia().getMonth() + "/"
-                                    + despesa.getDataOcorrencia().getYear()));
-                }
-            });
-
-            dados2.keySet().forEach((chave) -> {
-                dataSeries2.getData().add(new XYChart.Data(chave, dados2.get(chave)));
-            });
-
-            this.graficoLinha.setAxisSortingPolicy(LineChart.SortingPolicy.X_AXIS);
-
-            this.graficoLinha.getData().add(dataSeries1);
-            this.graficoLinha.getData().add(dataSeries2);
-
-            setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
-//
-            add(this.graficoLinha, 0, 1);
-
-            double saldo = control.getSaldo();
-
-            Label label = new Label("SALDO \n" + saldo);
-
-            label.setAlignment(Pos.CENTER);
-            Font font = new Font(70);
-            label.setFont(font);
-            if (saldo >= 0) {
-                label.setTextFill(Color.GREEN);
+        HashMap<String, HashMap<String, Double>> dados = new HashMap();
+        
+        for(Receita receita: receitas){
+            System.out.println(receita.toString());
+            if (!(dados.containsKey(receita.getSubCategoria().getCategoriaConta().getDescricao()))) {
+                dados.put(receita.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
+                dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), receita.getValor());
             } else {
-                label.setTextFill(Color.RED);
+                if(!dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(receita.getSubCategoria().getDescricao())){
+                    dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), receita.getValor());
+                }else{
+                    dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).get(receita.getSubCategoria().getDescricao()) + receita.getValor());
+                }
             }
-
-            add(label, 0, 0);
-            ColumnConstraints c1 = new ColumnConstraints();
-            c1.setHgrow(Priority.ALWAYS);
-            c1.setHalignment(HPos.CENTER);
-
-            RowConstraints r1 = new RowConstraints();
-            r1.setVgrow(Priority.ALWAYS);
-            r1.setValignment(VPos.CENTER);
-
-            getColumnConstraints().add(c1);
-            getRowConstraints().add(r1);
-        } catch (ClassNotFoundException | SQLException e) {
-            //
         }
+
+        dados.keySet().forEach((chave) -> {
+            
+            XYChart.Series dataSeries = new XYChart.Series();
+            dataSeries.setName(chave);
+            
+            dados.get(chave).keySet().forEach((chaveI) -> {
+                dataSeries.getData().add(new XYChart.Data(chaveI, dados.get(chave).get(chaveI)));
+            });
+            
+            bc.getData().add(dataSeries);
+        });
+        
+        BarChart<String,Number> bc2 = new BarChart<String,Number>(new CategoryAxis(),new NumberAxis());
+        bc2.setTitle("Despesas por Categoria");
+        xAxis.setLabel("Categoria");       
+        yAxis.setLabel("Valor");     
+        
+        List<Despesa> despesas = new DespesaController().getAll();
+
+        HashMap<String, HashMap<String, Double>> dados2 = new HashMap();
+        
+        for(Despesa despesa: despesas){
+            System.out.println(despesa.toString());
+            if (!(dados2.containsKey(despesa.getSubCategoria().getCategoriaConta().getDescricao()))) {
+                dados2.put(despesa.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
+                dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), despesa.getValor());
+            } else {
+                if(!dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(despesa.getSubCategoria().getDescricao())){
+                    dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), despesa.getValor());
+                }else{
+                    dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).get(despesa.getSubCategoria().getDescricao()) + despesa.getValor());
+                }
+            }
+        }
+
+        dados2.keySet().forEach((chave) -> {
+            
+            XYChart.Series dataSeries = new XYChart.Series();
+            dataSeries.setName(chave);
+            
+            dados2.get(chave).keySet().forEach((chaveI) -> {
+                dataSeries.getData().add(new XYChart.Data(chaveI, dados2.get(chave).get(chaveI)));
+            });
+            
+            bc2.getData().add(dataSeries);
+        });
+
+        setGraficoBar(new BarChart<>(getxAxis(), getyAxis()));
+
+        double saldo = movimentacaoController.getSaldo();
+
+        Label label = new Label("SALDO: " + saldo);
+
+        label.setAlignment(Pos.CENTER);
+        Font font = new Font(20);
+        label.setFont(font);
+        if (saldo >= 0) {
+            label.setTextFill(Color.GREEN);
+        } else {
+            label.setTextFill(Color.RED);
+        }
+
+//        HBox linha1 = new HBox();
+//        linha1.setPrefHeight(1);
+//        linha1.setMaxHeight(1);
+//        linha1.setStyle("-fx-background-color: #ccc;");
+//        
+//        HBox linha2 = new HBox();
+//        linha2.setPrefHeight(1);
+//        linha2.setMaxHeight(1);
+//        linha2.setStyle("-fx-background-color: #ccc;");
+//        
+//        VBox linha3 = new VBox();
+//        linha3.setPrefWidth(1);
+//        linha3.setMaxWidth(1);
+//        linha3.setStyle("-fx-background-color: #ccc;");
+        
+//        add(label, 0, 0, 3, 1);
+        add(bc, 0, 0);
+        add(bc2, 1, 0);
+        //add(linha2, 0, 1, 3, 1);
+        Label lbLast = new Label("Últimos Lançamentos");
+        Label lbFut = new Label("Lançamentos Futuros");
+        lbFut.setFont(new Font("Arial", 18));
+        lbLast.setFont(new Font("Arial", 18));
+        
+        this.add(lbLast, 0, 1);
+        this.add(lbFut, 1, 1);
+        this.add(new RelatorioFX(stage).showTable(true),0, 2);
+        this.add(new RelatorioFX(stage).showTable(false),1, 2);
+        //add(linha3, 1, 0, 1, 3);
+        
+        this.setPadding(new Insets(5));
+        this.setHgap(5);
+        this.setVgap(5);
+        ColumnConstraints c1 = new ColumnConstraints();
+        c1.setHgrow(Priority.ALWAYS);
+        c1.setHalignment(HPos.CENTER);
+        c1.setPercentWidth(50);
+        
+        ColumnConstraints c2 = new ColumnConstraints();
+        c2.setHgrow(Priority.ALWAYS);
+        c2.setHalignment(HPos.CENTER);
+        c2.setPercentWidth(50);
+        
+//        ColumnConstraints c3 = new ColumnConstraints();
+//        c3.setHgrow(Priority.ALWAYS);
+//        c3.setHalignment(HPos.CENTER);
+//        c3.setPercentWidth(50);
+        
+        RowConstraints r1 = new RowConstraints();
+        r1.setVgrow(Priority.ALWAYS);
+        r1.setValignment(VPos.CENTER);
+        
+        RowConstraints r2 = new RowConstraints();
+        r2.setVgrow(Priority.ALWAYS);
+        r2.setValignment(VPos.CENTER);
+        //r2.setPercentHeight(3);
+        
+        RowConstraints r3 = new RowConstraints();
+        r3.setVgrow(Priority.ALWAYS);
+        r3.setValignment(VPos.CENTER);
+//        
+//        RowConstraints r4 = new RowConstraints();
+//        r4.setVgrow(Priority.ALWAYS);
+//        r4.setValignment(VPos.CENTER);
+        
+        getColumnConstraints().addAll(c1, c2);
+        getRowConstraints().addAll(r1, r2, r3);
     }
 
     /**

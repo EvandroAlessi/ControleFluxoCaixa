@@ -37,20 +37,17 @@ public class MainFX extends Application {
         stage = primaryStage;
         root.setLeft(menuLateral);
         root.setTop(menuSuperior);
-
-        switchCenter(Tela.CATEGORIA);
+        root.setStyle("-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: #d2d4d6;");
+        switchCenter(Tela.RESUMO);
         primaryStage.setMaximized(true); // Tela cheia
         Scene scene = new Scene(root, 700, 700);
         stage.setMinHeight(600);
         stage.setMinWidth(800);
-        primaryStage.setTitle("Controle Fluxo de Caixa");
+        primaryStage.setTitle("Controle de Fluxo de Caixa");
         primaryStage.setScene(scene);
 
         primaryStage.show();
-
-        // teste
-        //Log.saveLog(new Exception());
-        //Mensagem.excecao(new Exception());
     }
 
     /**

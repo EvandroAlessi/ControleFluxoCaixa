@@ -6,10 +6,12 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
+import CrossCutting.Log;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
@@ -23,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -51,8 +54,9 @@ public class MenuLateralFX extends GridPane {
         vbRight = new VBox();
 
         try {
-            grafico = new Image(new FileInputStream("src\\Resources\\grafico.png"));
+            grafico = new Image(new FileInputStream("src\\Resources\\icon-05.png"));
         } catch (FileNotFoundException ex) {
+            Log.saveLog(ex);
             Label img = new Label("Imagem não encontrada");
             img.setMinWidth(150);
             img.setMinHeight(150);
@@ -94,12 +98,12 @@ public class MenuLateralFX extends GridPane {
             System.exit(0);
         });
 
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(80);
+        imageView.setFitHeight(120);
+        imageView.setFitWidth(120);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-
-        vbTop.getChildren().addAll(imageView, btnResumo, btnRelatorio, btnFuturo, btnDespesa, btnReceita, btnCategoria);
+        btnResumo.setPadding(new Insets(25));
+        vbTop.getChildren().addAll(imageView, btnResumo, btnDespesa, btnReceita, btnCategoria, btnRelatorio, btnFuturo);
         vbBottom.getChildren().addAll(btnSair);
         btnRelatorio.setMinWidth(150);
         btnRelatorio.setMinHeight(60);
@@ -115,7 +119,7 @@ public class MenuLateralFX extends GridPane {
         btnCategoria.setMinHeight(60);
         btnSair.setMinWidth(150);
         btnSair.setMinHeight(60);
-
+        
         btnResumo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
@@ -143,8 +147,12 @@ public class MenuLateralFX extends GridPane {
         btnSair.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
-                + "-fx-font-weight: bold");
-
+                + "-fx-font-weight: bold;"
+                + "-fx-background-color: #d64646;"
+                + "-fx-color: white;");
+        
+        btnSair.setTextFill(Color.WHITE);
+        
         add(vbTop, 0, 0);
         add(vbBottom, 0, 1);
         add(vbRight, 1, 0);

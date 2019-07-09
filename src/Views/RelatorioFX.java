@@ -7,6 +7,8 @@ package Views;
 
 import Controllers.MovimentacaoController;
 import Models.Movimentacao;
+import com.sun.javafx.collections.ElementObservableListDecorator;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -25,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import static javafx.scene.layout.GridPane.setConstraints;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
@@ -37,27 +41,65 @@ import javafx.util.Callback;
  */
 public class RelatorioFX extends GridPane {
 
-    Label lbTitulo;
+    private Label lbTitulo;
     //Button btnCadastrar, btnEditar;
     private TableView<Movimentacao> table;
     private TableColumn tcData, tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
-    MovimentacaoController movimentacaoController;
+    private final MovimentacaoController movimentacaoController;
     private TableColumn tcTipo;
-    private Stage mainStage;
-
+    private final Stage mainStage;
+    private DatePicker dpBeginDate;
+    private DatePicker dpEndDate;
+    private Button btnPesquisar;
+    
     public RelatorioFX(Stage stage) {
         mainStage = stage;
         movimentacaoController = new MovimentacaoController();
     }
     
-    public RelatorioFX(Stage stage, boolean untilNow) {
+    public RelatorioFX(Stage stage, boolean untilNow, String title) {
         mainStage = stage;
         movimentacaoController = new MovimentacaoController();
-        lbTitulo = new Label("Últimos lançamentos");
-        
+        lbTitulo = new Label(title);
+        dpEndDate = new DatePicker();
+        btnPesquisar = new Button("Pesquisar");
         showTable(untilNow);
         
+        if (!untilNow) {
+            dpBeginDate = new DatePicker(LocalDate.now().plusDays(1));
+            dpBeginDate.setDisable(true);
+            dpBeginDate.disarm();
+        }
+        else{
+            dpBeginDate = new DatePicker();
+        }
+        
+        HBox h = new HBox(new Label("De "), dpBeginDate, new Label(" Até "), dpEndDate, btnPesquisar);
+        h.setAlignment(Pos.CENTER);
+        h.setSpacing(10);
+        
+        btnPesquisar.setOnAction((event) -> {
+            List<Movimentacao> movimentacoes = null;
+            
+            if (dpBeginDate.getValue() != null && dpEndDate.getValue() != null) {
+                movimentacoes = movimentacaoController.getAll(untilNow, dpBeginDate.getValue(), dpEndDate.getValue());
+            }
+            else if (dpBeginDate.getValue() != null){
+                movimentacaoController.getAll(untilNow, dpBeginDate.getValue(), LocalDate.MAX);
+            }
+            else {
+                movimentacaoController.getAll(untilNow, LocalDate.MIN, dpEndDate.getValue());
+            }
+            if (movimentacoes != null) {
+                this.table.setItems(FXCollections.observableArrayList(movimentacoes));
+                this.table.refresh();
+            }
+        });
+        
+        
+        
         add(lbTitulo, 0, 0);
+        add(h, 1, 0);
         add(table, 0, 1);
         
         lbTitulo.setFont(new Font("Arial", 24));

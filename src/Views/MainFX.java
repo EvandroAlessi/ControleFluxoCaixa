@@ -86,10 +86,10 @@ public class MainFX extends Application {
                 root.setCenter(new ResumoFX(this.stage));
                 break;
             case ULTIMOS:
-                root.setCenter(new RelatorioFX(this.stage, true));
+                root.setCenter(new RelatorioFX(this.stage, true, "Últimos lançamentos"));
                 break;
             case FUTURO:
-                root.setCenter(new RelatorioFX(this.stage, false));
+                root.setCenter(new RelatorioFX(this.stage, false, "Lançamentos Futuros"));
                 break;
             case RECEITA:
                 root.setCenter(new ReceitaFX(this.stage));

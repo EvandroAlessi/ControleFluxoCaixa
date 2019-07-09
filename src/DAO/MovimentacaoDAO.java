@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -142,13 +143,20 @@ public class MovimentacaoDAO {
 
     /**
      *
+     * @param untilNow
+     * @param beginDate
+     * @param endDate
      * @return @throws ClassNotFoundException
      * @throws SQLException
      */
-    public ArrayList<Movimentacao> getAll(boolean untilNow) throws ClassNotFoundException, SQLException {
+    public ArrayList<Movimentacao> getAll(boolean untilNow, LocalDate beginDate, LocalDate endDate) throws ClassNotFoundException, SQLException {
         String query = "select * from Movimentacao where DataOcorrencia"
-                + (untilNow ? " <= NOW() " : " > NOW() ")
-                + "order by DataOcorrencia desc;";
+                + (untilNow ? " <= NOW() " 
+                    + (beginDate != null ? "AND DataOcorrencia >= '" + beginDate + "'" : "") 
+                : " > NOW() ")
+                + (endDate != null ? "AND DataOcorrencia <= '" + endDate + "'" : "")
+                + " order by DataOcorrencia desc;";
+        System.out.println(query);
         ArrayList<Movimentacao> list = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);
@@ -193,7 +201,7 @@ public class MovimentacaoDAO {
 
         return list;
     }
-
+    
     /**
      *
      * @param Movimentacao

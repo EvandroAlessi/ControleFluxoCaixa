@@ -91,11 +91,12 @@ public class MovimentacaoController {
 
     /**
      *
+     * @param untilNow
      * @return
      */
     public ArrayList<Movimentacao> getAll(boolean untilNow) {
         try {
-            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll(untilNow);
+            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll(untilNow, null, null);
 
             return movimentacoes;
         } catch (ClassNotFoundException | SQLException e) {
@@ -105,7 +106,27 @@ public class MovimentacaoController {
 
         return null;
     }
+    
+    /**
+     *
+     * @param untilNow
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public ArrayList<Movimentacao> getAll(boolean untilNow, LocalDate beginDate, LocalDate endDate) {
+        try {
+            ArrayList<Movimentacao> movimentacoes = new MovimentacaoDAO().getAll(untilNow, beginDate, endDate);
 
+            return movimentacoes;
+        } catch (ClassNotFoundException | SQLException e) {
+            Log.saveLog(e);
+            Mensagem.excecao(e);
+        }
+
+        return null;
+    }
+    
     /**
      *
      * @param movimentacao

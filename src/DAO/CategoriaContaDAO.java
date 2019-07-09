@@ -10,8 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * DAO CategoriaConta
+ * Responsável pela persistência das Categorias
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
  */
 public class CategoriaContaDAO {
 
@@ -35,7 +38,7 @@ public class CategoriaContaDAO {
     }
 
     /**
-     *
+     * Cria uma nova categoria a partir do objeto recebido
      * @param categoria
      * @return
      * @throws SQLException
@@ -72,10 +75,11 @@ public class CategoriaContaDAO {
         return dados.isClosed();
     }
 
-    /**
-     *
+    /** 
+     * Busca a categoria a partir do id informado
+     * 
      * @param id
-     * @return
+     * @return 
      * @throws ClassNotFoundException
      * @throws SQLException
      */
@@ -94,7 +98,7 @@ public class CategoriaContaDAO {
     }
 
     /**
-     * Busca todas as cateogiras existentes no banco de dados
+     * Busca todas as categorias existentes no banco de dados
      *
      * @return ArrayList<CategoriaConta> lista de todas as categoria
      * @throws ClassNotFoundException
@@ -119,7 +123,7 @@ public class CategoriaContaDAO {
     }
 
     /**
-     * Busca todas as cateogiras existentes no banco de dados
+     * Busca todas as categorias existentes no banco de dados
      *
      * @param positiva despesa/receita
      * @return ArrayList<CategoriaConta> lista de todas as categoria

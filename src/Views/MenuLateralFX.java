@@ -30,11 +30,14 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Window;
 
 /**
- *
- * @author SpaceBR
+ * View responsável pelo menu lateral. É ligada ao Stage principal gerado em MainFX.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see MainFX
  */
-public class MenuLateralFX extends GridPane {
 
+public class MenuLateralFX extends GridPane {
+    // Declaração de componentes
     GridPane menu;
     VBox vbTop;
     VBox vbBottom;
@@ -44,8 +47,11 @@ public class MenuLateralFX extends GridPane {
     ImageView imageView;
     public static Button btnSaldo;
     double saldo;
-
+    
+    /** @param main Recebe MainFX
+    */
     public MenuLateralFX(MainFX main) {
+        //Instanciação de componentes
         vbTop = new VBox();
         vbBottom = new VBox();
         btnResumo = new Button("Resumo");
@@ -86,6 +92,7 @@ public class MenuLateralFX extends GridPane {
             main.switchCenter(Tela.CATEGORIA);
         });
         
+        // Evento para confirmação de saída
         btnSair.setOnAction((event) -> {
             ButtonType btnSim = new ButtonType("Sim");
             ButtonType btnNao = new ButtonType("Não");
@@ -104,7 +111,8 @@ public class MenuLateralFX extends GridPane {
                 }
             });
         });
-
+        
+        //Definindo tamanhos
         imageView.setFitHeight(120);
         imageView.setFitWidth(120);
         imageView.setPickOnBounds(true);
@@ -129,7 +137,7 @@ public class MenuLateralFX extends GridPane {
         btnSair.setMinWidth(150);
         btnSair.setMinHeight(60);
         
-        if (saldo >= 0) {
+        if (saldo >= 0) { // Saldo positivo/Neutro
             btnSaldo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
@@ -139,7 +147,7 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-alignment: center;" 
                 + "-fx-font-size: 17;");
         }
-        else{
+        else{ // Saldo negativo
             btnSaldo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
@@ -188,7 +196,7 @@ public class MenuLateralFX extends GridPane {
                 + "-fx-color: white;");
         
         
-        btnSaldo.setOnAction(new EventHandler<ActionEvent>() {
+        btnSaldo.setOnAction(new EventHandler<ActionEvent>() { // Atualizar exibição do saldo
             @Override
             public void handle(ActionEvent actionEvent) {
                 saldo = new MovimentacaoController().getSaldo();

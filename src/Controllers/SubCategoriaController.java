@@ -13,8 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * Controlador de SubCategorias
+ * Propicia a comunicação entre a GUI e DAO
+ * Implementa a lógica de negócios
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see SubCategoria
+ * @see SubCategoriaDAO
  */
 public class SubCategoriaController {
 

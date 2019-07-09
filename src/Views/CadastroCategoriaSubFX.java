@@ -36,8 +36,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
- * @author SpaceBR
+ * View com formulário de cadastro para Categorias.
+ * Diretamente ligada ao Stage provido pela CategoriaSubFX
+ * Utiliza o controlador de CategoriaConta e SubCategoria
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
+ * @see SubCategoria
+ * @see CategoriaContaController
+ * @see SubCategoriaController
+ * @see CategoriaSubFX
  */
 public class CadastroCategoriaSubFX {
 

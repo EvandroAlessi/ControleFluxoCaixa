@@ -5,11 +5,16 @@
  */
 package Models;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
- *
- * @author evand
+ * Modelo estrutural de Movimentacao.
+ * Gera objetos modelos para comunicação com BD ou utilização na GUI.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Movimentacao
  */
 public class Movimentacao implements IPagamento {
     protected int movimentacaoID;
@@ -115,4 +120,10 @@ public class Movimentacao implements IPagamento {
         return "Movimentacao{" + "movimentacaoID=" + movimentacaoID + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", subcategoria=" + subCategoria + '}';
     }
     
+    public String getDateF(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String data = sdf.format(Date.valueOf(getDataOcorrencia()));
+        
+        return data;
+    }
 }

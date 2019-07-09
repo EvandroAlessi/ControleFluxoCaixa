@@ -46,11 +46,18 @@ import javafx.stage.Window;
 import javafx.util.Callback;
 
 /**
- *
- * @author SpaceBR
+ * View responsável pela apresentação das Receitas.
+ * Apresentação com TableView.
+ * Diretamente ligada ao Stage provido pela MainFX.
+ * Utiliza o controlador de Receitas.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Receita
+ * @see ReceitaController
+ * @see MainFX
  */
 public class ReceitaFX extends GridPane {
-
+    // Declaração de componentes
     Label lbTitulo;
     Button btnCadastrar, btnEditar;
     private TableView<Receita> table;
@@ -58,8 +65,11 @@ public class ReceitaFX extends GridPane {
     private TableColumn tcDescricao, tcValor, tcPagamento, tcCategoria, tcSubCategoria;
     private TableColumn<Receita, Void> tcApagar;
     private Stage mainStage;
-
+    
+    /** @param stage Recebe o stage principal de mainFX
+    */
     public ReceitaFX(Stage stage) {
+        // Instanciação de componentes
         mainStage = stage;
         ReceitaController control = new ReceitaController();
         lbTitulo = new Label("Receitas");
@@ -90,20 +100,6 @@ public class ReceitaFX extends GridPane {
                 .multiply(0.10));
 
         tcData.setCellValueFactory(new PropertyValueFactory<>("dateF"));
-//        tcData.setCellFactory(column -> {
-//            TableCell<Receita, LocalDate> cell = new TableCell<Receita, LocalDate>() {
-//                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-//                
-//                
-//                protected void updateItem(LocalDate item, boolean empty) {
-//                    super.updateItem(item, empty);
-//                    
-//                        setText(format.format(Date.from(item.atStartOfDay(ZoneId.systemDefault()).toInstant())));
-//                }
-//            };
-//
-//            return cell;
-//        });
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
@@ -148,6 +144,7 @@ public class ReceitaFX extends GridPane {
                     private final Button btn = new Button("Remover");
 
                     {
+                        // Evento para confirmação e exclusão
                         btn.setOnAction((ActionEvent event) -> {
                             Alert dialog = new Alert(Alert.AlertType.WARNING);
                             ButtonType btnSim = new ButtonType("Sim");
@@ -185,13 +182,14 @@ public class ReceitaFX extends GridPane {
                 return cell;
             }
         };
-
+        // Menu de Contexto e 2 cliques
         table.setRowFactory(new Callback<TableView<Receita>, TableRow<Receita>>() {
             public TableRow<Receita> call(TableView<Receita> tableView) {
                 final TableRow<Receita> row = new TableRow<>();
                 final ContextMenu rowMenu = new ContextMenu();
                 MenuItem removeItem = new MenuItem("Remover");
                 MenuItem editaItem = new MenuItem("Editar");
+                // Evento de remoção
                 removeItem.setOnAction(e -> {
                     ButtonType btnSim = new ButtonType("Sim");
                     ButtonType btnNao = new ButtonType("Não");
@@ -216,7 +214,7 @@ public class ReceitaFX extends GridPane {
                     });
                     
                 });
-
+                // Evento de edição
                 editaItem.setOnAction(e -> {
                     CadastroReceitaFX form = new CadastroReceitaFX();
                     try {
@@ -233,7 +231,7 @@ public class ReceitaFX extends GridPane {
                         Bindings.when(Bindings.isNotNull(row.itemProperty()))
                                 .then(rowMenu)
                                 .otherwise((ContextMenu) null));
-                
+                // Evento 2 cliques
                 row.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
                         if (e.getClickCount() == 2 && (!row.isEmpty())) {

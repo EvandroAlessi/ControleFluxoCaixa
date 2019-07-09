@@ -6,7 +6,6 @@
 package DAO;
 
 import CrossCutting.Log;
-import CrossCutting.Mensagem;
 import Models.SubCategoria;
 import Models.CategoriaConta;
 import java.sql.PreparedStatement;
@@ -17,8 +16,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * DAO SubCategoria
+ * Responsável pela persistência das SubCategorias
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
+ * @see SubCategoria
  */
 public class SubCategoriaDAO {
 

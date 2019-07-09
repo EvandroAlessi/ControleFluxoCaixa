@@ -6,8 +6,12 @@
 package Models;
 
 /**
- *
- * @author evand
+ * Modelo estrutural de SubCategoria.
+ * Gera objetos modelos para comunicação com BD ou utilização na GUI.
+ * Uma SubCategoria tem um Categoria.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
  */
 public class SubCategoria {
     private int subCategoriaID;

@@ -10,3 +10,5 @@ log.txt
 
 /log.txt
 log.txt
+*.xml
+*.properties

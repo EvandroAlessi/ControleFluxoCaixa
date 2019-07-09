@@ -17,8 +17,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * DAO Receita
+ * Responsável pela persistência das Receitas
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Receita
+ * @see CategoriaConta
+ * @see SubCategoria
  */
 public class ReceitaDAO {
 

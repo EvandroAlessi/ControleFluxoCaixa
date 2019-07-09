@@ -14,8 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
- * @author evand
+ * Responsável por gravar em arquivo um LOG de erros
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public class Log {
 

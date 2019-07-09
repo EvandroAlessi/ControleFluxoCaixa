@@ -18,8 +18,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * DAO Movimentacao
+ * Responsável pela persistência das Movimentacoes
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Movimentacao
+ * @see CategoriaConta
+ * @see SubCategoria
  */
 public class MovimentacaoDAO {
 

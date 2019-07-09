@@ -7,7 +7,6 @@ package Views;
 
 import Controllers.MovimentacaoController;
 import Models.Movimentacao;
-import com.sun.javafx.collections.ElementObservableListDecorator;
 import java.time.LocalDate;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -36,8 +35,15 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- *
- * @author evand
+ * View responsável pela apresentação de um relátorio das últimas e futuras movimentações.
+ * Apresentação com TableView.
+ * Diretamente ligada ao Stage provido pela MainFX.
+ * Utiliza o controlador de Movimentações.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Movimentacao
+ * @see MovimentacaoController
+ * @see MainFX
  */
 public class RelatorioFX extends GridPane {
 
@@ -52,6 +58,8 @@ public class RelatorioFX extends GridPane {
     private DatePicker dpEndDate;
     private Button btnPesquisar;
     
+    /** @param stage Recebe o stage principal de mainFX
+    */
     public RelatorioFX(Stage stage) {
         mainStage = stage;
         movimentacaoController = new MovimentacaoController();
@@ -152,7 +160,7 @@ public class RelatorioFX extends GridPane {
             }
         });
         
-        tcData.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
+        tcData.setCellValueFactory(new PropertyValueFactory<>("dateF"));
         tcSubCategoria.setCellValueFactory(new PropertyValueFactory<>("subCategoriaID"));
         tcDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tcValor.setCellValueFactory(new PropertyValueFactory<>("valor"));

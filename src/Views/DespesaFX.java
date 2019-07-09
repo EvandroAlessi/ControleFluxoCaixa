@@ -45,8 +45,15 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- *
- * @author SpaceBR
+ * View responsável pela apresentação das Despesas.
+ * Apresentação com TableView.
+ * Diretamente ligada ao Stage provido pela MainFX.
+ * Utiliza o controlador de Despesas.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Despesa
+ * @see DespesaController
+ * @see MainFX
  */
 public class DespesaFX extends GridPane {
 
@@ -58,6 +65,8 @@ public class DespesaFX extends GridPane {
     private TableColumn<Despesa, Void> tcApagar;
     private Stage mainStage;
 
+    /** @param stage Recebe o stage principal de mainFX
+    */
     public DespesaFX(Stage stage) {
         mainStage = stage;
         DespesaController control = new DespesaController();

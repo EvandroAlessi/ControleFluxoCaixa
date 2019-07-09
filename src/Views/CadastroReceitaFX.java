@@ -38,8 +38,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
- * @author SpaceBR
+ * View com formulário de cadastro para Receitas.
+ * Diretamente ligada ao Stage provido pela ReceitaFX
+ * Utiliza o controlador de CategoriaConta, SubCategoria e Receita
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
+ * @see SubCategoria
+ * @see Receita
+ * @see ReceitaController
+ * @see CategoriaContaController
+ * @see SubCategoriaController
+ * @see ReceitaFX
  */
 public class CadastroReceitaFX {
 

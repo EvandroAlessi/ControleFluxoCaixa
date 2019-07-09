@@ -12,11 +12,15 @@ import Models.Receita;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- *
- * @author evand
+ * Controlador de Receitas
+ * Propicia a comunicação entre a GUI e DAO
+ * Implementa a lógica de negócios
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Receita
+ * @see ReceitaDAO
  */
 public class ReceitaController {
 

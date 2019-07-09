@@ -15,8 +15,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- * @author evand
+ * Controlador de Movimentacoes
+ * Propicia a comunicação entre a GUI e DAO
+ * Implementa a lógica de negócios
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Movimentacao
+ * @see MovimentacaoDAO
  */
 public class MovimentacaoController {
 

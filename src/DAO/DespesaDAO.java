@@ -17,8 +17,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- *
- * @author evand
+ * DAO Despesa
+ * Responsável pela persistência das Despesas
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Despesa
+ * @see CategoriaConta
+ * @see SubCategoria
  */
 public class DespesaDAO {
 

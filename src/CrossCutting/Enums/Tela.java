@@ -6,8 +6,9 @@
 package CrossCutting.Enums;
 
 /**
- *
- * @author evand
+ * Enum das cenas das Views
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public enum Tela {
     

@@ -42,8 +42,16 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- *
- * @author SpaceBR
+ * View responsável pela apresentação das Categorias e SubCategorias.
+ * Apresentação com Table View.
+ * Diretamente ligada ao Stage provido pela MainFX
+ * Utiliza o controlador de SubCategorias
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
+ * @see SubCategoria
+ * @see SubCategoriaController
+ * @see MainFX
  */
 public class CategoriaSubFX extends GridPane {
 
@@ -55,6 +63,8 @@ public class CategoriaSubFX extends GridPane {
     private TableColumn<SubCategoria, String> tcTipoCategoria;
     private Stage mainStage;
 
+    /** @param stage Recebe o stage principal de mainFX
+    */
     public CategoriaSubFX(Stage stage) {
         mainStage = stage;
         SubCategoriaController subCategoriaController = new SubCategoriaController();

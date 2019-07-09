@@ -5,13 +5,15 @@
  */
 package Models;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
- *
- * @author evand
+ * Modelo estrutural de Receita.
+ * Gera objetos modelos para comunicação com BD ou utilização na GUI.
+ * Uma receita é uma movimentação.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see Movimentacao
  */
 public class Receita extends Movimentacao {
 
@@ -26,10 +28,4 @@ public class Receita extends Movimentacao {
         super(dataOcorrencia, descricao, valor, movimentacaoID, formaPagamento);
     }
     
-    public String getDateF(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String data = sdf.format(Date.valueOf(getDataOcorrencia()));
-        
-        return data;
-    }
 }

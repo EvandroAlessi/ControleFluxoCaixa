@@ -38,8 +38,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
- * @author SpaceBR
+ * View com formulário de cadastro para Despesas.
+ * Diretamente ligada ao Stage provido pela DespesaFX
+ * Utiliza o controlador de CategoriaConta, SubCategoria e Despesa
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see CategoriaConta
+ * @see SubCategoria
+ * @see Despesa
+ * @see DespesaController
+ * @see CategoriaContaController
+ * @see SubCategoriaController
+ * @see DespesaFX
  */
 public class CadastroDespesaFX {
 

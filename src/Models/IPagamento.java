@@ -6,8 +6,10 @@
 package Models;
 
 /**
- *
- * @author evand
+ * Interface de Pagamentos.
+ * Administra as formas de pagamentos.
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public interface IPagamento {
 

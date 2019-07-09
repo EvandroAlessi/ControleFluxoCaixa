@@ -6,8 +6,9 @@
 package CrossCutting.Enums;
 
 /**
- *
- * @author evand
+ * Enum das Formas de Pagamento
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public enum FormaPagamento {
     CREDITO(1),

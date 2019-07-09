@@ -18,8 +18,9 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
- *
- * @author evand
+ * View principal, onde o programa é inicializado e a primeira janela é criada
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public class MainFX extends Application {
 

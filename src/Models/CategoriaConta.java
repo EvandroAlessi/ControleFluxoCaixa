@@ -6,8 +6,10 @@
 package Models;
 
 /**
- *
- * @author evand
+ * Modelo estrutural de Categoria.
+ * Gera objetos modelos para comunicação com BD ou utilização na GUI.
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public class CategoriaConta {
     private int categoriaContaID;

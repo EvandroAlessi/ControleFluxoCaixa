@@ -12,8 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author evand
+ * DAO Contexto
+ * Responsável por gerênciar a conexão com o BD
+ * @author Evandro Alessi
+ * @author Eric Ueta
  */
 public class Contexto {
 

@@ -6,11 +6,9 @@
 package Views;
 
 import CrossCutting.Enums.Tela;
-import Models.Despesa;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -18,16 +16,21 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Window;
 
 /**
- *
- * @author SpaceBR
+ * View responsável pelo menu superior. É ligada ao Stage principal gerado em MainFX.
+ * @author Evandro Alessi
+ * @author Eric Ueta
+ * @see MainFX
  */
 public class MenuSuperiorFX extends MenuBar {
-
+    // Declaração de componentes
     MenuBar menuSuperior;
     Menu arquivo, geral, relatorios;
     MenuItem sair, resumo, despesa, receita, ultimos, futuros, categoria;
 
+    /** @param main Recebe MainFX
+    */
     public MenuSuperiorFX(MainFX main) {
+        //Instanciação de componentes
         arquivo = new Menu("Arquivo");
         geral = new Menu("Geral");
         relatorios = new Menu("Relatórios");
@@ -69,6 +72,7 @@ public class MenuSuperiorFX extends MenuBar {
             main.switchCenter(Tela.CATEGORIA);
         });
 
+        // Evento para confirmação de saída
         sair.setOnAction((event) -> {
            ButtonType btnSim = new ButtonType("Sim");
             ButtonType btnNao = new ButtonType("Não");

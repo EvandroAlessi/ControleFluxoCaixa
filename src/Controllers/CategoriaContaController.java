@@ -40,9 +40,9 @@ public class CategoriaContaController {
                     }
                 } else {
                     if (categoriaConta.isPositiva()) {
-                        Mensagem.aviso("Já existe uma categoria de receita com essa Descrição.");
+                        Mensagem.aviso("Já existe um tipo de receita com essa Descrição.");
                     } else {
-                        Mensagem.aviso("Já existe uma categoria de despesa com essa Descrição.");
+                        Mensagem.aviso("Já existe um tipo de despesa com essa Descrição.");
                     }
                 }
             } else {

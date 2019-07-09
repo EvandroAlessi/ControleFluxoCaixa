@@ -156,10 +156,10 @@ public class MovimentacaoDAO {
      */
     public ArrayList<Movimentacao> getAll(boolean untilNow, LocalDate beginDate, LocalDate endDate) throws ClassNotFoundException, SQLException {
         String query = "select * from Movimentacao where DataOcorrencia"
-                + (untilNow ? " <= NOW() " 
-                    + (beginDate != null ? "AND DataOcorrencia >= '" + beginDate + "'" : "") 
-                : " > NOW() ")
-                + (endDate != null ? "AND DataOcorrencia <= '" + endDate + "'" : "")
+                + (untilNow ? " <= NOW()" 
+                    + (beginDate != null ? " AND DataOcorrencia >= '" + beginDate + "'" : "") 
+                : " > NOW()")
+                + (endDate != null ? " AND DataOcorrencia <= '" + endDate + "'" : "")
                 + " order by DataOcorrencia desc;";
         System.out.println(query);
         ArrayList<Movimentacao> list = new ArrayList<>();

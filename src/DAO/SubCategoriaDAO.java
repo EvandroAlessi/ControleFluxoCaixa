@@ -73,12 +73,12 @@ public class SubCategoriaDAO {
         }
     }
 
-    public boolean exists(String desc) throws ClassNotFoundException, SQLException {
-        String query = "select SubCategoriaID from SubCategoria where Descricao = '" + desc + "';";
+    public boolean exists(String desc, boolean positiva) throws ClassNotFoundException, SQLException {
+        String query = "select S.SubCategoriaID from SubCategoria S, CategoriaConta C where S.CategoriaContaID = C.CategoriaContaID AND S.Descricao like '" + desc + "' AND C.Positiva = '" + (positiva ? 1 : 0) + "';";
 
         ResultSet dados = contexto.executeQuery(query);
-
-        return dados == null;
+        
+        return dados.next();
     }
 
     /**

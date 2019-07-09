@@ -144,6 +144,9 @@ public class CadastroCategoriaSubFX {
                     lbNewCategoria.setVisible(false);
                     tfNewCategoria.setVisible(false);
                     btnSalvarNewCategoria.setVisible(false);
+                    btnAdd.setText("+");
+                    tfNewCategoria.setStyle("-fx-text-box-border: #ccc ;"
+                        + " -fx-focus-color: #ccc;");
                 }
             } else {
                 tfNewCategoria.setStyle("-fx-text-box-border: red ;"
@@ -168,7 +171,7 @@ public class CadastroCategoriaSubFX {
         GridPane painel = criarFormulario(subCategoria);
         dialog.initOwner(mainStage);
         dialog.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(painel, 430, 370);
+        Scene scene = new Scene(painel, 430, 380);
 
         btnAdd.setOnAction((event) -> {
             boolean aux = !lbNewCategoria.isVisible();
@@ -179,9 +182,9 @@ public class CadastroCategoriaSubFX {
         });
 
         dialog.setResizable(false);
-        dialog.setMaxHeight(370);
+        dialog.setMaxHeight(380);
         dialog.setMaxWidth(430);
-        dialog.setMinHeight(370);
+        dialog.setMinHeight(380);
         dialog.setMinWidth(430);
 
         dialog.setScene(scene);
@@ -192,7 +195,9 @@ public class CadastroCategoriaSubFX {
         GridPane pane = new GridPane();
         HBox hbButtons = new HBox();
         HBox hbRadios = new HBox(30, rbReceita, rbDespesa);
-
+        
+        hbRadios.setAlignment(Pos.CENTER);
+        
         cbCategoria.setItems(FXCollections.observableArrayList(categorias));
         cbCategoria.getSelectionModel().selectFirst();
 
@@ -212,7 +217,7 @@ public class CadastroCategoriaSubFX {
 
         hbButtons.getChildren().addAll(btnCadastrar, btnCancelar);
         hbButtons.setSpacing(10);
-        hbButtons.setPadding(new Insets(10, 0, -10, 0));
+        hbButtons.setPadding(new Insets(20, 0, -10, 0));
         hbButtons.setAlignment(Pos.CENTER);
 
         lbTitle.setPadding(new Insets(0, 0, 25, 0));
@@ -223,15 +228,20 @@ public class CadastroCategoriaSubFX {
         tfNewCategoria.setPrefWidth(200);
 
         pane.add(lbTitle, 0, 0, 4, 1);
-        pane.add(lbCategoria, 0, 3);
-        pane.add(cbCategoria, 1, 3);
-        pane.add(btnAdd, 2, 3);
-        pane.add(lbDescricao, 0, 1);
-        pane.add(tfDescricao, 1, 1, 2, 1);
-        pane.add(hbRadios, 1, 2);
-        pane.add(lbNewCategoria, 0, 4);
-        pane.add(tfNewCategoria, 1, 4, 2, 1);
-        pane.add(btnSalvarNewCategoria, 2, 4);
+        
+        pane.add(hbRadios, 0, 1, 3, 1);
+        
+        pane.add(tfNewCategoria, 1, 3, 2, 1);
+        pane.add(btnSalvarNewCategoria, 2, 3);
+        pane.add(lbNewCategoria, 0, 3);
+        
+        pane.add(lbCategoria, 0, 2);
+        pane.add(cbCategoria, 1, 2);
+        pane.add(btnAdd, 2, 2);
+        
+        pane.add(lbDescricao, 0, 4);
+        pane.add(tfDescricao, 1, 4, 2, 1);
+        
         pane.add(hbButtons, 0, 5, 4, 1);
 
         lbNewCategoria.setVisible(false);

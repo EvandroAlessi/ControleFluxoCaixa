@@ -66,13 +66,11 @@ public class CategoriaContaDAO {
     }
 
     public boolean exists(String desc, boolean positiva) throws ClassNotFoundException, SQLException {
-        String query = "select CategoriaContaID from CategoriaConta where Descricao = '" + desc + "' AND Positiva = '" + (positiva ? 1 : 0) + "';";
+        String query = "select CategoriaContaID from CategoriaConta where Descricao like '" + desc + "' AND Positiva = '" + (positiva ? 1 : 0) + "';";
 
         ResultSet dados = contexto.executeQuery(query);
 
-        dados.next();
-
-        return dados.isClosed();
+        return dados.next();
     }
 
     /** 

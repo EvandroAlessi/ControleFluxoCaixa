@@ -73,18 +73,18 @@ public class CategoriaSubFX extends GridPane {
         tcDescricao = new TableColumn("Descricao");
         tcTipo = new TableColumn("Tipo");
         tcApagar = new TableColumn("Ações");
-        tcTipoCategoria = new TableColumn("Tipo Categoria");
+        tcTipoCategoria = new TableColumn("Tipo Receita/Despesa");
         btnCadastrar = new Button("Cadastrar");
         btnEditar = new Button("Editar");
 
-        tcDescricao.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.638));
-        tcTipoCategoria.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.15));
-        tcTipo.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.15));
-        tcApagar.prefWidthProperty().bind(table.widthProperty()
-                .multiply(0.06));
+//        tcDescricao.prefWidthProperty().bind(table.widthProperty()
+//                .multiply(0.638));
+//        tcTipoCategoria.prefWidthProperty().bind(table.widthProperty()
+//                .multiply(0.15));
+//        tcTipo.prefWidthProperty().bind(table.widthProperty()
+//                .multiply(0.15));
+//        tcApagar.prefWidthProperty().bind(table.widthProperty()
+//                .multiply(0.06));
 
         tcDescricao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SubCategoria, String>, ObservableValue<String>>() {
             @Override

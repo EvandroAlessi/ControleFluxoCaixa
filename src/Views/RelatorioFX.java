@@ -89,15 +89,19 @@ public class RelatorioFX extends GridPane {
         btnPesquisar.setOnAction((event) -> {
             List<Movimentacao> movimentacoes = null;
             
-            if (dpBeginDate.getValue() != null && dpEndDate.getValue() != null) {
+            if (dpBeginDate.getValue() != null || dpEndDate.getValue() != null) {
                 movimentacoes = movimentacaoController.getAll(untilNow, dpBeginDate.getValue(), dpEndDate.getValue());
             }
-            else if (dpBeginDate.getValue() != null){
-                movimentacaoController.getAll(untilNow, dpBeginDate.getValue(), LocalDate.MAX);
+//            else if (dpBeginDate.getValue() != null){
+//                movimentacaoController.getAll(untilNow, dpBeginDate.getValue(), null);
+//            }
+//            else if (dpEndDate.getValue() != null){
+//                movimentacaoController.getAll(untilNow, null, dpEndDate.getValue());
+//            }
+            else{
+                movimentacaoController.getAll(untilNow);
             }
-            else {
-                movimentacaoController.getAll(untilNow, LocalDate.MIN, dpEndDate.getValue());
-            }
+            
             if (movimentacoes != null) {
                 this.table.setItems(FXCollections.observableArrayList(movimentacoes));
                 this.table.refresh();

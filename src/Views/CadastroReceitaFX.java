@@ -287,6 +287,7 @@ public class CadastroReceitaFX {
             this.receitaCriada = receitaCriada;
             this.lbTitle.setText("Editar Receita");
             btnCadastrar.setText("Salvar");
+            this.dpCalendario.setValue(receitaCriada.getDataOcorrencia());
             this.tfDescricao.setText(receitaCriada.getDescricao());
             this.tfValor.setText(String.valueOf(receitaCriada.getValor()));
             this.cbPagamento.getSelectionModel().select(receitaCriada.getFormaPagamento() - 1);

@@ -288,6 +288,7 @@ public class CadastroDespesaFX {
             this.lbTitle.setText("Editar Despesa");
             btnCadastrar.setText("Salvar");
             this.tfDescricao.setText(despesaCriada.getDescricao());
+            this.dpCalendario.setValue(despesaCriada.getDataOcorrencia());
             this.tfValor.setText(String.valueOf(despesaCriada.getValor()));
             this.cbPagamento.getSelectionModel().select(despesaCriada.getFormaPagamento() - 1);
 

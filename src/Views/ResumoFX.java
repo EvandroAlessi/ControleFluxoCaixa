@@ -34,9 +34,9 @@ import javafx.stage.Stage;
 
 /**
  * View responsável pela apresentação de um resumo geral das movimentações.
- * Apresentação com TableView e BarChart.
- * Diretamente ligada ao Stage provido pela MainFX.
- * Utiliza o controlador de Movimentações.
+ * Apresentação com TableView e BarChart. Diretamente ligada ao Stage provido
+ * pela MainFX. Utiliza o controlador de Movimentações.
+ *
  * @author Evandro Alessi
  * @author Eric Ueta
  * @see Movimentacao
@@ -55,9 +55,10 @@ public class ResumoFX extends GridPane {
     private CategoryAxis xAxis;
     private LineChart<String, Number> graficoLinha;
     private MovimentacaoController movimentacaoController;
-    
-    /** @param stage Recebe o stage principal de mainFX
-    */
+
+    /**
+     * @param stage Recebe o stage principal de mainFX
+     */
     public ResumoFX(Stage stage) {
         movimentacaoController = new MovimentacaoController();
         setxAxis(new CategoryAxis());
@@ -67,73 +68,72 @@ public class ResumoFX extends GridPane {
         getxAxis().setLabel("TESTE");
         getyAxis().setLabel("VALOR");
         setTable(new TableView());
-        
-        
-        BarChart<String,Number> bc = new BarChart<String,Number>(new CategoryAxis(),new NumberAxis());
+
+        BarChart<String, Number> bc = new BarChart<String, Number>(new CategoryAxis(), new NumberAxis());
         bc.setTitle("Receitas por Categoria");
-        xAxis.setLabel("Categoria");       
-        yAxis.setLabel("Valor");     
-        
+        xAxis.setLabel("Categoria");
+        yAxis.setLabel("Valor");
+
         List<Receita> receitas = new ReceitaController().getAll();
 
         HashMap<String, HashMap<String, Double>> dados = new HashMap();
-        
-        for(Receita receita: receitas){
+
+        for (Receita receita : receitas) {
             if (!(dados.containsKey(receita.getSubCategoria().getCategoriaConta().getDescricao()))) {
                 dados.put(receita.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
                 dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), receita.getValor());
             } else {
-                if(!dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(receita.getSubCategoria().getDescricao())){
+                if (!dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(receita.getSubCategoria().getDescricao())) {
                     dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), receita.getValor());
-                }else{
+                } else {
                     dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).put(receita.getSubCategoria().getDescricao(), dados.get(receita.getSubCategoria().getCategoriaConta().getDescricao()).get(receita.getSubCategoria().getDescricao()) + receita.getValor());
                 }
             }
         }
 
         dados.keySet().forEach((chave) -> {
-            
+
             XYChart.Series dataSeries = new XYChart.Series();
             dataSeries.setName(chave);
-            
+
             dados.get(chave).keySet().forEach((chaveI) -> {
                 dataSeries.getData().add(new XYChart.Data(chaveI, dados.get(chave).get(chaveI)));
             });
-            
+
             bc.getData().add(dataSeries);
         });
-        
-        BarChart<String,Number> bc2 = new BarChart<String,Number>(new CategoryAxis(),new NumberAxis());
+
+        BarChart<String, Number> bc2 = new BarChart<String, Number>(new CategoryAxis(), new NumberAxis());
         bc2.setTitle("Despesas por Categoria");
-        xAxis.setLabel("Categoria");       
-        yAxis.setLabel("Valor");     
-        
+        xAxis.setLabel("Categoria");
+        yAxis.setLabel("Valor");
+
         List<Despesa> despesas = new DespesaController().getAll();
 
         HashMap<String, HashMap<String, Double>> dados2 = new HashMap();
-        
-        for(Despesa despesa: despesas){
+
+        for (Despesa despesa : despesas) {
             if (!(dados2.containsKey(despesa.getSubCategoria().getCategoriaConta().getDescricao()))) {
                 dados2.put(despesa.getSubCategoria().getCategoriaConta().getDescricao(), new HashMap());
                 dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), despesa.getValor());
             } else {
-                if(!dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(despesa.getSubCategoria().getDescricao())){
+                if (!dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).containsKey(despesa.getSubCategoria().getDescricao())) {
                     dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), despesa.getValor());
-                }else{
+                } else {
                     dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).put(despesa.getSubCategoria().getDescricao(), dados2.get(despesa.getSubCategoria().getCategoriaConta().getDescricao()).get(despesa.getSubCategoria().getDescricao()) + despesa.getValor());
                 }
             }
         }
 
         dados2.keySet().forEach((chave) -> {
-            
+
             XYChart.Series dataSeries = new XYChart.Series();
             dataSeries.setName(chave);
-            
+
             dados2.get(chave).keySet().forEach((chaveI) -> {
                 dataSeries.getData().add(new XYChart.Data(chaveI, dados2.get(chave).get(chaveI)));
             });
-            
+
             bc2.getData().add(dataSeries);
         });
 
@@ -154,17 +154,17 @@ public class ResumoFX extends GridPane {
 
         add(bc, 0, 0);
         add(bc2, 1, 0);
-        
+
         Label lbLast = new Label("Últimos Lançamentos");
         Label lbFut = new Label("Lançamentos Futuros");
         lbFut.setFont(new Font("Arial", 18));
         lbLast.setFont(new Font("Arial", 18));
-        
+
         this.add(lbLast, 0, 1);
         this.add(lbFut, 1, 1);
-        this.add(new RelatorioFX(stage).showTable(true),0, 2);
-        this.add(new RelatorioFX(stage).showTable(false),1, 2);
-        
+        this.add(new RelatorioFX(stage).showTable(true), 0, 2);
+        this.add(new RelatorioFX(stage).showTable(false), 1, 2);
+
         this.setPadding(new Insets(5));
         this.setHgap(5);
         this.setVgap(5);
@@ -172,24 +172,24 @@ public class ResumoFX extends GridPane {
         c1.setHgrow(Priority.ALWAYS);
         c1.setHalignment(HPos.CENTER);
         c1.setPercentWidth(50);
-        
+
         ColumnConstraints c2 = new ColumnConstraints();
         c2.setHgrow(Priority.ALWAYS);
         c2.setHalignment(HPos.CENTER);
         c2.setPercentWidth(50);
-        
+
         RowConstraints r1 = new RowConstraints();
         r1.setVgrow(Priority.ALWAYS);
         r1.setValignment(VPos.CENTER);
-        
+
         RowConstraints r2 = new RowConstraints();
         r2.setVgrow(Priority.ALWAYS);
         r2.setValignment(VPos.CENTER);
-        
+
         RowConstraints r3 = new RowConstraints();
         r3.setVgrow(Priority.ALWAYS);
         r3.setValignment(VPos.CENTER);
-        
+
         getColumnConstraints().addAll(c1, c2);
         getRowConstraints().addAll(r1, r2, r3);
     }

@@ -23,7 +23,7 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException {
-        String query = "select * from categoriaconta;";
+        String query = "select * from CategoriaConta;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
         String[] columns = new String[fields.getColumnCount()];
 
@@ -42,7 +42,7 @@ public class CategoriaContaDAO {
      * @throws ClassNotFoundException
      */
     public boolean create(CategoriaConta categoria) throws SQLException, ClassNotFoundException {
-        String sql = "insert into categoriaconta(Descricao, Positiva)values(?,?)";
+        String sql = "insert into CategoriaConta(Descricao, Positiva)values(?,?)";
         try (PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparestatement.setString(1, categoria.getDescricao()); //substitui o ? pelo dado do usuario
             preparestatement.setInt(2, (categoria.isPositiva() ? 1 : 0));
@@ -63,7 +63,7 @@ public class CategoriaContaDAO {
     }
 
     public boolean exists(String desc, boolean positiva) throws ClassNotFoundException, SQLException {
-        String query = "select categoriaContaID from categoriaConta where Descricao = '" + desc + "' AND Positiva = '" + (positiva ? 1 : 0) + "';";
+        String query = "select CategoriaContaID from CategoriaConta where Descricao = '" + desc + "' AND Positiva = '" + (positiva ? 1 : 0) + "';";
 
         ResultSet dados = contexto.executeQuery(query);
 
@@ -80,19 +80,19 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public CategoriaConta get(int id) throws ClassNotFoundException, SQLException {
-        String query = "select * from categoriaconta where categoriacontaid = '" + id + "';";
+        String query = "select * from CategoriaConta where CategoriaContaID = '" + id + "';";
         CategoriaConta categoria = new CategoriaConta();
         ResultSet dados = contexto.executeQuery(query);
 
         while (dados.next()) {
             categoria.setDescricao(dados.getString("Descricao"));
             categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
-            categoria.setPositiva(dados.getBoolean("positiva"));
+            categoria.setPositiva(dados.getBoolean("Positiva"));
         }
 
         return categoria;
     }
-    
+
     /**
      * Busca todas as cateogiras existentes no banco de dados
      *
@@ -101,7 +101,7 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public ArrayList<CategoriaConta> getAll() throws SQLException, ClassNotFoundException {
-        String query = "select * from categoriaconta order by descricao;";
+        String query = "select * from CategoriaConta order by Descricao;";
         ArrayList<CategoriaConta> lista = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);
@@ -110,14 +110,14 @@ public class CategoriaContaDAO {
             CategoriaConta categoria = new CategoriaConta();
             categoria.setDescricao(dados.getString("Descricao"));
             categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
-            categoria.setPositiva(dados.getBoolean("positiva"));
+            categoria.setPositiva(dados.getBoolean("Positiva"));
 
             lista.add(categoria);
         }
 
         return lista;
     }
-    
+
     /**
      * Busca todas as cateogiras existentes no banco de dados
      *
@@ -127,7 +127,7 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public ArrayList<CategoriaConta> getAll(boolean positiva) throws SQLException, ClassNotFoundException {
-        String query = "select * from categoriaconta where Positiva = '" + (positiva ? 1 : 0) + "' order by descricao;";
+        String query = "select * from CategoriaConta where Positiva = '" + (positiva ? 1 : 0) + "' order by Descricao;";
         ArrayList<CategoriaConta> lista = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);
@@ -136,7 +136,7 @@ public class CategoriaContaDAO {
             CategoriaConta categoria = new CategoriaConta();
             categoria.setDescricao(dados.getString("Descricao"));
             categoria.setCategoriaContaID(dados.getInt("CategoriaContaID"));
-            categoria.setPositiva(dados.getBoolean("positiva"));
+            categoria.setPositiva(dados.getBoolean("Positiva"));
 
             lista.add(categoria);
         }
@@ -156,16 +156,16 @@ public class CategoriaContaDAO {
     public boolean update(CategoriaConta categoria) throws ClassNotFoundException, SQLException {
         StringBuilder columnsAndValues = new StringBuilder(255);
 
-        columnsAndValues.append("descricao= '")
+        columnsAndValues.append("Descricao= '")
                 .append(categoria.getDescricao())
                 .append("'");
-        columnsAndValues.append("positiva= '")
+        columnsAndValues.append("Positiva= '")
                 .append(categoria.isPositiva())
                 .append("'");
 
-        String query = "update categoriaconta SET "
+        String query = "update CategoriaConta SET "
                 + columnsAndValues.toString()
-                + " WHERE categoriacontaid = " + categoria.getCategoriaContaID();
+                + " WHERE CategoriaContaID = " + categoria.getCategoriaContaID();
 
         int result = contexto.executeUpdate(query);
 
@@ -181,7 +181,7 @@ public class CategoriaContaDAO {
      * @throws SQLException
      */
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
-        String sql = "delete from categoriaconta where categoriacontaid = ?";
+        String sql = "delete from CategoriaConta where CategoriaContaID = ?";
         try (PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();

@@ -30,7 +30,7 @@ public class MovimentacaoDAO {
      * @throws SQLException
      */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao;";
+        String query = "select * from Movimentacao;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
         String[] columns = new String[fields.getColumnCount()];
 
@@ -43,26 +43,26 @@ public class MovimentacaoDAO {
 
     /**
      *
-     * @param movimentacao
+     * @param Movimentacao
      * @return
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public boolean create(Movimentacao movimentacao) throws ClassNotFoundException, SQLException {
-        String sql = "insert into movimentacao(Descricao, dataOcorrencia, valor, formaPagamento, suvCategoriaID)values(?, ?, ?, ?, ?)";
+    public boolean create(Movimentacao Movimentacao) throws ClassNotFoundException, SQLException {
+        String sql = "insert into Movimentacao(Descricao, DataOcorrencia, Valor, FormaPagamento, SubCategoriaID)values(?, ?, ?, ?, ?)";
         try (PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            preparestatement.setString(1, movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
-            preparestatement.setDate(2, Date.valueOf(movimentacao.getDataOcorrencia()));
-            preparestatement.setDouble(3, movimentacao.getValor()); //substitui o ? pelo dado do usuario
-            preparestatement.setInt(4, movimentacao.getFormaPagamento());
-            preparestatement.setInt(5, movimentacao.getSubCategoria().getSubCategoriaID());
+            preparestatement.setString(1, Movimentacao.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setDate(2, Date.valueOf(Movimentacao.getDataOcorrencia()));
+            preparestatement.setDouble(3, Movimentacao.getValor()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(4, Movimentacao.getFormaPagamento());
+            preparestatement.setInt(5, Movimentacao.getSubCategoria().getSubCategoriaID());
             //executando comando sql
 
             int result = preparestatement.executeUpdate();
             if (result > 0) {
                 ResultSet id = preparestatement.getGeneratedKeys();
                 if (id.next()) {
-                    movimentacao.setMovimentacaoID(id.getInt(1));
+                    Movimentacao.setMovimentacaoID(id.getInt(1));
                     return true;
                 }
             }
@@ -74,12 +74,13 @@ public class MovimentacaoDAO {
     }
 
     public double getSaldo() throws ClassNotFoundException, SQLException {
-        String query = "SELECT (SELECT SUM(valor) FROM movimentacao WHERE dataocorrencia <= NOW() AND subcategoriaid in (\n"
-                + "select subcategoriaid from subcategoria where subcategoriaid in (\n"
-                + "select categoriacontaid from categoriaconta where positiva = 1))) "
-                + "- (SELECT SUM(valor) FROM movimentacao WHERE dataocorrencia <= NOW() AND subcategoriaid in (\n"
-                + "select subcategoriaid from subcategoria where subcategoriaid in (\n"
-                + "select categoriacontaid from categoriaconta where positiva = 0))) as saldo;";
+        String query = "SELECT (IFNULL((SELECT SUM(valor) FROM Movimentacao "
+                + "WHERE DataOcorrencia <= NOW() AND SubCategoriaID in ("
+                + "select SubCategoriaID from SubCategoria where CategoriaContaID in ("
+                + "select CategoriaContaID from CategoriaConta where Positiva = 1))), 0) "
+                + "- (IFNULL((SELECT SUM(valor) FROM Movimentacao WHERE DataOcorrencia <= NOW() AND SubCategoriaID in ("
+                + "select SubCategoriaID from SubCategoria where CategoriaContaID in ("
+                + "select CategoriaContaID from CategoriaConta where Positiva = 0))), 0))) as saldo;";
 
         ResultSet dados = contexto.executeQuery(query);
 
@@ -98,45 +99,45 @@ public class MovimentacaoDAO {
      * @throws SQLException
      */
     public Movimentacao get(int id) throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao where movimentacaoid = '" + id + "';";
-        Movimentacao movimentacao = new Movimentacao();
+        String query = "select * from Movimentacao where MovimentacaoID = '" + id + "';";
+        Movimentacao Movimentacao = new Movimentacao();
         ResultSet dados = contexto.executeQuery(query);
 
         while (dados.next()) {
-            movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            movimentacao.setDescricao(dados.getString("Descricao"));
-            movimentacao.setDataOcorrencia(dados.getDate("dataOcorrencia").toLocalDate());
-            movimentacao.setValor(dados.getDouble("valor"));
-            movimentacao.setFormaPagamento(dados.getInt("formaPagamento"));
+            Movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
+            Movimentacao.setDescricao(dados.getString("Descricao"));
+            Movimentacao.setDataOcorrencia(dados.getDate("DataOcorrencia").toLocalDate());
+            Movimentacao.setValor(dados.getDouble("Valor"));
+            Movimentacao.setFormaPagamento(dados.getInt("FormaPagamento"));
 
-            String querySub = "select * from subcategoria where SubCategoriaid = '"
+            String querySub = "select * from SubCategoria where SubCategoriaID = '"
                     + dados.getInt("SubCategoriaID")
                     + "';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
 
             while (dadosSub.next()) {
-                movimentacao.setSubCategoria(
+                Movimentacao.setSubCategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
-                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                String queryCat = "select * from CategoriaConta where CategoriaContaID = '"
                         + dadosSub.getInt("CategoriaContaID")
                         + "';";
                 ResultSet dadosCat = contexto.executeQuery(queryCat);
 
                 while (dadosCat.next()) {
-                    movimentacao.getSubCategoria().setCategoriaConta(
+                    Movimentacao.getSubCategoria().setCategoriaConta(
                             new CategoriaConta(
                                     dadosCat.getInt("CategoriaContaID"),
                                     dadosCat.getString("Descricao"),
-                                    dadosCat.getBoolean("positiva"))
+                                    dadosCat.getBoolean("Positiva"))
                     );
                 }
             }
         }
 
-        return movimentacao;
+        return Movimentacao;
     }
 
     /**
@@ -145,83 +146,83 @@ public class MovimentacaoDAO {
      * @throws SQLException
      */
     public ArrayList<Movimentacao> getAll(boolean untilNow) throws ClassNotFoundException, SQLException {
-        String query = "select * from movimentacao where dataocorrencia"
+        String query = "select * from Movimentacao where DataOcorrencia"
                 + (untilNow ? " <= NOW() " : " > NOW() ")
-                + "order by dataocorrencia desc;";
+                + "order by DataOcorrencia desc;";
         ArrayList<Movimentacao> list = new ArrayList<>();
 
         ResultSet dados = contexto.executeQuery(query);
 
         while (dados.next()) {
-            Movimentacao movimentacao = new Movimentacao();
-            movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
-            movimentacao.setDescricao(dados.getString("Descricao"));
-            movimentacao.setDataOcorrencia(dados.getDate("dataOcorrencia").toLocalDate());
-            movimentacao.setValor(dados.getDouble("valor"));
-            movimentacao.setFormaPagamento(dados.getInt("formaPagamento"));
+            Movimentacao Movimentacao = new Movimentacao();
+            Movimentacao.setMovimentacaoID(dados.getInt("MovimentacaoID"));
+            Movimentacao.setDescricao(dados.getString("Descricao"));
+            Movimentacao.setDataOcorrencia(dados.getDate("dataOcorrencia").toLocalDate());
+            Movimentacao.setValor(dados.getDouble("Valor"));
+            Movimentacao.setFormaPagamento(dados.getInt("FormaPagamento"));
 
-            String querySub = "select * from subcategoria where SubCategoriaid = '"
+            String querySub = "select * from SubCategoria where SubCategoriaID = '"
                     + dados.getInt("SubCategoriaID")
                     + "';";
             ResultSet dadosSub = contexto.executeQuery(querySub);
 
             while (dadosSub.next()) {
-                movimentacao.setSubCategoria(
+                Movimentacao.setSubCategoria(
                         new SubCategoria(
                                 dadosSub.getInt("SubCategoriaID"),
                                 dadosSub.getString("Descricao"))
                 );
 
-                String queryCat = "select * from categoriaConta where categoriaContaid = '"
+                String queryCat = "select * from CategoriaConta where CategoriaContaID = '"
                         + dadosSub.getInt("CategoriaContaID")
                         + "';";
                 ResultSet dadosCat = contexto.executeQuery(queryCat);
 
                 while (dadosCat.next()) {
-                    movimentacao.getSubCategoria().setCategoriaConta(
+                    Movimentacao.getSubCategoria().setCategoriaConta(
                             new CategoriaConta(
                                     dadosCat.getInt("CategoriaContaID"),
                                     dadosCat.getString("Descricao"),
-                                    dadosCat.getBoolean("positiva"))
+                                    dadosCat.getBoolean("Positiva"))
                     );
                 }
             }
 
-            list.add(movimentacao);
+            list.add(Movimentacao);
         }
 
         return list;
     }
-    
+
     /**
      *
-     * @param movimentacao
+     * @param Movimentacao
      * @return
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public boolean update(Movimentacao movimentacao) throws ClassNotFoundException, SQLException {
+    public boolean update(Movimentacao Movimentacao) throws ClassNotFoundException, SQLException {
         StringBuilder columnsAndValues = new StringBuilder(255);
 
-        columnsAndValues.append(" descricao= '")
-                .append(movimentacao.getDescricao())
+        columnsAndValues.append(" Descricao= '")
+                .append(Movimentacao.getDescricao())
                 .append("',");
-        columnsAndValues.append(" dataOcorrencia= '")
-                .append(movimentacao.getDataOcorrencia())
+        columnsAndValues.append(" DataOcorrencia= '")
+                .append(Movimentacao.getDataOcorrencia())
                 .append("',");
-        columnsAndValues.append(" valor= '")
-                .append(movimentacao.getValor())
+        columnsAndValues.append(" Valor= '")
+                .append(Movimentacao.getValor())
                 .append("',");
-        columnsAndValues.append(" formaPagamento= '")
-                .append(movimentacao.getFormaPagamento())
+        columnsAndValues.append(" FormaPagamento= '")
+                .append(Movimentacao.getFormaPagamento())
                 .append("',");
         columnsAndValues.append(" SubCategoriaID= '")
-                .append(movimentacao.getSubCategoria().getSubCategoriaID())
+                .append(Movimentacao.getSubCategoria().getSubCategoriaID())
                 .append("'");
 
-        String query = "update movimentacao SET "
+        String query = "update Movimentacao SET "
                 + columnsAndValues.toString()
-                + " WHERE movimentacaoID = " + movimentacao.getMovimentacaoID();
+                + " WHERE MovimentacaoID = " + Movimentacao.getMovimentacaoID();
 
         int result = contexto.executeUpdate(query);
 
@@ -236,7 +237,7 @@ public class MovimentacaoDAO {
      * @throws SQLException
      */
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
-        String sql = "delete from movimentacao where movimentacaoID = ?";
+        String sql = "delete from Movimentacao where MovimentacaoID = ?";
         try (PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();

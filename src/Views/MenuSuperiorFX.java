@@ -24,12 +24,12 @@ import javafx.stage.Window;
 public class MenuSuperiorFX extends MenuBar {
 
     MenuBar menuSuperior;
-    Menu arquivo, cadastro, relatorios;
+    Menu arquivo, geral, relatorios;
     MenuItem sair, resumo, despesa, receita, ultimos, futuros, categoria;
 
     public MenuSuperiorFX(MainFX main) {
         arquivo = new Menu("Arquivo");
-        cadastro = new Menu("Geral");
+        geral = new Menu("Geral");
         relatorios = new Menu("Relatórios");
         resumo = new MenuItem("Resumo");
         despesa = new MenuItem("Despesas");
@@ -40,10 +40,10 @@ public class MenuSuperiorFX extends MenuBar {
         sair = new MenuItem("Sair      ");
         arquivo.getItems().add(sair);
         
-        cadastro.getItems().addAll(resumo, despesa, receita, categoria);
+        geral.getItems().addAll(resumo, despesa, receita, categoria);
         relatorios.getItems().addAll(ultimos, futuros);
         
-        getMenus().addAll(arquivo, cadastro, relatorios);
+        getMenus().addAll(arquivo, geral, relatorios);
 
         resumo.setOnAction((event) -> {
             main.switchCenter(Tela.RESUMO);

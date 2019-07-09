@@ -30,7 +30,7 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public String[] getAllMetaData() throws ClassNotFoundException, SQLException {
-        String query = "select * from subCategoria;";
+        String query = "select * from SubCategoria;";
         ResultSetMetaData fields = contexto.executeQuery(query).getMetaData();
         String[] columns = new String[fields.getColumnCount()];
 
@@ -43,23 +43,23 @@ public class SubCategoriaDAO {
 
     /**
      *
-     * @param subCategoria
+     * @param SubCategoria
      * @return
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public boolean create(SubCategoria subCategoria) throws ClassNotFoundException, SQLException {
-        String sql = "insert into subCategoria(descricao, categoriaContaID)values(?, ?)";
+    public boolean create(SubCategoria SubCategoria) throws ClassNotFoundException, SQLException {
+        String sql = "insert into SubCategoria(Descricao, CategoriaContaID)values(?, ?)";
         try (PreparedStatement preparestatement = contexto.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            preparestatement.setString(1, subCategoria.getDescricao()); //substitui o ? pelo dado do usuario
-            preparestatement.setInt(2, subCategoria.getCategoriaConta().getCategoriaContaID());
+            preparestatement.setString(1, SubCategoria.getDescricao()); //substitui o ? pelo dado do usuario
+            preparestatement.setInt(2, SubCategoria.getCategoriaConta().getCategoriaContaID());
 
             //executando comando sql
             int result = preparestatement.executeUpdate();
             if (result > 0) {
                 ResultSet id = preparestatement.getGeneratedKeys();
                 if (id.next()) {
-                    subCategoria.setSubCategoriaID(id.getInt(1));
+                    SubCategoria.setSubCategoriaID(id.getInt(1));
 
                     return true;
                 }
@@ -86,31 +86,31 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public SubCategoria get(int id) throws ClassNotFoundException, SQLException {
-        String query = "select * from subCategoria where subCategoriaid = '" + id + "';";
-        SubCategoria subCategoria = new SubCategoria();
+        String query = "select * from SubCategoria where SubCategoriaID = '" + id + "';";
+        SubCategoria SubCategoria = new SubCategoria();
 
         ResultSet dadosSub = contexto.executeQuery(query);
 
         while (dadosSub.next()) {
-            subCategoria.setSubCategoriaID(dadosSub.getInt("subCategoriaID"));
-            subCategoria.setDescricao(dadosSub.getString("Descricao"));
+            SubCategoria.setSubCategoriaID(dadosSub.getInt("SubCategoriaID"));
+            SubCategoria.setDescricao(dadosSub.getString("Descricao"));
 
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
+            String queryCat = "select * from CategoriaConta where CategoriaContaID = '"
                     + dadosSub.getInt("CategoriaContaID")
                     + "';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
             while (dadosCat.next()) {
-                subCategoria.setCategoriaConta(
+                SubCategoria.setCategoriaConta(
                         new CategoriaConta(
                                 dadosCat.getInt("CategoriaContaID"),
                                 dadosCat.getString("Descricao"),
-                                dadosCat.getBoolean("positiva"))
+                                dadosCat.getBoolean("Positiva"))
                 );
             }
         }
 
-        return subCategoria;
+        return SubCategoria;
     }
 
     /**
@@ -119,31 +119,31 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public ArrayList<SubCategoria> getAll() throws ClassNotFoundException, SQLException {
-        String query = "select * from subCategoria;";
+        String query = "select * from SubCategoria;";
         ArrayList<SubCategoria> list = new ArrayList<>();
 
         ResultSet dadosSub = contexto.executeQuery(query);
 
         while (dadosSub.next()) {
-            SubCategoria subCategoria = new SubCategoria();
-            subCategoria.setSubCategoriaID(dadosSub.getInt("subCategoriaID"));
-            subCategoria.setDescricao(dadosSub.getString("Descricao"));
+            SubCategoria SubCategoria = new SubCategoria();
+            SubCategoria.setSubCategoriaID(dadosSub.getInt("SubCategoriaID"));
+            SubCategoria.setDescricao(dadosSub.getString("Descricao"));
 
-            String queryCat = "select * from categoriaConta where categoriaContaid = '"
+            String queryCat = "select * from CategoriaConta where CategoriaContaID = '"
                     + dadosSub.getInt("CategoriaContaID")
                     + "';";
             ResultSet dadosCat = contexto.executeQuery(queryCat);
 
             while (dadosCat.next()) {
-                subCategoria.setCategoriaConta(
+                SubCategoria.setCategoriaConta(
                         new CategoriaConta(
                                 dadosCat.getInt("CategoriaContaID"),
                                 dadosCat.getString("Descricao"),
-                                dadosCat.getBoolean("positiva"))
+                                dadosCat.getBoolean("Positiva"))
                 );
             }
 
-            list.add(subCategoria);
+            list.add(SubCategoria);
         }
 
         return list;
@@ -151,26 +151,26 @@ public class SubCategoriaDAO {
 
     /**
      *
-     * @param subCategoria
+     * @param SubCategoria
      * @return
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public boolean update(SubCategoria subCategoria) throws ClassNotFoundException, SQLException {
+    public boolean update(SubCategoria SubCategoria) throws ClassNotFoundException, SQLException {
         StringBuilder columnsAndValues = new StringBuilder(255);
 
-        columnsAndValues.append(" descricao= '")
-                .append(subCategoria.getDescricao())
+        columnsAndValues.append(" Descricao= '")
+                .append(SubCategoria.getDescricao())
                 .append("',");
 
         columnsAndValues.append(" CategoriaContaID= '")
-                .append(subCategoria.getCategoriaConta().getCategoriaContaID())
+                .append(SubCategoria.getCategoriaConta().getCategoriaContaID())
                 .append("'");
 
-        String query = "update subCategoria SET "
+        String query = "update SubCategoria SET "
                 + columnsAndValues.toString()
-                + " WHERE subCategoriaid = "
-                + subCategoria.getSubCategoriaID();
+                + " WHERE SubCategoriaID = "
+                + SubCategoria.getSubCategoriaID();
 
         int result = contexto.executeUpdate(query);
 
@@ -185,7 +185,7 @@ public class SubCategoriaDAO {
      * @throws SQLException
      */
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
-        String sql = "delete from SubCategoria where subCategoriaID = ?";
+        String sql = "delete from SubCategoria where SubCategoriaID = ?";
         try (PreparedStatement preparedStatement = contexto.getConexao().prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();

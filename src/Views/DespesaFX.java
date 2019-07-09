@@ -146,6 +146,7 @@ public class DespesaFX extends GridPane {
                                     control.delete(data.getMovimentacaoID());
                                     table.getItems().remove(data);
                                     table.refresh();
+                                    btnSaldo.fire();
                                 } else {
                                     dialog.close();
                                 }
@@ -190,6 +191,7 @@ public class DespesaFX extends GridPane {
                             table.getItems().remove(data);
                             table.refresh();
                             table.getItems().remove(row.getItem());
+                            btnSaldo.fire();
                         } else {
                             dialog.close();
                         }
@@ -202,6 +204,7 @@ public class DespesaFX extends GridPane {
                     try {
                         form.start(mainStage, table.getSelectionModel().getSelectedItem());
                         table.refresh();
+                        btnSaldo.fire();
                     } catch (Exception ex) {
                         Log.saveLog(ex);
                         Mensagem.excecao(ex);
@@ -220,6 +223,7 @@ public class DespesaFX extends GridPane {
                             try {
                                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                                 table.refresh();
+                                btnSaldo.fire();
                             } catch (Exception ex) {
                                 Log.saveLog(ex);
                                 Mensagem.excecao(ex);
@@ -279,6 +283,7 @@ public class DespesaFX extends GridPane {
             try {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
+                btnSaldo.fire();
             } catch (Exception ex) {
                 Log.saveLog(ex);
                 Mensagem.excecao(ex);

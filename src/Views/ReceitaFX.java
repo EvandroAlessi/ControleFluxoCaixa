@@ -10,13 +10,9 @@ import CrossCutting.Log;
 import CrossCutting.Mensagem;
 import Models.Receita;
 import static Views.MenuLateralFX.btnSaldo;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -38,7 +34,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -167,6 +162,7 @@ public class ReceitaFX extends GridPane {
                                     control.delete(data.getMovimentacaoID());
                                     table.getItems().remove(data);
                                     table.refresh();
+                                    btnSaldo.fire();
                                 } else {
                                     dialog.close();
                                 }
@@ -213,6 +209,7 @@ public class ReceitaFX extends GridPane {
                             table.getItems().remove(data);
                             table.refresh();
                             table.getItems().remove(row.getItem());
+                            btnSaldo.fire();
                         } else if (res.equals(btnNao)) {
                             dialog.close();
                         }
@@ -225,6 +222,7 @@ public class ReceitaFX extends GridPane {
                     try {
                         form.start(mainStage, table.getSelectionModel().getSelectedItem());
                         table.refresh();
+                        btnSaldo.fire();
                     } catch (Exception ex) {
                         Log.saveLog(ex);
                         Mensagem.excecao(ex);
@@ -243,6 +241,7 @@ public class ReceitaFX extends GridPane {
                             try {
                                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                                 table.refresh();
+                                btnSaldo.fire();
                             } catch (Exception ex) {
                                 Log.saveLog(ex);
                                 Mensagem.excecao(ex);
@@ -301,6 +300,7 @@ public class ReceitaFX extends GridPane {
             try {
                 form.start(mainStage, table.getSelectionModel().getSelectedItem());
                 table.refresh();
+                btnSaldo.fire();
             } catch (Exception ex) {
                 Log.saveLog(ex);
                 Mensagem.excecao(ex);

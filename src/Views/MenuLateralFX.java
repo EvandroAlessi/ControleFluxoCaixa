@@ -7,10 +7,6 @@ package Views;
 
 import Controllers.MovimentacaoController;
 import CrossCutting.Enums.Tela;
-import CrossCutting.Log;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,20 +16,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import static javafx.scene.input.DataFormat.URL;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Window;
 
 /**
@@ -136,7 +129,7 @@ public class MenuLateralFX extends GridPane {
         btnSair.setMinWidth(150);
         btnSair.setMinHeight(60);
         
-        if (saldo > 0) {
+        if (saldo >= 0) {
             btnSaldo.setStyle("-fx-background-insets: 0,0; "
                 + "-fx-padding: 1; "
                 + "-fx-border: 0;"
@@ -200,7 +193,8 @@ public class MenuLateralFX extends GridPane {
             public void handle(ActionEvent actionEvent) {
                 saldo = new MovimentacaoController().getSaldo();
                 btnSaldo.setText("Saldo Atual\nR$ " + saldo);
-                if (saldo > 0) {
+                btnSaldo.setTextAlignment(TextAlignment.CENTER);
+                if (saldo >= 0) {
                     btnSaldo.setStyle("-fx-background-insets: 0,0; "
                             + "-fx-padding: 1; "
                             + "-fx-border: 0;"
@@ -224,7 +218,7 @@ public class MenuLateralFX extends GridPane {
         
         btnSair.setTextFill(Color.WHITE);
         btnSaldo.setTextFill(Color.WHITE);
-        btnSaldo.setAlignment(Pos.CENTER);
+        btnSaldo.setTextAlignment(TextAlignment.CENTER);
         btnSaldo.setText("Saldo Atual\nR$ " + saldo);
         
         add(vbTop, 0, 0);

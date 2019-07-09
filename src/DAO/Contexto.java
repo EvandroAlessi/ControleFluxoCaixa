@@ -17,7 +17,7 @@ import java.sql.Statement;
  */
 public class Contexto {
 
-    private String url = "jdbc:mysql://localhost:3306/controlefluxocaixa?useTimezone=true&serverTimezone=Brazil/East";
+    private String url = "jdbc:mysql://localhost:3306/ControleFluxoCaixa?useTimezone=true&serverTimezone=Brazil/East";
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String usuario = "root";
     private String senha = "root";

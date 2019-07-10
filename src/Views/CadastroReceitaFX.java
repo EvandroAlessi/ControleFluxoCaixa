@@ -263,10 +263,18 @@ public class CadastroReceitaFX {
         tfValor.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                if (tfValor.getText().length() > 6) {
-                    String s = tfValor.getText().substring(0, 6);
-                    tfValor.setText(s);
+
+                try {
+                    Double.parseDouble(tfValor.getText());
+                } catch (Exception e) {
+                    tfValor.setText(tfValor.getText().substring(0, tfValor.getText().length() - 1));
                 }
+                finally{
+                    if (tfValor.getText().length() > 7) {
+                        String s = tfValor.getText().substring(0, 7);
+                        tfValor.setText(s);
+                    }
+                }   
             }
         });
         

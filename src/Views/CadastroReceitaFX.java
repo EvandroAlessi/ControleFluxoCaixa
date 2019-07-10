@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -257,7 +259,17 @@ public class CadastroReceitaFX {
         tfDescricao.setPrefWidth(200);
         tfValor.setPrefWidth(200);
         dpCalendario.setPrefWidth(200);
-
+        
+        tfValor.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (tfValor.getText().length() > 6) {
+                    String s = tfValor.getText().substring(0, 6);
+                    tfValor.setText(s);
+                }
+            }
+        });
+        
         pane.add(lbTitle, 0, 0, 4, 1);
         pane.add(lbCategoria, 0, 1);
         pane.add(cbCategoria, 1, 1);

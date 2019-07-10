@@ -9,6 +9,7 @@ import CrossCutting.Enums.Tela;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -74,8 +75,8 @@ public class MenuSuperiorFX extends MenuBar {
 
         // Evento para confirmação de saída
         sair.setOnAction((event) -> {
-           ButtonType btnSim = new ButtonType("Sim");
-            ButtonType btnNao = new ButtonType("Não");
+            ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE);
+            ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
             Alert alert = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
             alert.setHeaderText("Deseja realmente sair?");
             alert.setContentText("Tem certeza?");

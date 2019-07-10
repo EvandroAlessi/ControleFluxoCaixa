@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -56,8 +57,8 @@ public class MainFX extends Application {
         
         stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e-> {
             e.consume();
-            ButtonType btnSim = new ButtonType("Sim");
-            ButtonType btnNao = new ButtonType("Não");
+            ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE);
+            ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
             Alert alert = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
             alert.setHeaderText("Deseja realmente sair?");
             alert.setContentText("Tem certeza?");

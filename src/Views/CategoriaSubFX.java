@@ -22,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -39,6 +40,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Callback;
 
 /**
@@ -121,12 +123,14 @@ public class CategoriaSubFX extends GridPane {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Alert dialog = new Alert(Alert.AlertType.WARNING);
-                            ButtonType btnSim = new ButtonType("Sim");
-                            ButtonType btnNao = new ButtonType("Não");
+                            ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE);
+                            ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
                             dialog.setTitle("Confimação de exclusão");
                             dialog.setHeaderText("Deseja realmente excluir?");
                             dialog.setContentText("Tem certeza?");
                             dialog.getButtonTypes().setAll(btnSim, btnNao);
+                            Window window = dialog.getDialogPane().getScene().getWindow();
+                            window.setOnCloseRequest(e -> dialog.hide());
                             dialog.showAndWait().ifPresent(b -> {
                                 if (b == btnSim) {
                                     SubCategoria data = getTableView().getItems().get(getIndex());

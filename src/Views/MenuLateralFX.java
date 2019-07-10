@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -94,8 +95,8 @@ public class MenuLateralFX extends GridPane {
         
         // Evento para confirmação de saída
         btnSair.setOnAction((event) -> {
-            ButtonType btnSim = new ButtonType("Sim");
-            ButtonType btnNao = new ButtonType("Não");
+            ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE);
+            ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
             Alert alert = new Alert(Alert.AlertType.WARNING, "", btnSim, btnNao);
             alert.setHeaderText("Deseja realmente sair?");
             alert.setContentText("Tem certeza?");
